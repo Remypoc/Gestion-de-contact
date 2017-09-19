@@ -84,13 +84,17 @@ public class AddContactValidationForm extends ActionForm {
 		ActionErrors errors = new ActionErrors();
 		      
 		if( getFirstName()== null || getFirstName().length() < 1 ) {
-			errors.add("first name", new ActionMessage("creation.fn.error.required"));
+			errors.add("firstName", new ActionMessage("contact.creation.fn.error.required"));
 		}
 		if( getLastName()== null || getLastName().length() < 1 ) {
-			errors.add("last name", new ActionMessage("creation.ln.error.required"));
+			errors.add("lastName", new ActionMessage("contact.creation.ln.error.required"));
 		}
-		if( getEmail() == null || getEmail().length() < 1 ) {
+		if ( getEmail().trim() == null || getEmail().trim().length() < 1 ) {
 			errors.add("email", new ActionMessage("creation.email.error.required"));
+		}
+		if( !getEmail().matches(
+				"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$" ) ) {
+			errors.add("email", new ActionMessage("creation.email.error.syntax"));
 		}
 		return errors;
 	}

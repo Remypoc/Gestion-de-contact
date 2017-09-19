@@ -16,6 +16,7 @@
   	<action path="/Main" forward="/pages/main.jsp" />
   	<action path="/ContactCreation" forward="/pages/contactCreation.jsp" />
   	
+  	<!-- ========== Validation =========================== -->
   	<action path="/AddContact" 
 		type="servletAction.AddContactAction" name="AddContactValidationForm" scope="request" input="/pages/contactCreation.jsp">
 		<forward name="success" path="/pages/success.jsp" />

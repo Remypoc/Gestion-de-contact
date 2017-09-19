@@ -26,8 +26,6 @@ public class AddContactAction extends Action {
 		final DAOContact lDAOContact = new DAOContact();
 		final String lError = lDAOContact.addContact(id, firstName, lastName, email);
 		
-		System.out.print(lError);
-		
 		if(lError == null) {
 			// if no exception is raised,  forward "success"
 			return pMapping.findForward("success");
