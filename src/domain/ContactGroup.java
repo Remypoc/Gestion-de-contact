@@ -3,24 +3,24 @@ package domain;
 import java.util.Set;
 
 public class ContactGroup {
-	private int groupId;
+	private long groupId;
 	private String groupName;
 	private Set<Contact> contacts;
 	
 	public ContactGroup() {
 	}
 	
-	public ContactGroup(int groupId, String groupName, Set<Contact> contacts) {
+	public ContactGroup(long groupId, String groupName, Set<Contact> contacts) {
 		this.groupId = groupId;
 		this.groupName = groupName;
 		this.contacts = contacts;
 	}
 
-	public int getGroupId() {
+	public long getGroupId() {
 		return groupId;
 	}
 
-	public void setGroupId(int groupId) {
+	public void setGroupId(long groupId) {
 		this.groupId = groupId;
 	}
 

@@ -1,23 +1,23 @@
 package domain;
 
 public class PhoneNumber {
-	private int id;
+	private long id;
 	private String phoneKind;
 	private String phoneNumber;
 	private Contact contact;
 	
-	public PhoneNumber(int id, String phoneKind, String phoneNumber, Contact contact) {
+	public PhoneNumber(long id, String phoneKind, String phoneNumber, Contact contact) {
 		this.id = id;
 		this.phoneKind = phoneKind;
 		this.phoneNumber = phoneNumber;
 		this.contact = contact;
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

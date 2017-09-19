@@ -8,19 +8,64 @@
 
   <!-- ========== Form beans ============================= -->
   <form-beans>
+  
+  	<!-- Contact Validation Form -->
 	<form-bean name="AddContactValidationForm" type="actionForm.AddContactValidationForm"/>
+	
+	<!-- Address Validation Form-->
+	<form-bean name="AddAddressValidationForm" type="actionForm.AddAddressValidationForm"/>
+	<form-bean name="DeleteAddressValidationForm" type="actionForm.DeleteAddressValidationForm"/>
+	<form-bean name="UpdateAddressValidationForm" type="actionForm.UpdateAddressValidationForm"/>
+	<form-bean name="SearchAddressValidationForm" type="actionForm.SearchAddressValidationForm"/>
+	
   </form-beans>
 	
   <!-- ========== Forwards =============================== -->
   <action-mappings>
+  
   	<action path="/Main" forward="/pages/main.jsp" />
+  	
+  	<!-- Contact jsp path -->
   	<action path="/ContactCreation" forward="/pages/contactCreation.jsp" />
   	
+  	<!-- Address jsp path-->
+  	<action path="/AddressCreation" forward="/pages/addressCreation.jsp" />
+  	<action path="/AddressDelete" forward="/pages/addressDelete.jsp" />
+  	<action path="/AddressUpdate" forward="/pages/addressUpdate.jsp" />
+  	<action path="/AddressSearch" forward="/pages/addressSearch.jsp" />
+  	
+  	<!-- Contact Action path -->
   	<action path="/AddContact" 
 		type="servletAction.AddContactAction" name="AddContactValidationForm" scope="request" input="/pages/contactCreation.jsp">
 		<forward name="success" path="/pages/success.jsp" />
 		<forward name="error" path="/pages/error.jsp" />
 	</action>
+	
+	<!-- Address Action path -->
+	<action path="/AddAddress" 
+		type="servletAction.AddAddressAction" name="AddAddressValidationForm" scope="request" input="/pages/addressCreation.jsp">
+		<forward name="success" path="/pages/success.jsp" />
+		<forward name="error" path="/pages/error.jsp" />
+	</action>
+	
+	<action path="/DeleteAddress" 
+		type="servletAction.DeleteAddressAction" name="DeleteAddressValidationForm" scope="request" input="/pages/addressDelete.jsp">
+		<forward name="success" path="/pages/success.jsp" />
+		<forward name="error" path="/pages/error.jsp" />
+	</action>
+	
+	<action path="/UpdateAddress" 
+		type="servletAction.UpdateAddressAction" name="UpdateAddressValidationForm" scope="request" input="/pages/addressUpdate.jsp">
+		<forward name="success" path="/pages/success.jsp" />
+		<forward name="error" path="/pages/error.jsp" />
+	</action>
+	
+	<action path="/SearchAddress" 
+		type="servletAction.SearchAddressAction" name="SearchAddressValidationForm" scope="request" input="/pages/addressSearch.jsp">
+		<forward name="success" path="/pages/success.jsp" />
+		<forward name="error" path="/pages/error.jsp" />
+	</action>
+	
   </action-mappings>
   
   <!-- ========== Message file =========================== -->

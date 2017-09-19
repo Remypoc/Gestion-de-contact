@@ -1,7 +1,7 @@
 package domain;
 
 public class Address {
-	private int id;
+	private long id;
 	private String street;
 	private String city;
 	private String zip;
@@ -10,19 +10,19 @@ public class Address {
 	public Address() {
 	}
 	
-	public Address(int id, String street, String city, String zip, String country) {
+	public Address(long id, String country, String city, String street, String zip) {
 		this.id = id;
-		this.street = street;
-		this.city = city;
-		this.zip = zip;
 		this.country = country;
+		this.city = city;
+		this.street = street;
+		this.zip = zip;
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -61,11 +61,11 @@ public class Address {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("Address:\n").append("id=").append(id);
-		sb.append("street=").append(street).append("\n");
-		sb.append("city=").append(city).append("\n");
-		sb.append("zip=").append(zip).append("\n");
+		sb.append("Address{\n").append("id=").append(id).append("\n");
 		sb.append("country=").append(country).append("\n");
+		sb.append("city=").append(city).append("\n");
+		sb.append("street=").append(street).append("\n");
+		sb.append("zip=").append(zip).append("\n");
 		return sb.toString();
 	}
 }

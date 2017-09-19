@@ -14,7 +14,7 @@ public class AddContactAction extends Action {
 	
 	public ActionForward execute(final ActionMapping pMapping, ActionForm pForm, final HttpServletRequest pRequest, final HttpServletResponse pResponse) {
 		
-		final AddContactValidationForm lForm=(AddContactValidationForm)pForm;
+		final AddContactValidationForm lForm = (AddContactValidationForm) pForm;
 		
 		final long id = lForm.getId();
 		
