@@ -18,6 +18,12 @@
 	<form-bean name="UpdateAddressValidationForm" type="actionForm.UpdateAddressValidationForm"/>
 	<form-bean name="SearchAddressValidationForm" type="actionForm.SearchAddressValidationForm"/>
 	
+	<!-- PhoneNumber Validation Form-->
+	<form-bean name="AddPhoneNumberValidationForm" type="actionForm.AddPhoneNumberValidationForm"/>
+	<form-bean name="DeletePhoneNumberValidationForm" type="actionForm.DeletePhoneNumberValidationForm"/>
+	<form-bean name="UpdatePhoneNumberValidationForm" type="actionForm.UpdatePhoneNumberValidationForm"/>
+	<form-bean name="SearchPhoneNumberValidationForm" type="actionForm.SearchPhoneNumberValidationForm"/>
+	
   </form-beans>
 	
   <!-- ========== Forwards =============================== -->
@@ -33,6 +39,12 @@
   	<action path="/AddressDelete" forward="/pages/addressDelete.jsp" />
   	<action path="/AddressUpdate" forward="/pages/addressUpdate.jsp" />
   	<action path="/AddressSearch" forward="/pages/addressSearch.jsp" />
+  	
+  	<!-- PhoneNumber jsp path-->
+  	<action path="/PhoneNumberCreation" forward="/pages/phoneNumberCreation.jsp" />
+  	<action path="/PhoneNumberDelete" forward="/pages/phoneNumberDelete.jsp" />
+  	<action path="/PhoneNumberUpdate" forward="/pages/phoneNumberUpdate.jsp" />
+  	<action path="/PhoneNumberSearch" forward="/pages/phoneNumberSearch.jsp" />
   	
   	<!-- Contact Action path -->
   	<action path="/AddContact" 
@@ -62,6 +74,31 @@
 	
 	<action path="/SearchAddress" 
 		type="servletAction.SearchAddressAction" name="SearchAddressValidationForm" scope="request" input="/pages/addressSearch.jsp">
+		<forward name="success" path="/pages/success.jsp" />
+		<forward name="error" path="/pages/error.jsp" />
+	</action>
+	
+	<!-- PhoneNumber Action path -->
+	<action path="/AddPhoneNumber" 
+		type="servletAction.AddPhoneNumberAction" name="AddPhoneNumberValidationForm" scope="request" input="/pages/phoneNumberCreation.jsp">
+		<forward name="success" path="/pages/success.jsp" />
+		<forward name="error" path="/pages/error.jsp" />
+	</action>
+	
+	<action path="/DeletePhoneNumber" 
+		type="servletAction.DeletePhoneNumberAction" name="DeletePhoneNumberValidationForm" scope="request" input="/pages/phoneNumberDelete.jsp">
+		<forward name="success" path="/pages/success.jsp" />
+		<forward name="error" path="/pages/error.jsp" />
+	</action>
+	
+	<action path="/UpdatePhoneNumber" 
+		type="servletAction.UpdatePhoneNumberAction" name="UpdatePhoneNumberValidationForm" scope="request" input="/pages/phoneNumberUpdate.jsp">
+		<forward name="success" path="/pages/success.jsp" />
+		<forward name="error" path="/pages/error.jsp" />
+	</action>
+	
+	<action path="/SearchPhoneNumber" 
+		type="servletAction.SearchPhoneNumberAction" name="SearchPhoneNumberValidationForm" scope="request" input="/pages/phoneNumberSearch.jsp">
 		<forward name="success" path="/pages/success.jsp" />
 		<forward name="error" path="/pages/error.jsp" />
 	</action>
