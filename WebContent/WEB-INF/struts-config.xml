@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+          
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+          "http://jakarta.apache.org/struts/dtds/struts-config_1_3.dtd">
+
+<struts-config>
+
+  <!-- ========== Form beans ============================= -->
+  <form-beans>
+	<form-bean name="AddContactValidationForm" type="actionForm.AddContactValidationForm"/>
+  </form-beans>
+	
+  <!-- ========== Forwards =============================== -->
+  <action-mappings>
+  	<action path="/Main" forward="/pages/main.jsp" />
+  	<action path="/ContactCreation" forward="/pages/contactCreation.jsp" />
+  	
+  	<action path="/AddContact" 
+		type="servletAction.AddContactAction" name="AddContactValidationForm" scope="request" input="/pages/contactCreation.jsp">
+		<forward name="success" path="/pages/success.jsp" />
+		<forward name="error" path="/pages/error.jsp" />
+	</action>
+  </action-mappings>
+  
+  <!-- ========== Message file =========================== -->
+  <message-resources parameter="resources/Resources" />
+</struts-config>
