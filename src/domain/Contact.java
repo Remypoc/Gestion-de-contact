@@ -1,12 +1,34 @@
 package domain;
 
+import java.util.Set;
+
 public class Contact {
 	
 	private long id;   
 	private String firstName;
 	private String lastName;
 	private String email;
-	  
+	private Set<PhoneNumber> phones;
+	private Address address; 
+		
+	public Contact() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public Contact(long id, String firstName, String lastName, String email, 
+			Set<PhoneNumber> phones, Address address) {
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.phones = phones;
+		this.address = address;
+	}
+
+	public String getFullName() {
+		return String.format("%s %s", firstName, lastName);
+	}
+	
 	/**
 	 * @return Email
 	 */
