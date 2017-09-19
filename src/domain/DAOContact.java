@@ -44,4 +44,47 @@ public class DAOContact {
 			
 		}
 	}
+	
+	/**
+	 * 
+	 * @param address
+	 * @return null if address was correctly being add or string exception if failure
+	 */
+	public Object addAddress(final Address address) {
+		System.out.println(String.format("Add address to database : %s", address.toString()));
+		return null;
+	}
+	
+	/**
+	 * 
+	 * @param address
+	 * @return address being search or string exception if failure
+	 */
+	public Object searchAddress(Address address) {
+		// Searching address by id or country or/and city, or/and street, or/and zip
+		System.out.println(String.format("Searching address : %s", address.toString()));
+		return null;
+	}
+	
+	/**
+	 * 
+	 * @param address
+	 * @return return null or string exception
+	 */
+	public Object updateAddress(Address address) {
+		// Updating address by id
+		System.out.println(String.format("Updating address address : %s", address.toString()));
+		return null;
+	}
+	
+	/**
+	 * 
+	 * @param address
+	 * @return return null or string exception
+	 */
+	public Object deleteAddress(Address address) {
+		// Deleting address by id
+		System.out.println(String.format("Deleting address : %s", address.toString()));
+		return null;
+	}
 }
