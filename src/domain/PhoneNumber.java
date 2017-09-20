@@ -6,7 +6,17 @@ public class PhoneNumber {
 	private String phoneNumber;
 	private Contact contact;
 	
-	public PhoneNumber(long id, String phoneKind, String phoneNumber, Contact contact) {
+	public PhoneNumber() {
+	}
+	
+	public PhoneNumber(long id, String phoneNumber, String phoneKind) {
+		this.id = id;
+		this.phoneKind = phoneKind;
+		this.phoneNumber = phoneNumber;
+		this.contact = null;
+	}
+	
+	public PhoneNumber(long id, String phoneNumber, String phoneKind, Contact contact) {
 		this.id = id;
 		this.phoneKind = phoneKind;
 		this.phoneNumber = phoneNumber;

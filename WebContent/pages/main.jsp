@@ -15,21 +15,25 @@
  	<ul>
  		<li><a href="ContactCreation.do"><bean:message key="main.page.contact.creation"/></a></li>
  		<li><a href="AddressCreation.do"><bean:message key="main.page.address.creation"/></a></li>
+ 		<li><a href="PhoneNumberCreation.do"><bean:message key="main.page.phonenumber.creation"/></a></li>
  	</ul>
  	
  	<h1>Delete</h1>
  	<ul>
  		<li><a href="AddressDelete.do"><bean:message key="main.page.address.delete"/></a></li>
+ 		<li><a href="PhoneNumberDelete.do"><bean:message key="main.page.phonenumber.delete"/></a></li>
  	</ul>
  	
  	<h1>Update</h1>
  	<ul>
  		<li><a href="AddressUpdate.do"><bean:message key="main.page.address.update"/></a></li>
+ 		<li><a href="PhoneNumberUpdate.do"><bean:message key="main.page.phonenumber.update"/></a></li>
  	</ul>
  	
  	<h1>Search</h1>
  	<ul>
  		<li><a href="AddressSearch.do"><bean:message key="main.page.address.search"/></a></li>
+ 		<li><a href="PhoneNumberSearch.do"><bean:message key="main.page.phonenumber.search"/></a></li>
  	</ul>
  	
   </body>
