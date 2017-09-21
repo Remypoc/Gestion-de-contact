@@ -1,48 +1,47 @@
 package domain;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.LinkedList;
-import java.util.List;
-
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
-
 public class DAOContact {
 	
 	private final static String RESOURCE_JDBC = "java:comp/env/jdbc/gestion_contact";
 
-	public String addContact(final long id, final String firstName, final String lastName, final String email) {
-		try {
-			final Context lContext = new InitialContext();
-			final DataSource lDataSource = (DataSource) lContext.lookup(RESOURCE_JDBC);
-			final Connection lConnection  = lDataSource.getConnection();
-			
-			// adding a new contact
-			final PreparedStatement lPreparedStatementCreation = 
-					
-			lConnection.prepareStatement("INSERT INTO CONTACT(ID, FIRSTNAME, LASTNAME, EMAIL) VALUES(?, ?, ?, ?)");
-			
-			lPreparedStatementCreation.setLong(1, id);
-			lPreparedStatementCreation.setString(2, firstName);
-			lPreparedStatementCreation.setString(3, lastName);
-			lPreparedStatementCreation.setString(4, email);
-			lPreparedStatementCreation.executeUpdate();
-			
-			return null;
-		} catch (NamingException e) {
-		
-			return "NamingException : " + e.getMessage();
-		
-		} catch (SQLException e) {
-
-			return "SQLException : " + e.getMessage();
-			
-		}
+	/**
+	 * 
+	 * @param contact
+	 * @return null if contact was correctly being add or string exception if failure
+	 */
+	public String addContact(final Contact contact) {
+		System.out.println(String.format("Add contact to database : %s", contact.toString()));
+		return null;
+	}
+	
+	/**
+	 * 
+	 * @param contact
+	 * @return return null or string exception
+	 */
+	public Object searchContact(final Contact contact) {
+		System.out.println(String.format("Searching contact : %s", contact.toString()));
+		return null;
+	}
+	
+	/**
+	 * 
+	 * @param contact
+	 * @return return null or string exception
+	 */
+	public Object updateContact(final Contact contact) {
+		System.out.println(String.format("Updating contact : %s", contact.toString()));
+		return null;
+	}
+	
+	/**
+	 * 
+	 * @param contact
+	 * @return return null or string exception
+	 */
+	public Object deleteContact(final Contact contact) {
+		System.out.println(String.format("Deleting contact : %s", contact.toString()));
+		return null;
 	}
 	
 	/**
@@ -71,7 +70,7 @@ public class DAOContact {
 	 * @return return null or string exception
 	 */
 	public Object updateAddress(Address address) {
-		System.out.println(String.format("Updating address address : %s", address.toString()));
+		System.out.println(String.format("Updating address : %s", address.toString()));
 		return null;
 	}
 	

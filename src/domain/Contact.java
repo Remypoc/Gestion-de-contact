@@ -15,6 +15,13 @@ public class Contact {
 		// TODO Auto-generated constructor stub
 	}
 	
+	public Contact(long id, String firstName, String lastName, String email) {
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+	}
+	
 	public Contact(long id, String firstName, String lastName, String email, 
 			Set<PhoneNumber> phones, Address address) {
 		this.id = id;
@@ -83,5 +90,33 @@ public class Contact {
      */
     public void setId(long l) {
     	id = l;
+    }
+    
+    /**
+     * @return Set Returns Phones
+     */
+    public Set<PhoneNumber> getPhones() {
+    	return phones;
+    }
+
+    /**
+     * @param Set<PhoneNumber> Sets the Phones
+     */
+    public void setPhones(Set<PhoneNumber> phoneNumbers) {
+    	phones = phoneNumbers;
+    }
+    
+    /**
+     * @return Address
+     */
+    public Address getAddress() {
+    	return address;
+    }
+
+    /**
+     * @param Address Sets the address
+     */
+    public void setAdress(Address a) {
+    	address = a;
     }
 }

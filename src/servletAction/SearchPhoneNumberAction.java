@@ -9,8 +9,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import actionForm.SearchPhoneNumberValidationForm;
-import domain.DAOContact;
 import domain.PhoneNumber;
+import service.ContactService;
 
 public class SearchPhoneNumberAction extends Action {
 	
@@ -24,8 +24,8 @@ public class SearchPhoneNumberAction extends Action {
 		final String phoneKind 	 = lForm.getPhoneKind();
 		
 		final PhoneNumber phoneNumber = new PhoneNumber(id, phoneNumberStr, phoneKind);
-		final DAOContact lDAOContact = new DAOContact();
-		final Object lError = lDAOContact.searchPhoneNumber(phoneNumber);
+		final ContactService cs = new ContactService();
+		final Object lError = cs.searchPhoneNumber(phoneNumber);
 		
 		if (lError instanceof String)
 			System.out.print((String) lError);

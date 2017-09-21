@@ -10,7 +10,7 @@ import org.apache.struts.action.ActionMapping;
 
 import actionForm.UpdateAddressValidationForm;
 import domain.Address;
-import domain.DAOContact;
+import service.ContactService;
 
 public class UpdateAddressAction extends Action {
 	
@@ -26,8 +26,8 @@ public class UpdateAddressAction extends Action {
 		final String zip 		= lForm.getZip();
 		
 		final Address address = new Address(id, country, city, street, zip);
-		final DAOContact lDAOContact = new DAOContact();
-		final Object lError = lDAOContact.updateAddress(address);
+		final ContactService cs = new ContactService();
+		final Object lError = cs.updateAddress(address);
 		
 		if (lError instanceof String)
 			System.out.print((String) lError);

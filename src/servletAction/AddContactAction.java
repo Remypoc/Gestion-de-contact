@@ -8,7 +8,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import actionForm.AddContactValidationForm;
-import domain.DAOContact;
+import domain.Contact;
+import service.ContactService;
 
 public class AddContactAction extends Action {
 	
@@ -17,14 +18,15 @@ public class AddContactAction extends Action {
 		final AddContactValidationForm lForm = (AddContactValidationForm) pForm;
 		
 		final long id = lForm.getId();
-		
 		final String firstName = lForm.getFirstName();
 		final String lastName = lForm.getLastName();
 		final String email = lForm.getEmail();
+		
+		final Contact contact = new Contact(id, firstName, lastName, email);
 
 		// create a new Contact
-		final DAOContact lDAOContact = new DAOContact();
-		final String lError = lDAOContact.addContact(id, firstName, lastName, email);
+		final ContactService cs = new ContactService();
+		final Object lError = cs.addContact(contact);
 		
 		if(lError == null) {
 			// if no exception is raised,  forward "success"
