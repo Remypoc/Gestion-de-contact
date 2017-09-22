@@ -48,8 +48,8 @@ public class DeletePhoneNumberValidationForm extends ActionForm {
 		ActionMapping mapping, HttpServletRequest request ) {
 		ActionErrors errors = new ActionErrors();
 		      
-		if( getPhoneNumber() == null || getPhoneNumber().length() < 2 &&
-				getPhoneKind() == null || getPhoneKind().length() < 1) {
+		if((getPhoneNumber() == null || getPhoneNumber().length() < 2) &&
+				(getPhoneKind() == null || getPhoneKind().length() < 1)) {
 			errors.add("phonenumber ", new ActionMessage("phonenumber.delete.error"));
 		}
 		
