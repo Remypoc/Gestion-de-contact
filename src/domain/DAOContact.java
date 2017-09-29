@@ -16,9 +16,7 @@ public class DAOContact {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 
 		session.beginTransaction();
-
-		long id = (long) session.save(contact);
-		contact.setId(id);
+		session.persist(contact);
 
 		session.getTransaction().commit();
 		session.close();

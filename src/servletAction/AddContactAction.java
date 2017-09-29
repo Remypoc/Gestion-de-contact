@@ -3,6 +3,7 @@ package servletAction;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import domain.Address;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -17,12 +18,20 @@ public class AddContactAction extends Action {
 		
 		final AddContactValidationForm lForm = (AddContactValidationForm) pForm;
 		
-		final long id = lForm.getId();
-		final String firstName = lForm.getFirstName();
-		final String lastName = lForm.getLastName();
-		final String email = lForm.getEmail();
-		
-		Contact contact = new Contact(id, firstName, lastName, email);
+		final long id 			= lForm.getId();
+		final String firstName  = lForm.getFirstName();
+		final String lastName   = lForm.getLastName();
+		final String email 		= lForm.getEmail();
+		final String hasAddress = lForm.getHasAddress();
+
+		Address address = null;
+		if (hasAddress.equals("true")) {
+			address = new Address(
+					lForm.getIdAddress(), lForm.getCountry(),
+					lForm.getCity(), lForm.getStreet(), lForm.getZip());
+		}
+
+		Contact contact = new Contact(id, firstName, lastName, email, address);
 
 		// create a new Contact
 		final ContactService cs = new ContactService();

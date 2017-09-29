@@ -26,6 +26,32 @@
 					<td><html:text property="email" maxlength="200" /></td>
 				</tr>
 				<tr>
+					<td><html:radio property="hasAddress" value="false">
+						<bean:message key="form.contact.address.disable"></bean:message>
+					</html:radio>
+					</td>
+					<td><html:radio property="hasAddress" value="true">
+						<bean:message key="form.contact.address.enable"></bean:message>
+					</html:radio>
+					</td>
+				</tr>
+				<tr>
+					<td><bean:message key="form.address.country" /></td>
+					<td><html:text property="country" maxlength="200"/></td>
+				</tr>
+				<tr>
+					<td><bean:message key="form.address.city" />
+					<td><html:text property="city" maxlength="60"/></td>
+				</tr>
+				<tr>
+					<td><bean:message key="form.address.street" /></td>
+					<td><html:text property="street" maxlength="200" /></td>
+				</tr>
+				<tr>
+					<td><bean:message key="form.address.zip" /></td>
+					<td><html:text property="zip" maxlength="30" /></td>
+				</tr>
+				<tr>
 				<td>
 					<input type="submit" class="btn btn-primary" value=" <bean:message key="form.contact.creation.validate" />" />
 					<input type="reset" class="btn btn-primary" value="<bean:message key="form.contact.creation.cancel" />" />

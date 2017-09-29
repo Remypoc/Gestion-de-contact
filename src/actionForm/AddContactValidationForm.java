@@ -11,10 +11,16 @@ public class AddContactValidationForm extends ActionForm {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private long id=0;   
-	private String firstName=null;
-	private String lastName=null;
-	private String email=null;
+	private long id			 	= 0;
+	private String firstName 	= null;
+	private String lastName  	= null;
+	private String email 	 	= null;
+	private String hasAddress 	= "false";
+	private long   idAddress    = 0;
+	private String country 		= null;
+	private String city 		= null;
+	private String street 		= null;
+	private String zip 			= null;
 	
 	/**
 	 * @return Email
@@ -71,12 +77,66 @@ public class AddContactValidationForm extends ActionForm {
 	public void setId(long l) {
 	    id = l;
 	}
-	
+
+	public long getIdAddress() {
+		return idAddress;
+	}
+
+	public void setIdAddress(long idAddress) {
+		this.idAddress = idAddress;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getStreet() {
+		return street;
+	}
+
+	public void setStreet(String street) {
+		this.street = street;
+	}
+
+	public String getZip() {
+		return zip;
+	}
+
+	public void setZip(String zip) {
+		this.zip = zip;
+	}
+
+	public String getHasAddress() {
+		return hasAddress;
+	}
+
+	public void setHasAddress(String hasAddress) {
+		this.hasAddress = hasAddress;
+	}
+
 	public void reset(ActionMapping mapping, HttpServletRequest request) {
-	  	this.id=0;
-	    this.firstName=null;
-	    this.lastName=null;
-	    this.email=null;
+		this.id			= 0;
+		this.firstName	= null;
+		this.lastName	= null;
+		this.email		= null;
+		this.hasAddress = "false";
+		this.idAddress  = 0;
+		this.country 	= null;
+		this.city		= null;
+		this.street 	= null;
+		this.zip 		= null;
 	}
 	
 	public ActionErrors validate( 
@@ -96,6 +156,22 @@ public class AddContactValidationForm extends ActionForm {
 				"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$" ) ) {
 			errors.add("email", new ActionMessage("creation.email.error.syntax"));
 		}
+
+		if (getHasAddress().equals("true")) {
+			if( getCountry() == null || getCountry().length() < 1 ) {
+				errors.add("country ", new ActionMessage("address.country.error"));
+			}
+			if( getCity()== null || getCity().length() < 1 ) {
+				errors.add("city ", new ActionMessage("address.city.error"));
+			}
+			if( getStreet() == null || getStreet().length() < 1 ) {
+				errors.add("street ", new ActionMessage("address.street.error"));
+			}
+			if( getZip() == null || getZip().length() < 1 ) {
+				errors.add("zip ", new ActionMessage("address.zip.error"));
+			}
+		}
+
 		return errors;
 	}
 }
