@@ -1,3 +1,10 @@
+# Ignore intellij files
+.idea/
+*.iml
+out/
+
+web/WEB-ING/lib/
+
 # Compiled class file
 *.class
 .classpath

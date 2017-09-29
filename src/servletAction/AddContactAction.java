@@ -22,7 +22,7 @@ public class AddContactAction extends Action {
 		final String lastName = lForm.getLastName();
 		final String email = lForm.getEmail();
 		
-		final Contact contact = new Contact(id, firstName, lastName, email);
+		Contact contact = new Contact(id, firstName, lastName, email);
 
 		// create a new Contact
 		final ContactService cs = new ContactService();

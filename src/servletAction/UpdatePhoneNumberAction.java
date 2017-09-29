@@ -23,7 +23,7 @@ public class UpdatePhoneNumberAction extends Action {
 		final String phoneNumberStr = lForm.getPhoneNumber();
 		final String phoneKind 	    = lForm.getPhoneKind();
 		
-		final PhoneNumber phoneNumber = new PhoneNumber(id, phoneNumberStr, phoneKind);
+		PhoneNumber phoneNumber = new PhoneNumber(id, phoneNumberStr, phoneKind);
 		final ContactService cs = new ContactService();
 		final Object lError = cs.updatePhoneNumber(phoneNumber);
 		

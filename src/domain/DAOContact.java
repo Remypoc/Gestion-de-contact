@@ -1,5 +1,8 @@
 package domain;
 
+import org.hibernate.Session;
+import util.HibernateUtil;
+
 public class DAOContact {
 	
 	private final static String RESOURCE_JDBC = "java:comp/env/jdbc/gestion_contact";
@@ -9,8 +12,19 @@ public class DAOContact {
 	 * @param contact
 	 * @return null if contact was correctly being add or string exception if failure
 	 */
-	public String addContact(final Contact contact) {
+	public String addContact(Contact contact) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+
+		session.beginTransaction();
+
+		long id = (long) session.save(contact);
+		contact.setId(id);
+
+		session.getTransaction().commit();
+		session.close();
+
 		System.out.println(String.format("Add contact to database : %s", contact.toString()));
+
 		return null;
 	}
 	
@@ -50,6 +64,16 @@ public class DAOContact {
 	 * @return null if address was correctly being add or string exception if failure
 	 */
 	public Object addAddress(final Address address) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+
+		session.beginTransaction();
+
+		long id = (long) session.save(address);
+		address.setId(id);
+
+		session.getTransaction().commit();
+		session.close();
+
 		System.out.println(String.format("Add address to database : %s", address.toString()));
 		return null;
 	}
@@ -90,6 +114,16 @@ public class DAOContact {
 	 * @return null if phoneNumber was correctly being add or string exception if failure
 	 */
 	public Object addPhoneNumber(final PhoneNumber phoneNumber) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+
+		session.beginTransaction();
+
+		long id = (long) session.save(phoneNumber);
+		phoneNumber.setId(id);
+
+		session.getTransaction().commit();
+		session.close();
+
 		System.out.println(String.format("Add phoneNumber to database : %s", phoneNumber.toString()));
 		return null;
 	}

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="domain">
+    <class name="PhoneNumber" table="PHONENUMBER">
+
+        <meta attribute="class-description">
+            This class contains all PhoneNumber informations.
+        </meta>
+
+        <id name="id" type="long" column="id">
+            <generator class="increment"/>
+        </id>
+
+        <property name="phoneKind" column="PHONEKIND" type="string"/>
+        <property name="phoneNumber" column="PHONENUMBER" type="string"/>
+
+    </class>
+</hibernate-mapping>

@@ -26,7 +26,7 @@ public class DeleteAddressAction extends Action {
 		final String street = lForm.getStreet();
 		final String zip = lForm.getZip();
 		
-		final Address address = new Address(id, country, city, street, zip);
+		Address address = new Address(id, country, city, street, zip);
 		final ContactService cs = new ContactService();
 		final Object lError = cs.deleteAddress(address);
 		

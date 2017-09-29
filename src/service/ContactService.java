@@ -19,7 +19,7 @@ public class ContactService {
 	 * @param contact
 	 * @return null if contact was correctly being add or string exception if failure
 	 */
-	public Object addContact(final Contact contact) {
+	public Object addContact(Contact contact) {
 		return (cdao = new DAOContact()).addContact(contact);
 	}
 	
@@ -55,7 +55,7 @@ public class ContactService {
 	 * @param address
 	 * @return null if address was correctly being add or string exception if failure
 	 */
-	public Object addAddress(final Address address) {
+	public Object addAddress(Address address) {
 		return (cdao = new DAOContact()).addAddress(address);
 	}
 	
@@ -91,7 +91,7 @@ public class ContactService {
 	 * @param phoneNumber
 	 * @return null if phoneNumber was correctly being add or string exception if failure
 	 */
-	public Object addPhoneNumber(final PhoneNumber phoneNumber) {
+	public Object addPhoneNumber(PhoneNumber phoneNumber) {
 		return (cdao = new DAOContact()).addPhoneNumber(phoneNumber);
 	}
 	

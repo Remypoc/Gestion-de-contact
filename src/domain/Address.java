@@ -1,5 +1,8 @@
 package domain;
 
+import javax.persistence.Entity;
+
+@Entity(name = "Address")
 public class Address {
 	private long id;
 	private String street;
@@ -61,11 +64,12 @@ public class Address {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("Address{\n").append("id=").append(id).append("\n");
+		sb.append("Address {\n").append("id=").append(id).append("\n");
 		sb.append("country=").append(country).append("\n");
 		sb.append("city=").append(city).append("\n");
 		sb.append("street=").append(street).append("\n");
 		sb.append("zip=").append(zip).append("\n");
+		sb.append("}\n");
 		return sb.toString();
 	}
 }

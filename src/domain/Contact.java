@@ -9,7 +9,7 @@ public class Contact {
 	private String lastName;
 	private String email;
 	private Set<PhoneNumber> phones;
-	private Address address; 
+	private Address address;
 		
 	public Contact() {
 		// TODO Auto-generated constructor stub
@@ -21,8 +21,8 @@ public class Contact {
 		this.lastName = lastName;
 		this.email = email;
 	}
-	
-	public Contact(long id, String firstName, String lastName, String email, 
+
+	public Contact(long id, String firstName, String lastName, String email,
 			Set<PhoneNumber> phones, Address address) {
 		this.id = id;
 		this.firstName = firstName;
@@ -35,7 +35,7 @@ public class Contact {
 	public String getFullName() {
 		return String.format("%s %s", firstName, lastName);
 	}
-	
+
 	/**
 	 * @return Email
 	 */
@@ -50,7 +50,7 @@ public class Contact {
 	  return firstName;
 	}
 
-	/** 
+	/**
      * @return Last name
      */
     public String getLastName() {
@@ -91,7 +91,7 @@ public class Contact {
     public void setId(long l) {
     	id = l;
     }
-    
+
     /**
      * @return Set Returns Phones
      */
@@ -105,7 +105,7 @@ public class Contact {
     public void setPhones(Set<PhoneNumber> phoneNumbers) {
     	phones = phoneNumbers;
     }
-    
+
     /**
      * @return Address
      */

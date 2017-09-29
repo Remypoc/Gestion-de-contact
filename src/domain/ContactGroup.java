@@ -43,7 +43,7 @@ public class ContactGroup {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("ContactGroup:\n").append("id=").append(groupId);
+		sb.append("ContactGroup {\n").append("id=").append(groupId);
 		sb.append("groupName=").append(groupName).append("\n");
 		sb.append("contacts = [\n");
 		for (Contact c : contacts) {
@@ -51,6 +51,7 @@ public class ContactGroup {
 				.append(c.getFullName()).append("\n");
 		}
 		sb.append("]");
+		sb.append("}\n");
 		return sb.toString();
 	}
 }
