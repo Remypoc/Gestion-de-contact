@@ -80,5 +80,4 @@
     </table>
 </html:form>
 </body>
-</body>
 </html>
