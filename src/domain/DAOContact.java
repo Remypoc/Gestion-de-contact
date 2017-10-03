@@ -155,4 +155,19 @@ public class DAOContact {
 		System.out.println(String.format("Deleting phoneNumber : %s", phoneNumber.toString()));
 		return null;
 	}
+
+	public Object addContactGroup(ContactGroup contactGroup) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+
+		session.beginTransaction();
+
+		long id = (long) session.save(contactGroup);
+		contactGroup.setGroupId(id);
+
+		session.getTransaction().commit();
+		session.close();
+
+		System.out.println(String.format("Add contactGroup : %s", contactGroup.toString()));
+		return null;
+	}
 }

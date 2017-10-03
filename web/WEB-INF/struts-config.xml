@@ -23,7 +23,10 @@
 	<form-bean name="DeletePhoneNumberValidationForm" type="actionForm.DeletePhoneNumberValidationForm"/>
 	<form-bean name="UpdatePhoneNumberValidationForm" type="actionForm.UpdatePhoneNumberValidationForm"/>
 	<form-bean name="SearchPhoneNumberValidationForm" type="actionForm.SearchPhoneNumberValidationForm"/>
-	
+
+	  <!-- ContactGroup Validation Form -->
+	  <form-bean name="AddContactGroupValidationForm" type="actionForm.AddContactGroupValidationForm"/>
+
   </form-beans>
 	
   <!-- ========== Forwards =============================== -->
@@ -45,9 +48,11 @@
   	<action path="/PhoneNumberDelete" forward="/pages/phoneNumberDelete.jsp" />
   	<action path="/PhoneNumberUpdate" forward="/pages/phoneNumberUpdate.jsp" />
   	<action path="/PhoneNumberSearch" forward="/pages/phoneNumberSearch.jsp" />
-  	
-  	<!-- Contact Action path -->
-  	<!-- ========== Validation =========================== -->
+
+	  <!-- ContactGroup jsp path -->
+	  <action path="/ContactGroupCreation" forward="/pages/contactGroupCreation.jsp" />
+
+	  <!-- Contact Action path -->
   	<action path="/AddContact" 
 		type="servletAction.AddContactAction" name="AddContactValidationForm" scope="request" input="/pages/contactCreation.jsp">
 		<forward name="success" path="/pages/success.jsp" />
@@ -103,9 +108,17 @@
 		<forward name="success" path="/pages/success.jsp" />
 		<forward name="error" path="/pages/error.jsp" />
 	</action>
-	
+
+	  <!-- ContactGroup action path -->
+	  <action path="/AddContactGroup"
+			  type="servletAction.AddContactGroupAction" name="AddContactGroupValidationForm" scope="request" input="/pages/contactGroupCreation.jsp">
+		  <forward name="success" path="/pages/success.jsp" />
+		  <forward name="error" path="/pages/error.jsp" />
+	  </action>
+
   </action-mappings>
   
   <!-- ========== Message file =========================== -->
   <message-resources parameter="resources/Resources" />
+
 </struts-config>

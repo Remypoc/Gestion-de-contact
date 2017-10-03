@@ -1,9 +1,6 @@
 package service;
 
-import domain.Address;
-import domain.Contact;
-import domain.PhoneNumber;
-import domain.DAOContact;
+import domain.*;
 
 public class ContactService {
 	
@@ -120,5 +117,9 @@ public class ContactService {
 	 */
 	public Object deletePhoneNumber(PhoneNumber phoneNumber) {
 		return (cdao = new DAOContact()).deletePhoneNumber(phoneNumber);
+	}
+
+	public Object addContactGroup(ContactGroup contactGroup) {
+		return (cdao = new DAOContact()).addContactGroup(contactGroup);
 	}
 }

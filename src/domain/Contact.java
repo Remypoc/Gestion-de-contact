@@ -9,7 +9,7 @@ public class Contact {
 	private String firstName;
 	private String lastName;
 	private String email;
-	private Set<PhoneNumber> phones=new HashSet<PhoneNumber>();
+	private Set<PhoneNumber> phones = new HashSet<PhoneNumber>();
 	private Address address;
 
 	public Contact() {

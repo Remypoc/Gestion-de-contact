@@ -10,7 +10,7 @@
             This class contains all ContactGroup informations.
         </meta>
 
-        <id name="groupId" type="long" column="groupId">
+        <id name="groupId" type="long" column="GROUPID">
             <generator class="increment"/>
         </id>
 

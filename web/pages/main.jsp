@@ -16,6 +16,7 @@
  		<li><a href="ContactCreation.do"><bean:message key="main.page.contact.creation"/></a></li>
  		<li><a href="AddressCreation.do"><bean:message key="main.page.address.creation"/></a></li>
  		<li><a href="PhoneNumberCreation.do"><bean:message key="main.page.phonenumber.creation"/></a></li>
+		<li><a href="ContactGroupCreation.do"><bean:message key="main.page.contactgroup.creation"/></a></li>
  	</ul>
  	
  	<h1>Delete</h1>

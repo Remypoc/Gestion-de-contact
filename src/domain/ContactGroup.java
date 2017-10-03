@@ -1,19 +1,25 @@
 package domain;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class ContactGroup {
 	private long groupId;
 	private String groupName;
-	private Set<Contact> contacts;
-	
+	private Set<Contact> contacts = new HashSet<Contact>();
+
 	public ContactGroup() {
 	}
-	
-	public ContactGroup(long groupId, String groupName, Set<Contact> contacts) {
-		this.groupId = groupId;
+
+	public ContactGroup(long groupId, String groupName) {
+		this.groupId   = groupId;
 		this.groupName = groupName;
-		this.contacts = contacts;
+	}
+
+	public ContactGroup(long groupId, String groupName, Set<Contact> contacts) {
+		this.groupId   = groupId;
+		this.groupName = groupName;
+		this.contacts  = contacts;
 	}
 
 	public long getGroupId() {
