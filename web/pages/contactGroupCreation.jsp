@@ -17,7 +17,7 @@
 <html:form action="/AddContactGroup">
     <table>
         <tr>
-            <td><bean:message key="form.contactgroup.groupname" />
+            <td><bean:message key="form.contactgroup.groupname" /></td>
             <td><html:text property="groupName" maxlength="30"/></td>
         </tr>
         <tr>
