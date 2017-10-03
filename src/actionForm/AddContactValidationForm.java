@@ -10,17 +10,26 @@ import org.apache.struts.action.ActionMessage;
 public class AddContactValidationForm extends ActionForm {
 	
 	private static final long serialVersionUID = 1L;
-	
-	private long id			 	= 0;
+
+	// Contact
+	private long   id			= 0;
 	private String firstName 	= null;
 	private String lastName  	= null;
 	private String email 	 	= null;
-	private String hasAddress 	= "false";
+
+	// Address
 	private long   idAddress    = 0;
 	private String country 		= null;
 	private String city 		= null;
 	private String street 		= null;
 	private String zip 			= null;
+	private String hasAddress 	= "false";
+
+	// Phone
+	private long idPhone = 0;
+	private String phoneKind = null;
+	private String phoneNumber = null;
+	private String hasPhone = "false";
 	
 	/**
 	 * @return Email
@@ -126,6 +135,38 @@ public class AddContactValidationForm extends ActionForm {
 		this.hasAddress = hasAddress;
 	}
 
+	public long getIdPhone() {
+		return idPhone;
+	}
+
+	public void setIdPhone(long idPhone) {
+		this.idPhone = idPhone;
+	}
+
+	public String getPhoneKind() {
+		return phoneKind;
+	}
+
+	public void setPhoneKind(String phoneKind) {
+		this.phoneKind = phoneKind;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public String getHasPhone() {
+		return hasPhone;
+	}
+
+	public void setHasPhone(String hasPhone) {
+		this.hasPhone = hasPhone;
+	}
+
 	public void reset(ActionMapping mapping, HttpServletRequest request) {
 		this.id			= 0;
 		this.firstName	= null;
@@ -137,6 +178,10 @@ public class AddContactValidationForm extends ActionForm {
 		this.city		= null;
 		this.street 	= null;
 		this.zip 		= null;
+		this.idPhone = 0;
+		this.phoneKind = null;
+		this.phoneNumber = null;
+		this.hasPhone = "false";
 	}
 	
 	public ActionErrors validate( 
@@ -169,6 +214,15 @@ public class AddContactValidationForm extends ActionForm {
 			}
 			if( getZip() == null || getZip().length() < 1 ) {
 				errors.add("zip ", new ActionMessage("address.zip.error"));
+			}
+		}
+
+		if (getHasPhone().equals("true")) {
+			if( getPhoneNumber() == null || getPhoneNumber().length() < 2 ) {
+				errors.add("phonenumber ", new ActionMessage("phonenumber.phonenumber.error"));
+			}
+			if( getPhoneKind()== null || getPhoneKind().length() < 1 ) {
+				errors.add("phonekind", new ActionMessage("phonenumber.phonekind.error"));
 			}
 		}
 

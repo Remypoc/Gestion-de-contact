@@ -21,8 +21,10 @@
         <property name="firstName" type="string" column="FIRSTNAME"/>
         <property name="lastName" type="string" column="LASTNAME"/>
         <property name="email" type="string" column="EMAIL"/>
-        <many-to-one name="address" column="REFADDRESS"  not-null="false" cascade="persist"></many-to-one>
-
+        <many-to-one name="address" column="REFADDRESS" not-null="false" cascade="persist"/>
+        <set name="phones" inverse="true" cascade="persist">
+            <key column="id_contact"/>
+            <one-to-many class="PhoneNumber"/>
+        </set>
     </class>
-
 </hibernate-mapping>

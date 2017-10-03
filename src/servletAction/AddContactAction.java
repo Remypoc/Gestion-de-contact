@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import domain.Address;
+import domain.PhoneNumber;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -23,6 +24,7 @@ public class AddContactAction extends Action {
 		final String lastName   = lForm.getLastName();
 		final String email 		= lForm.getEmail();
 		final String hasAddress = lForm.getHasAddress();
+		final String hasPhone = lForm.getHasPhone();
 
 		Address address = null;
 		if (hasAddress.equals("true")) {
@@ -32,6 +34,13 @@ public class AddContactAction extends Action {
 		}
 
 		Contact contact = new Contact(id, firstName, lastName, email, address);
+
+        PhoneNumber phoneNumber = null;
+        if(hasPhone.equals("true")) {
+            phoneNumber = new PhoneNumber(lForm.getIdPhone(), lForm.getPhoneNumber(), lForm.getPhoneKind());
+            phoneNumber.setContact(contact);
+            contact.addPhones(phoneNumber);
+        }
 
 		// create a new Contact
 		final ContactService cs = new ContactService();

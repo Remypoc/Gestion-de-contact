@@ -13,7 +13,10 @@ public class DAOContact {
 	 * @return null if contact was correctly being add or string exception if failure
 	 */
 	public String addContact(Contact contact) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+
+        System.out.println("contact : " + contact.toString());
+
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 
 		session.beginTransaction();
 		session.persist(contact);

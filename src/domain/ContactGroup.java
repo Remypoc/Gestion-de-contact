@@ -1,11 +1,15 @@
 package domain;
 
+import javax.persistence.Entity;
+import java.util.HashSet;
 import java.util.Set;
 
+@Entity(name = "ContactGroup")
 public class ContactGroup {
+
 	private long groupId;
 	private String groupName;
-	private Set<Contact> contacts;
+	private Set<Contact> contacts = new HashSet<>();
 	
 	public ContactGroup() {
 	}
