@@ -18,6 +18,5 @@
         <property name="city" column="CITY" type="string"/>
         <property name="street" column="STREET" type="string"/>
         <property name="zip" column="zip" type="string"/>
-
     </class>
 </hibernate-mapping>
