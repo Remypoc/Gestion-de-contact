@@ -1,50 +1,48 @@
 package domain;
 
+import javax.persistence.Entity;
 import java.util.HashSet;
 import java.util.Set;
 
+@Entity(name = "ContactGroup")
 public class ContactGroup {
-	private long groupId;
-	private String groupName;
-	private Set<Contact> contacts = new HashSet<Contact>();
 
-	public ContactGroup() {
-	}
+    private long groupId;
+    private String groupName;
+    private Set<Contact> contacts = new HashSet<>();
 
+    public ContactGroup() {
+    }
 	public ContactGroup(long groupId) {
 		this.groupId = groupId;
 	}
 
-	public ContactGroup(long groupId, String groupName) {
-		this.groupId   = groupId;
-		this.groupName = groupName;
-	}
+    public ContactGroup(long groupId, String groupName) {
+        this.groupId = groupId;
+        this.groupName = groupName;
+    }
 
-	public ContactGroup(long groupId, String groupName, Set<Contact> contacts) {
-		this.groupId   = groupId;
-		this.groupName = groupName;
-		this.contacts  = contacts;
-	}
+    public ContactGroup(long groupId, String groupName, Set<Contact> contacts) {
+        this.groupId = groupId;
+        this.groupName = groupName;
+        this.contacts = contacts;
+    }
 
-	public long getGroupId() {
-		return groupId;
-	}
+    public long getGroupId() {
+        return groupId;
+    }
 
-	public void setGroupId(long groupId) {
-		this.groupId = groupId;
-	}
+    public void setGroupId(long groupId) {
+        this.groupId = groupId;
+    }
 
-	public String getGroupName() {
-		return groupName;
-	}
+    public String getGroupName() {
+        return groupName;
+    }
 
-	public void setGroupName(String groupName) {
-		this.groupName = groupName;
-	}
-
-	public Set<Contact> getContacts() {
-		return contacts;
-	}
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
 
 	public void setContacts(Set<Contact> contacts) {
 		this.contacts = contacts;

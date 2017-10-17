@@ -21,7 +21,10 @@
         <property name="firstName" type="string" column="FIRSTNAME"/>
         <property name="lastName" type="string" column="LASTNAME"/>
         <property name="email" type="string" column="EMAIL"/>
-        <many-to-one name="address" column="REFADDRESS"  not-null="false" cascade="persist"></many-to-one>
+        <set name="phones" inverse="true" cascade="persist">
+            <key column="id_contact"/>
+            <one-to-many class="PhoneNumber"/>
+        </set>
 
         <!-- ContactGroup est le possédant de l'association. Pour sauvegarder, mettre à jour, ou supprimer
         il faut passer par le contactGroup -->
@@ -30,6 +33,6 @@
             <many-to-many class="ContactGroup" column="ID_GROUP"></many-to-many>
         </set>
 
+        <many-to-one name="address" column="REFADDRESS"  not-null="false" cascade="persist"></many-to-one>
     </class>
-
 </hibernate-mapping>
