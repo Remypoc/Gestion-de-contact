@@ -10,11 +10,18 @@
             This class contains all ContactGroup informations.
         </meta>
 
-        <id name="groupId" type="long" column="GROUPID">
+        <id name="groupId" type="long" column="ID">
             <generator class="increment"/>
         </id>
 
         <property name="groupName" column="GROUPNAME" type="string"/>
+
+        <!-- ContactGroup est le possédant de l'association. Pour sauvegarder, mettre à jour, ou supprimer
+        il faut passer par le contactGroup -->
+        <set name="contacts" table="CONTACTINGROUP" lazy="true" cascade="persist">
+            <key column="ID_GROUP"></key>
+            <many-to-many class="Contact" column="ID_CONTACT"></many-to-many>
+        </set>
 
     </class>
 </hibernate-mapping>

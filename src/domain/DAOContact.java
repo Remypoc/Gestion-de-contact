@@ -170,4 +170,23 @@ public class DAOContact {
 		System.out.println(String.format("Add contactGroup : %s", contactGroup.toString()));
 		return null;
 	}
+
+	public Object addContactToGroup(ContactGroup group, Contact contact) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+
+		session.beginTransaction();
+
+		// TODO Comment faire pour mettre à jour l'association sans récupérer le group en entier sur la BDD ?
+		ContactGroup groupTmp = session.get(ContactGroup.class, group.getGroupId());
+		groupTmp.addContact(contact);
+
+		session.saveOrUpdate(groupTmp);
+
+		session.getTransaction().commit();
+		session.close();
+
+		System.out.println(String.format("Add contact %s to group %s",
+				contact.toString(), group.toString()));
+		return null;
+	}
 }

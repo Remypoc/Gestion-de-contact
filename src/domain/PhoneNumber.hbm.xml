@@ -10,7 +10,7 @@
             This class contains all PhoneNumber informations.
         </meta>
 
-        <id name="id" type="long" column="id">
+        <id name="id" type="long" column="ID">
             <generator class="increment"/>
         </id>
 

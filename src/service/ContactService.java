@@ -122,4 +122,8 @@ public class ContactService {
 	public Object addContactGroup(ContactGroup contactGroup) {
 		return (cdao = new DAOContact()).addContactGroup(contactGroup);
 	}
+
+    public Object addContactToGroup(ContactGroup group, Contact contact) {
+		return (cdao = new DAOContact()).addContactToGroup(group, contact);
+	}
 }

@@ -11,7 +11,7 @@
   
   <body>
   	
-  	<h2>Create</h2>
+  	<h1>Create</h1>
  	<ul>
  		<li><a href="ContactCreation.do"><bean:message key="main.page.contact.creation"/></a></li>
  		<li><a href="AddressCreation.do"><bean:message key="main.page.address.creation"/></a></li>
@@ -36,7 +36,12 @@
  		<li><a href="AddressSearch.do"><bean:message key="main.page.address.search"/></a></li>
  		<li><a href="PhoneNumberSearch.do"><bean:message key="main.page.phonenumber.search"/></a></li>
  	</ul>
- 	
+
+  	<h2>Add</h2>
+	<ul>
+		<li><a href="ContactGroupAddContact.do"><bean:message key="main.page.contactgroup.addcontact"/></a></li>
+	</ul>
+
   </body>
   
 </html>

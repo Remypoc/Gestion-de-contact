@@ -11,6 +11,7 @@
 
 <body>
     <h1><bean:message key="success"/></h1>
+    <a href="Main.do">Return to main page</a>
 </body>
 
 </html>

@@ -26,6 +26,7 @@
 
 	  <!-- ContactGroup Validation Form -->
 	  <form-bean name="AddContactGroupValidationForm" type="actionForm.AddContactGroupValidationForm"/>
+	  <form-bean name="AddContactToGroupValidationForm" type="actionForm.AddContactToGroupValidationForm"/>
 
   </form-beans>
 	
@@ -51,6 +52,7 @@
 
 	  <!-- ContactGroup jsp path -->
 	  <action path="/ContactGroupCreation" forward="/pages/contactGroupCreation.jsp" />
+	  <action path="/ContactGroupAddContact" forward="/pages/contactGroupAddContact.jsp" />
 
 	  <!-- Contact Action path -->
   	<action path="/AddContact" 
@@ -112,6 +114,12 @@
 	  <!-- ContactGroup action path -->
 	  <action path="/AddContactGroup"
 			  type="servletAction.AddContactGroupAction" name="AddContactGroupValidationForm" scope="request" input="/pages/contactGroupCreation.jsp">
+		  <forward name="success" path="/pages/success.jsp" />
+		  <forward name="error" path="/pages/error.jsp" />
+	  </action>
+
+	  <action path="/AddContactToGroup"
+			  type="servletAction.AddContactToGroupAction" name="AddContactToGroupValidationForm" scope="request" input="/pages/contactGroupAddContact.jsp">
 		  <forward name="success" path="/pages/success.jsp" />
 		  <forward name="error" path="/pages/error.jsp" />
 	  </action>

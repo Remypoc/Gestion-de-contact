@@ -10,14 +10,14 @@
             This class contains all Address informations.
         </meta>
 
-        <id name="id" type="long" column="id">
+        <id name="id" type="long" column="ID">
             <generator class="increment"/>
         </id>
 
         <property name="country" column="COUNTRY" type="string"/>
         <property name="city" column="CITY" type="string"/>
         <property name="street" column="STREET" type="string"/>
-        <property name="zip" column="zip" type="string"/>
+        <property name="zip" column="ZIP" type="string"/>
 
     </class>
 </hibernate-mapping>

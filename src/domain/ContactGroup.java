@@ -11,6 +11,10 @@ public class ContactGroup {
 	public ContactGroup() {
 	}
 
+	public ContactGroup(long groupId) {
+		this.groupId = groupId;
+	}
+
 	public ContactGroup(long groupId, String groupName) {
 		this.groupId   = groupId;
 		this.groupName = groupName;
@@ -45,7 +49,39 @@ public class ContactGroup {
 	public void setContacts(Set<Contact> contacts) {
 		this.contacts = contacts;
 	}
-	
+
+	public void addContact(Contact contact) {
+		contacts.add(contact);
+		if (!contact.isMemberOfGroup(this))
+			contact.addBook(this);
+	}
+
+	public void removeContact(Contact contact) {
+		contacts.remove(contact);
+		if (!contact.isMemberOfGroup(this))
+			contact.removeBook(this);
+	}
+
+	public Boolean contains(Contact contact) {
+		return contacts.contains(contact);
+	}
+
+	@Override
+	public int hashCode() {
+		return (int) this.groupId;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null)
+			return false;
+		if (obj instanceof ContactGroup) {
+			if (((ContactGroup) obj).getGroupId() == this.groupId)
+				return true;
+		}
+		return false;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
@@ -53,11 +89,10 @@ public class ContactGroup {
 		sb.append("groupName=").append(groupName).append("\n");
 		sb.append("contacts = [\n");
 		for (Contact c : contacts) {
-			sb.append("id=").append(c.getId()).append(", ")
-				.append(c.getFullName()).append("\n");
+			sb.append("id: ").append(c.getId()).append(", ")
+				.append(c.getFullName()).append(",\n");
 		}
-		sb.append("]");
-		sb.append("}\n");
+		sb.append("]}\n");
 		return sb.toString();
 	}
 }
