@@ -20,7 +20,7 @@
         <!-- Enable Hibernate's automatic session context management -->
         <property name="current_session_context_class">thread</property>
 
-        <property name="hbm2ddl.auto">update</property>
+        <property name="hbm2ddl.auto">create</property>
 
         <!-- List of XML mapping files -->
         <mapping resource="domain/Address.hbm.xml"/>

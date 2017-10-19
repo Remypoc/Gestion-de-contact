@@ -2,8 +2,8 @@ package domain;
 
 import javax.persistence.Entity;
 
-@Entity(name = "Address")
 public class Address {
+
 	private long id;
 	private String street;
 	private String city;

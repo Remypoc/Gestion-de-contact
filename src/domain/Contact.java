@@ -5,7 +5,6 @@ import javax.persistence.Entity;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity(name = "Contact")
 public class Contact {
 	
 	private long id;   
@@ -23,17 +22,6 @@ public class Contact {
 	public Contact(long id) {
 		this.id = id;
 	}
-
-	public Contact(long id, String firstName, String lastName, String email) {
-		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
-	}
-
-    public Contact() {
-        // TODO Auto-generated constructor stub
-    }
 
     public Contact(long id, String firstName, String lastName, String email) {
         this.id = id;
@@ -60,9 +48,9 @@ public class Contact {
         this.address = address;
     }
 
-    public String getFullName() {
-        return String.format("%s %s", firstName, lastName);
-    }
+	public String getFullName() {
+		return String.format("%s %s", getFirstName(), getLastName());
+	}
 
     public String getEmail() {
         return email;
@@ -104,9 +92,13 @@ public class Contact {
         phones = phoneNumbers;
     }
 
-    public void addPhones(PhoneNumber phone) {
+    public void addPhoneNumber(PhoneNumber phone) {
         this.phones.add(phone);
     }
+
+	public Address getAddress() {
+		return address;
+	}
 
 	public void setAddress(Address address) {
 		this.address = address;

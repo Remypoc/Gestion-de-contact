@@ -2,7 +2,6 @@ package domain;
 
 import javax.persistence.Entity;
 
-@Entity(name = "PhoneNumber")
 public class PhoneNumber {
 
     private long id;

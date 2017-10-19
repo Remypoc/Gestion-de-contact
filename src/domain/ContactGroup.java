@@ -4,7 +4,6 @@ import javax.persistence.Entity;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity(name = "ContactGroup")
 public class ContactGroup {
 
     private long groupId;
@@ -42,6 +41,10 @@ public class ContactGroup {
 
     public void setGroupName(String groupName) {
         this.groupName = groupName;
+    }
+
+    public Set<Contact> getContacts() {
+    	return this.contacts;
     }
 
 	public void setContacts(Set<Contact> contacts) {

@@ -26,10 +26,10 @@ public class AddContactValidationForm extends ActionForm {
 	private String hasAddress 	= "false";
 
 	// Phone
-	private long idPhone = 0;
-	private String phoneKind = null;
-	private String phoneNumber = null;
-	private String hasPhone = "false";
+	private long idPhone 		= 0;
+	private String phoneKind 	= null;
+	private String phoneNumber 	= null;
+	private String hasPhone 	= "false";
 	
 	/**
 	 * @return Email
@@ -168,20 +168,22 @@ public class AddContactValidationForm extends ActionForm {
 	}
 
 	public void reset(ActionMapping mapping, HttpServletRequest request) {
-		this.id			= 0;
-		this.firstName	= null;
-		this.lastName	= null;
-		this.email		= null;
-		this.hasAddress = "false";
-		this.idAddress  = 0;
-		this.country 	= null;
-		this.city		= null;
-		this.street 	= null;
-		this.zip 		= null;
-		this.idPhone = 0;
-		this.phoneKind = null;
+		this.id			 = 0;
+		this.firstName	 = null;
+		this.lastName	 = null;
+		this.email		 = null;
+
+		this.hasAddress  = "false";
+		this.idAddress   = 0;
+		this.country 	 = null;
+		this.city		 = null;
+		this.street 	 = null;
+		this.zip 		 = null;
+
+		this.hasPhone 	 = "false";
+		this.idPhone 	 = 0;
+		this.phoneKind 	 = null;
 		this.phoneNumber = null;
-		this.hasPhone = "false";
 	}
 	
 	public ActionErrors validate( 

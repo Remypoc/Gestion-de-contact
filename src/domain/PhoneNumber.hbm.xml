@@ -16,6 +16,9 @@
 
         <property name="phoneKind" column="PHONEKIND" type="string"/>
         <property name="phoneNumber" column="PHONENUMBER" type="string"/>
+
+        <!-- lazy="proxy" not-null="false" -->
         <many-to-one name="contact" column="id_contact" class="Contact"/>
+
     </class>
 </hibernate-mapping>

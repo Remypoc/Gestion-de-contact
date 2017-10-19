@@ -26,21 +26,26 @@ public class AddContactAction extends Action {
 		final String hasAddress = lForm.getHasAddress();
 		final String hasPhone = lForm.getHasPhone();
 
+		Contact contact = new Contact(id, firstName, lastName, email);
+
 		Address address = null;
 		if (hasAddress.equals("true")) {
 			address = new Address(
 					lForm.getIdAddress(), lForm.getCountry(),
 					lForm.getCity(), lForm.getStreet(), lForm.getZip());
 		}
-
-		Contact contact = new Contact(id, firstName, lastName, email, address);
+		contact.setAddress(address);
 
         PhoneNumber phoneNumber = null;
         if(hasPhone.equals("true")) {
-            phoneNumber = new PhoneNumber(lForm.getIdPhone(), lForm.getPhoneNumber(), lForm.getPhoneKind());
-            phoneNumber.setContact(contact);
-            contact.addPhones(phoneNumber);
-        }
+            phoneNumber = new PhoneNumber(
+            		lForm.getIdPhone(), lForm.getPhoneNumber(), lForm.getPhoneKind());
+			phoneNumber.setContact(contact);
+			contact.addPhoneNumber(phoneNumber);
+		}
+
+        // TODO addPhonNumber devrait l'ajouter de l'autre côté automatiquement auss
+
 
 		// create a new Contact
 		final ContactService cs = new ContactService();

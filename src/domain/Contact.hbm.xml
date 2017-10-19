@@ -21,6 +21,10 @@
         <property name="firstName" type="string" column="FIRSTNAME"/>
         <property name="lastName" type="string" column="LASTNAME"/>
         <property name="email" type="string" column="EMAIL"/>
+
+        <many-to-one name="address" column="REFADDRESS"  not-null="false" cascade="persist"/>
+
+        <!-- TODO add lazy="true" -->
         <set name="phones" inverse="true" cascade="persist">
             <key column="id_contact"/>
             <one-to-many class="PhoneNumber"/>
@@ -29,10 +33,9 @@
         <!-- ContactGroup est le possédant de l'association. Pour sauvegarder, mettre à jour, ou supprimer
         il faut passer par le contactGroup -->
         <set name="books" table="CONTACTINGROUP" inverse="true" lazy="true" cascade="persist">
-            <key column="ID_CONTACT"></key>
-            <many-to-many class="ContactGroup" column="ID_GROUP"></many-to-many>
+            <key column="ID_CONTACT"/>
+            <many-to-many class="ContactGroup" column="ID_GROUP"/>
         </set>
 
-        <many-to-one name="address" column="REFADDRESS"  not-null="false" cascade="persist"></many-to-one>
     </class>
 </hibernate-mapping>
