@@ -25,7 +25,7 @@
         <many-to-one name="address" column="REFADDRESS"  not-null="false" cascade="persist"/>
 
         <!-- TODO add lazy="true" -->
-        <set name="phones" cascade="persist">
+        <set name="phones" cascade="persist" lazy="true" cascade="persist">
             <key column="id_contact"/>
             <one-to-many class="PhoneNumber"/>
         </set>
