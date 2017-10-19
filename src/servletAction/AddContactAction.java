@@ -36,11 +36,10 @@ public class AddContactAction extends Action {
 		}
 		contact.setAddress(address);
 
-        PhoneNumber phoneNumber = null;
+        PhoneNumber phoneNumber;
         if(hasPhone.equals("true")) {
             phoneNumber = new PhoneNumber(
             		lForm.getIdPhone(), lForm.getPhoneNumber(), lForm.getPhoneKind());
-			phoneNumber.setContact(contact);
 			contact.addPhoneNumber(phoneNumber);
 		}
 

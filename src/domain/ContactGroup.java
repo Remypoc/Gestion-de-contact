@@ -63,7 +63,7 @@ public class ContactGroup {
 			contact.removeBook(this);
 	}
 
-	public Boolean contains(Contact contact) {
+	public Boolean hasContact(Contact contact) {
 		return contacts.contains(contact);
 	}
 

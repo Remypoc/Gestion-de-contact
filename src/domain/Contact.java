@@ -1,7 +1,5 @@
 package domain;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import javax.persistence.Entity;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,8 +9,8 @@ public class Contact {
 	private String firstName;
 	private String lastName;
 	private String email;
-	private Set<PhoneNumber> phones = new HashSet<PhoneNumber>();
 	private Address address;
+	private Set<PhoneNumber> phones = new HashSet<PhoneNumber>();
 	private Set<ContactGroup> books = new HashSet<ContactGroup>();
 
 	public Contact() {
@@ -44,7 +42,8 @@ public class Contact {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.phones = phones;
+        if (phones != null)
+        	this.phones = phones;
         this.address = address;
     }
 
@@ -89,11 +88,15 @@ public class Contact {
     }
 
     public void setPhones(Set<PhoneNumber> phoneNumbers) {
-        phones = phoneNumbers;
+        if (phoneNumbers != null)
+			phones = phoneNumbers;
     }
 
     public void addPhoneNumber(PhoneNumber phone) {
-        this.phones.add(phone);
+		if (phone != null) {
+			this.phones.add(phone);
+			phone.setContact(this);
+		}
     }
 
 	public Address getAddress() {
@@ -114,18 +117,22 @@ public class Contact {
 
 	public void addBook(ContactGroup group) {
 		books.add(group);
-		if (!group.contains(this))
+		if (!group.hasContact(this))
 			group.addContact(this);
 	}
 
 	public void removeBook(ContactGroup group) {
 		books.remove(group);
-		if (!group.contains(this))
+		if (!group.hasContact(this))
 			group.removeContact(this);
 	}
 
 	public Boolean isMemberOfGroup(ContactGroup group) {
 		return books.contains(group);
+	}
+
+	public boolean hasPhoneNumber(PhoneNumber phoneNumber) {
+		return phones.contains(phoneNumber);
 	}
 
 	@Override

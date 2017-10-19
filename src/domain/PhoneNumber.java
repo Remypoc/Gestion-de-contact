@@ -1,6 +1,5 @@
 package domain;
 
-import javax.persistence.Entity;
 
 public class PhoneNumber {
 
@@ -55,7 +54,9 @@ public class PhoneNumber {
     }
 
     public void setContact(Contact contact) {
-        this.contact = contact;
+        if (contact != null) {
+            this.contact = contact;
+        }
     }
 
     @Override
@@ -74,4 +75,5 @@ public class PhoneNumber {
         sb.append("}\n");
         return sb.toString();
     }
+
 }
