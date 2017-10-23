@@ -52,7 +52,12 @@
 
 	  <!-- ContactGroup jsp path -->
 	  <action path="/ContactGroupCreation" forward="/pages/contactGroupCreation.jsp" />
-	  <action path="/ContactGroupAddContact" forward="/pages/contactGroupAddContact.jsp" />
+
+	  <action path="/GroupAddContact"
+			  type="servletAction.loader.GroupAddContact">
+		  <forward name="success" path="/pages/contactGroupAddContact.jsp" />
+		  <forward name="error" path="/pages/error.jsp" />
+ 	  </action>
 
 	  <!-- Contact Action path -->
   	<action path="/AddContact" 

@@ -3,6 +3,10 @@ package domain;
 import org.hibernate.Session;
 import util.HibernateUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 public class DAOContact {
 	
 	private final static String RESOURCE_JDBC = "java:comp/env/jdbc/gestion_contact";
@@ -191,5 +195,24 @@ public class DAOContact {
 		System.out.println(String.format("Add contact %s to group %s",
 				contact.toString(), group.toString()));
 		return null;
+	}
+
+	public Object loadContacts() {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		List<Contact> contacts = session.createQuery("from Contact contact").list();
+		session.close();
+
+		return contacts;
+	}
+
+	public Object loadGroups() {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		List<ContactGroup> groups = session.createQuery("from ContactGroup contactGroup").list();
+		System.out.println(groups);
+		session.close();
+
+		return groups;
 	}
 }

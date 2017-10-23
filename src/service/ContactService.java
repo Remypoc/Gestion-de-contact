@@ -126,4 +126,12 @@ public class ContactService {
     public Object addContactToGroup(ContactGroup group, Contact contact) {
 		return (cdao = new DAOContact()).addContactToGroup(group, contact);
 	}
+
+    public Object loadContacts() {
+		return (cdao = new DAOContact()).loadContacts();
+    }
+
+	public Object loadGroups() {
+		return (cdao = new DAOContact()).loadGroups();
+	}
 }

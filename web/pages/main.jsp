@@ -39,7 +39,7 @@
 
   	<h2>Add</h2>
 	<ul>
-		<li><a href="ContactGroupAddContact.do"><bean:message key="main.page.contactgroup.addcontact"/></a></li>
+		<li><a href="GroupAddContact.do"><bean:message key="main.page.contactgroup.addcontact"/></a></li>
 	</ul>
 
   </body>
