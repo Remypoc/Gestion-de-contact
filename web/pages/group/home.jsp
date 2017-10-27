@@ -13,7 +13,7 @@
 
 <body>
 
-    <h1>Groups</h1>
+    <h1><bean:message key="label.groups" /></h1>
 
     <html:form action="/SearchGroup">
         <table>
@@ -31,7 +31,7 @@
         <logic:present name="groups">
             <logic:empty name="groups">
                 <tr>
-                    <td>Aucun groupe de contact ne correspond à votre recherche.</td>
+                    <td><bean:message key="contactgroup.search.empty"/></td>
                 </tr>
             </logic:empty>
             <logic:iterate name="groups" id="group">
