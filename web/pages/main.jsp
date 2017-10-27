@@ -10,6 +10,8 @@
   </head>
   
   <body>
+
+  <h1><a href="Group.do">Groups</a></h1>
   	
   	<h1>Create</h1>
  	<ul>

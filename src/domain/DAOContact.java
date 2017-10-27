@@ -3,9 +3,6 @@ package domain;
 import org.hibernate.Session;
 import util.HibernateUtil;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
 public class DAOContact {
 	
@@ -200,7 +197,7 @@ public class DAOContact {
 	public Object loadContacts() {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
-		List<Contact> contacts = session.createQuery("from Contact contact").list();
+		Object contacts = session.createQuery("from Contact contact ORDER BY lastName").list();
 		session.close();
 
 		return contacts;
@@ -209,10 +206,22 @@ public class DAOContact {
 	public Object loadGroups() {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
-		List<ContactGroup> groups = session.createQuery("from ContactGroup contactGroup").list();
+		Object groups = session.createQuery(
+				"from ContactGroup contactGroup ORDER BY groupName").list();
 		System.out.println(groups);
 		session.close();
 
+		return groups;
+	}
+
+	public Object loadGroups(String groupName) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		Object groups = session.createQuery(
+				"from ContactGroup contactGroup WHERE groupName like :name ORDER BY groupName")
+				.setParameter("name", String.format("%s%%", groupName))
+				.list();
+		session.close();
 		return groups;
 	}
 }

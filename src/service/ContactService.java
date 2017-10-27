@@ -134,4 +134,8 @@ public class ContactService {
 	public Object loadGroups() {
 		return (cdao = new DAOContact()).loadGroups();
 	}
+
+	public Object loadGroups(String groupName) {
+		return (cdao = new DAOContact()).loadGroups(groupName);
+	}
 }
