@@ -18,7 +18,7 @@ public class GroupLoader extends Action {
         final List<ContactGroup> groups = service.getAll();
 
         if (groups != null) {
-            pRequest.setAttribute("groups", new ActionMessage(""));
+            pRequest.setAttribute("groups", groups);
             return pMapping.findForward("success");
         }
         else {
