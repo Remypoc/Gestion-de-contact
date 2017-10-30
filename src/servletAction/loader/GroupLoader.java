@@ -1,10 +1,7 @@
 package servletAction.loader;
 
 import domain.ContactGroup;
-import org.apache.struts.action.Action;
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.*;
 import service.ContactGroupService;
 import service.ServiceFactory;
 
@@ -21,7 +18,7 @@ public class GroupLoader extends Action {
         final List<ContactGroup> groups = service.getAll();
 
         if (groups != null) {
-            pRequest.setAttribute("groups", groups);
+            pRequest.setAttribute("groups", new ActionMessage(""));
             return pMapping.findForward("success");
         }
         else {

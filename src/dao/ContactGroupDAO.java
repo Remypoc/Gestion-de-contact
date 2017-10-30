@@ -9,6 +9,6 @@ public interface ContactGroupDAO {
         public void update(ContactGroup group);
         public ContactGroup get(long id);
         public List<ContactGroup> getAll();
-        public void delete(int id);
+        public void delete(long id);
         public List<ContactGroup> search(String groupName);
 }

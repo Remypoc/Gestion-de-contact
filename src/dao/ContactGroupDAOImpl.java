@@ -50,7 +50,7 @@ public class ContactGroupDAOImpl implements ContactGroupDAO {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(long id) {
         getCurrentSession().beginTransaction();
         ContactGroup group = getCurrentSession().get(ContactGroup.class, id);
         if (group != null)

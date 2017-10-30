@@ -31,6 +31,8 @@
 	  <!-- Search ContactGroup Validation Form -->
 	  <form-bean name="SearchGroupValidationForm" type="actionForm.search.SearchGroupValidationForm"/>
 
+	  <form-bean name="DeleteContactGroupValidationForm" type="actionForm.contactgroup.DeleteContactGroupValidationForm"/>
+
   </form-beans>
 	
   <!-- ========== Forwards =============================== -->
@@ -142,6 +144,15 @@
 
 	  <action path="/AddContactToGroup"
 			  type="servletAction.AddContactToGroupAction" name="AddContactToGroupValidationForm" scope="request" input="/pages/contactGroupAddContact.jsp">
+		  <forward name="success" path="/pages/success.jsp" />
+		  <forward name="error" path="/pages/error.jsp" />
+	  </action>
+
+	  <!-- ContactGroup Delete -->
+	  <action path="/DeleteContactGroup"
+			  type="servletAction.contactgroup.DeleteContactGroupAction"
+			  name="DeleteContactGroupValidationForm"
+			  scope="request" input="/pages/contactGroupCreation.jsp">
 		  <forward name="success" path="/pages/success.jsp" />
 		  <forward name="error" path="/pages/error.jsp" />
 	  </action>

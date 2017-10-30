@@ -38,8 +38,12 @@
             <logic:iterate name="groups" id="group">
                 <tr>
                     <td><bean:write name="group" property="groupName"/></td>
-                    <td>Show contacts</td>
-                    <td>Delete group</td>
+                    <td>
+                        <html:form action="/DeleteContactGroup">
+                            <html:hidden property="groupId" value="${group.groupId}"/>
+                            <input type="submit" value=" <bean:message key="label.delete" />" />
+                        </html:form>
+                    </td>
                 </tr>
             </logic:iterate>
         </logic:present>

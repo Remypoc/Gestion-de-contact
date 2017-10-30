@@ -30,7 +30,7 @@ public class ContactGroupServiceImpl implements ContactGroupService {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(long id) {
         dao.delete(id);
     }
 
