@@ -21,7 +21,7 @@ public class UpdatePhoneNumberValidationForm extends ActionForm {
 	public void setId(long id) {
 		this.id = id;
 	}
-	
+
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
@@ -44,8 +44,8 @@ public class UpdatePhoneNumberValidationForm extends ActionForm {
 	    this.phoneKind 		= null;
 	}
 
-	public ActionErrors validate( 
-		ActionMapping mapping, HttpServletRequest request ) {
+	public ActionErrors validate(
+			ActionMapping mapping, HttpServletRequest request ) {
 		ActionErrors errors = new ActionErrors();
 		      
 		if( getPhoneNumber() == null || getPhoneNumber().length() < 2 ) {

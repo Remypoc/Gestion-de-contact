@@ -5,7 +5,9 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import service.ContactGroupService;
 import service.ContactService;
+import service.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,12 +17,12 @@ public class SearchGroupAction extends Action {
     public ActionForward execute(final ActionMapping pMapping, ActionForm pForm,
                                  final HttpServletRequest pRequest, final HttpServletResponse pResponse) {
 
-        final ContactService cs = new ContactService();
+        final ContactGroupService service = ServiceFactory.getContactGroupService();
         final SearchGroupValidationForm lForm = (SearchGroupValidationForm) pForm;
         String groupName = lForm.getGroupName();
-        final Object groups = cs.loadGroups(groupName);
+        final Object groups = service.search(groupName);
 
-        if (groups instanceof List) {
+        if (groups != null) {
             pRequest.setAttribute("groups", groups);
             return pMapping.findForward("success");
         }

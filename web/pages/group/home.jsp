@@ -21,6 +21,7 @@
                 <td>
                     <html:text property="groupName" maxlength="100"/>
                     <input type="submit" class="btn btn-primary" value=" <bean:message key="label.search" />" />
+                    <a href="Group.do"><bean:message key="form.cancel" /></a> <!-- TODO Replace by a button -->
                 </td>
             </tr>
         </table>
@@ -37,6 +38,8 @@
             <logic:iterate name="groups" id="group">
                 <tr>
                     <td><bean:write name="group" property="groupName"/></td>
+                    <td>Show contacts</td>
+                    <td>Delete group</td>
                 </tr>
             </logic:iterate>
         </logic:present>
