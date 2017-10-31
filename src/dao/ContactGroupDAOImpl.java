@@ -41,6 +41,15 @@ public class ContactGroupDAOImpl implements ContactGroupDAO {
     }
 
     @Override
+    public ContactGroup getWithContacts(long id) {
+        getCurrentSession().beginTransaction();
+        ContactGroup group = getCurrentSession().get(ContactGroup.class, id);
+        System.out.println(group.getContacts());
+        getCurrentSession().close();
+        return group;
+    }
+
+    @Override
     public List<ContactGroup> getAll() {
         getCurrentSession().beginTransaction();
         List<ContactGroup> groups = getCurrentSession().createQuery(

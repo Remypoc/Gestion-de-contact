@@ -37,7 +37,12 @@
             </logic:empty>
             <logic:iterate name="groups" id="group">
                 <tr>
-                    <td><bean:write name="group" property="groupName"/></td>
+                    <td>
+                        <html:link href="UpdateGroup.do">
+                            <html:param name="groupId"><bean:write name="group" property="groupId"/></html:param>
+                            <bean:write name="group" property="groupName"/>
+                        </html:link>
+                    </td>
                     <td>
                         <html:form action="/DeleteContactGroup">
                             <html:hidden property="groupId" value="${group.groupId}"/>

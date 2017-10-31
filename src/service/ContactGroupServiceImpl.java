@@ -25,6 +25,11 @@ public class ContactGroupServiceImpl implements ContactGroupService {
     }
 
     @Override
+    public ContactGroup getWithContacts(long id) {
+        return dao.getWithContacts(id);
+    }
+
+    @Override
     public List<ContactGroup> getAll() {
         return dao.getAll();
     }

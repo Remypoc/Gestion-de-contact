@@ -71,6 +71,13 @@
 		  <forward name="error" path="/pages/error.jsp" />
 	  </action>
 
+	  <!-- Loading group home -->
+	  <action path="/UpdateGroup"
+			  type="servletAction.contactgroup.UpdateContactGroupAction">
+		  <forward name="success" path="/pages/group/update.jsp" />
+		  <forward name="error" path="/pages/error.jsp" />
+	  </action>
+
 	  <!-- Search group -->
 	  <action path="/SearchGroup"
 			  type="servletAction.search.SearchGroupAction" name="SearchGroupValidationForm" scope="request" input="/pages/group/home.jsp">
