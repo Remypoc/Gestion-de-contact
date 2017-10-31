@@ -31,6 +31,9 @@
         <!--Search contact Validation Form-->
         <form-bean name="SearchContactValidationForm" type="actionForm.search.SearchContactValidationForm"/>
 
+        <!--Delete contact-->
+        <form-bean name="DeleteContactValidationForm" type="actionForm.delete.DeleteContactValidationForm"/>
+
     </form-beans>
 
     <!-- ========== Forwards =============================== -->
@@ -152,10 +155,19 @@
 
         <!--Search contact-->
         <action path="/SearchContact"
-        			  type="servletAction.search.SearchContactAction" name="SearchContactValidationForm" scope="request" input="/pages/contact/home.jsp">
-        		  <forward name="success" path="/pages/contact/home.jsp" />
-        		  <forward name="error" path="/pages/contact/home.jsp" />
-        	  </action>
+                type="servletAction.search.SearchContactAction" name="SearchContactValidationForm" scope="request"
+                input="/pages/contact/home.jsp">
+            <forward name="success" path="/pages/contact/home.jsp"/>
+            <forward name="error" path="/pages/contact/home.jsp"/>
+        </action>
+
+        <!--Delete contact-->
+        <action path="/DeleteContact"
+                type="servletAction.delete.DeleteContactAction" name="DeleteContactValidationForm" scope="request"
+                input="/pages/contact/home.jsp">
+            <forward name="success" path="/ContactHome.do" redirect="true"/>
+            <forward name="error" path="/ContactHome.do" redirect="true"/>
+        </action>
 
     </action-mappings>
 

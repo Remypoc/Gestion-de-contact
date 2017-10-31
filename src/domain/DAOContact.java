@@ -60,6 +60,22 @@ public class DAOContact {
     }
 
     /**
+     * @param id Delete contact based on his id
+     * @return return null or string exception
+     */
+    public Object deleteContact(final Long id) {
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+
+        Contact contact = session.get(Contact.class, id);
+
+        session.delete(contact);
+        session.getTransaction().commit();
+        session.close();
+        return null;
+    }
+
+    /**
      * @param address
      * @return null if address was correctly being add or string exception if failure
      */

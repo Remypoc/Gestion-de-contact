@@ -10,6 +10,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <title><bean:message key="contacthome.home.page.title"/></title>
 </head>
+<body>
 <html:errors/>
 <html:form action="/SearchContact">
     <table>
@@ -21,12 +22,11 @@
                 <input type="submit" class="btn btn-primary"
                        value=" <bean:message key="form.contact.search.validate" />"/>
                 <input type="reset" class="btn btn-primary"
-                       value="<bean:message key="form.contact.search.cancel" />"/>
+                       value="<bean:message key="form.cancel" />"/>
             </td>
         </tr>
     </table>
 </html:form>
-<body>
 <table>
     <thead>
     <tr>
@@ -43,7 +43,12 @@
                 <td><bean:write name="contact" property="lastName"/></td>
                 <td><bean:write name="contact" property="firstName"/></td>
                 <td><bean:write name="contact" property="email"/></td>
-                <td><bean:message key="contact.display.delete"/></td>
+                <td>
+                    <html:form action="/DeleteContact">
+                        <html:hidden property="id" value="${contact.id}"/>
+                        <input type="submit" value="<bean:message key="contact.display.delete"/>"/>
+                    </html:form>
+                </td>
             </tr>
         </logic:iterate>
     </logic:present>

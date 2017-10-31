@@ -44,6 +44,14 @@ public class ContactService {
     }
 
     /**
+     * @param id Delete contact based on his id
+     * @return return null or string exception
+     */
+    public Object deleteContact(long id) {
+        return (cdao = new DAOContact()).deleteContact(id);
+    }
+
+    /**
      * @param address
      * @return null if address was correctly being add or string exception if failure
      */
