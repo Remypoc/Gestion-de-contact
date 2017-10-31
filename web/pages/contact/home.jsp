@@ -33,6 +33,7 @@
         <th><bean:message key="contact.display.lastname"/></th>
         <th><bean:message key="contact.display.firstname"/></th>
         <th><bean:message key="contact.display.email"/></th>
+        <th><bean:message key="contact.display"/></th>
         <th><bean:message key="contact.display.delete"/></th>
     </tr>
     </thead>
@@ -43,6 +44,13 @@
                 <td><bean:write name="contact" property="lastName"/></td>
                 <td><bean:write name="contact" property="firstName"/></td>
                 <td><bean:write name="contact" property="email"/></td>
+                <td>
+                    <html:form action="/DisplayContact">
+                        <html:hidden property="id" value="${contact.id}"/>
+                        <input type="submit" value="<bean:message key="contact.display"/>"/>
+                    </html:form>
+                </td>
+
                 <td>
                     <html:form action="/DeleteContact">
                         <html:hidden property="id" value="${contact.id}"/>

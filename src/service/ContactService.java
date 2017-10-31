@@ -131,6 +131,10 @@ public class ContactService {
         return (cdao = new DAOContact()).loadContacts(search);
     }
 
+    public Object loadContact(Long id) {
+        return (cdao = new DAOContact()).loadContact(id);
+    }
+
     public Object loadGroups() {
         return (cdao = new DAOContact()).loadGroups();
     }

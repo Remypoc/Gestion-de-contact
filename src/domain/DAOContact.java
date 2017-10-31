@@ -1,8 +1,13 @@
 package domain;
 
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 import util.HibernateUtil;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -212,13 +217,31 @@ public class DAOContact {
     public Object loadContacts(String search) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        Object groups = session.createQuery(
+        Object contacts = session.createQuery(
                 "from Contact contact WHERE lastName like :name or firstName like :name or email like :name " +
                         "ORDER BY lastName")
                 .setParameter("name", String.format("%s%%", search))
                 .list();
         session.close();
-        return groups;
+        return contacts;
+    }
+
+
+    public Object loadContact(Long id) {
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Contact> criteria = builder.createQuery(Contact.class);
+        Root<Contact> root = criteria.from(Contact.class);
+        criteria.select(root).where(builder.equal(root.get("id"), id));
+        Contact contact = session.createQuery(criteria).getSingleResult();
+
+        // Used to force load object
+        Hibernate.initialize(contact.getAddress());
+        Hibernate.initialize(contact.getPhones());
+        session.close();
+        System.out.println(contact);
+        return contact;
     }
 
     public Object loadGroups() {

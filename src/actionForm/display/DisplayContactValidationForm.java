@@ -1,4 +1,4 @@
-package actionForm.delete;
+package actionForm.display;
 
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -7,7 +7,7 @@ import org.apache.struts.action.ActionMessage;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class DeleteContactValidationForm extends ActionForm{
+public class DisplayContactValidationForm extends ActionForm {
 
     private static final long serialVersionUID = 1L;
 
@@ -26,7 +26,7 @@ public class DeleteContactValidationForm extends ActionForm{
         ActionErrors errors = new ActionErrors();
 
         if(getId() < 1) {
-            errors.add("id", new ActionMessage("contact.delete.error"));
+            errors.add("id", new ActionMessage("contact.display.error"));
         }
 
         return errors;
