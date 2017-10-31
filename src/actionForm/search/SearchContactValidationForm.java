@@ -7,30 +7,31 @@ import org.apache.struts.action.ActionMessage;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class ResearchContactValidationForm extends ActionForm {
+public class SearchContactValidationForm extends ActionForm {
 
     private static final long serialVersionUID = 1L;
 
-    private String research = null;
+    // Can search by lastname, firstname, email
+    private String search = null;
 
-    public String getResearch() {
-        return research;
+    public String getSearch() {
+        return search;
     }
 
-    public void setResearch(String research) {
-        this.research = research;
+    public void setSearch(String research) {
+        this.search = research;
     }
 
     public void reset(ActionMapping mapping, HttpServletRequest request) {
-        this.research = null;
+        this.search = null;
     }
 
     public ActionErrors validate(
             ActionMapping mapping, HttpServletRequest request) {
         ActionErrors errors = new ActionErrors();
 
-        if (getResearch() == null || getResearch().length() < 1) {
-            errors.add("research", new ActionMessage("contact.home.research.error"));
+        if (getSearch() == null || getSearch().length() < 1) {
+            errors.add("search", new ActionMessage("contact.home.research.error"));
         }
         return errors;
     }

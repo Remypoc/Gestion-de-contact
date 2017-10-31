@@ -11,11 +11,18 @@
     <title><bean:message key="contacthome.home.page.title"/></title>
 </head>
 <html:errors/>
-<html:form action="/ResearchContact">
+<html:form action="/SearchContact">
     <table>
         <tr>
-            <td><bean:message key="form.contact.research"/></td>
-            <td><html:text property="research" maxlength="200"/></td>
+            <td><html:text property="search" maxlength="200"/></td>
+        </tr>
+        <tr>
+            <td>
+                <input type="submit" class="btn btn-primary"
+                       value=" <bean:message key="form.contact.search.validate" />"/>
+                <input type="reset" class="btn btn-primary"
+                       value="<bean:message key="form.contact.search.cancel" />"/>
+            </td>
         </tr>
     </table>
 </html:form>
@@ -25,17 +32,21 @@
     <tr>
         <th><bean:message key="contact.display.lastname"/></th>
         <th><bean:message key="contact.display.firstname"/></th>
+        <th><bean:message key="contact.display.email"/></th>
         <th><bean:message key="contact.display.delete"/></th>
     </tr>
     </thead>
     <tbody>
-    <logic:iterate name="contacts" id="contact">
-        <tr>
-            <td><bean:write name="contact" property="firstName"/></td>
-            <td><bean:write name="contact" property="lastName"/></td>
-            <td><bean:message key="contact.display.delete"/></td>
-        </tr>
-    </logic:iterate>
+    <logic:present name="contacts">
+        <logic:iterate name="contacts" id="contact">
+            <tr>
+                <td><bean:write name="contact" property="lastName"/></td>
+                <td><bean:write name="contact" property="firstName"/></td>
+                <td><bean:write name="contact" property="email"/></td>
+                <td><bean:message key="contact.display.delete"/></td>
+            </tr>
+        </logic:iterate>
+    </logic:present>
     </tbody>
 </table>
 </body>

@@ -8,211 +8,210 @@ import java.util.List;
 import java.util.Set;
 
 public class DAOContact {
-	
-	private final static String RESOURCE_JDBC = "java:comp/env/jdbc/gestion_contact";
 
-	/**
-	 * 
-	 * @param contact
-	 * @return null if contact was correctly being add or string exception if failure
-	 */
-	public String addContact(Contact contact) {
+    private final static String RESOURCE_JDBC = "java:comp/env/jdbc/gestion_contact";
+
+    /**
+     * @param contact
+     * @return null if contact was correctly being add or string exception if failure
+     */
+    public String addContact(Contact contact) {
 
         System.out.println("contact : " + contact.toString());
 
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 
-		session.beginTransaction();
-		session.persist(contact);
+        session.beginTransaction();
+        session.persist(contact);
 
-		session.getTransaction().commit();
-		session.close();
+        session.getTransaction().commit();
+        session.close();
 
-		System.out.println(String.format("Add contact to database : %s", contact.toString()));
+        System.out.println(String.format("Add contact to database : %s", contact.toString()));
 
-		return null;
-	}
-	
-	/**
-	 * 
-	 * @param contact
-	 * @return return null or string exception
-	 */
-	public Object searchContact(final Contact contact) {
-		System.out.println(String.format("Searching contact : %s", contact.toString()));
-		return null;
-	}
-	
-	/**
-	 * 
-	 * @param contact
-	 * @return return null or string exception
-	 */
-	public Object updateContact(final Contact contact) {
-		System.out.println(String.format("Updating contact : %s", contact.toString()));
-		return null;
-	}
-	
-	/**
-	 * 
-	 * @param contact
-	 * @return return null or string exception
-	 */
-	public Object deleteContact(final Contact contact) {
-		System.out.println(String.format("Deleting contact : %s", contact.toString()));
-		return null;
-	}
-	
-	/**
-	 * 
-	 * @param address
-	 * @return null if address was correctly being add or string exception if failure
-	 */
-	public Object addAddress(final Address address) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        return null;
+    }
 
-		session.beginTransaction();
+    /**
+     * @param contact
+     * @return return null or string exception
+     */
+    public Object searchContact(final Contact contact) {
+        System.out.println(String.format("Searching contact : %s", contact.toString()));
+        return null;
+    }
 
-		long id = (long) session.save(address);
-		address.setId(id);
+    /**
+     * @param contact
+     * @return return null or string exception
+     */
+    public Object updateContact(final Contact contact) {
+        System.out.println(String.format("Updating contact : %s", contact.toString()));
+        return null;
+    }
 
-		session.getTransaction().commit();
-		session.close();
+    /**
+     * @param contact
+     * @return return null or string exception
+     */
+    public Object deleteContact(final Contact contact) {
+        System.out.println(String.format("Deleting contact : %s", contact.toString()));
+        return null;
+    }
 
-		System.out.println(String.format("Add address to database : %s", address.toString()));
-		return null;
-	}
-	
-	/**
-	 * 
-	 * @param address
-	 * @return address being search or string exception if failure
-	 */
-	public Object searchAddress(Address address) {
-		System.out.println(String.format("Searching address : %s", address.toString()));
-		return null;
-	}
-	
-	/**
-	 * 
-	 * @param address
-	 * @return return null or string exception
-	 */
-	public Object updateAddress(Address address) {
-		System.out.println(String.format("Updating address : %s", address.toString()));
-		return null;
-	}
-	
-	/**
-	 * 
-	 * @param address
-	 * @return return null or string exception
-	 */
-	public Object deleteAddress(Address address) {
-		System.out.println(String.format("Deleting address : %s", address.toString()));
-		return null;
-	}
-	
-	/**
-	 * 
-	 * @param phoneNumber
-	 * @return null if phoneNumber was correctly being add or string exception if failure
-	 */
-	public Object addPhoneNumber(final PhoneNumber phoneNumber) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+    /**
+     * @param address
+     * @return null if address was correctly being add or string exception if failure
+     */
+    public Object addAddress(final Address address) {
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 
-		session.beginTransaction();
+        session.beginTransaction();
 
-		long id = (long) session.save(phoneNumber);
-		phoneNumber.setId(id);
+        long id = (long) session.save(address);
+        address.setId(id);
 
-		session.getTransaction().commit();
-		session.close();
+        session.getTransaction().commit();
+        session.close();
 
-		System.out.println(String.format("Add phoneNumber to database : %s", phoneNumber.toString()));
-		return null;
-	}
-	
-	/**
-	 * 
-	 * @param phoneNumber
-	 * @return phoneNumber being search or string exception if failure
-	 */
-	public Object searchPhoneNumber(PhoneNumber phoneNumber) {
-		System.out.println(String.format("Searching phoneNumber : %s", phoneNumber.toString()));
-		return null;
-	}
-	
-	/**
-	 * 
-	 * @param phoneNumber
-	 * @return return null or string exception
-	 */
-	public Object updatePhoneNumber(PhoneNumber phoneNumber) {
-		System.out.println(String.format("Updating phoneNumber : %s", phoneNumber.toString()));
-		return null;
-	}
-	
-	/**
-	 * 
-	 * @param phoneNumber
-	 * @return return null or string exception
-	 */
-	public Object deletePhoneNumber(PhoneNumber phoneNumber) {
-		System.out.println(String.format("Deleting phoneNumber : %s", phoneNumber.toString()));
-		return null;
-	}
+        System.out.println(String.format("Add address to database : %s", address.toString()));
+        return null;
+    }
 
-	public Object addContactGroup(ContactGroup contactGroup) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+    /**
+     * @param address
+     * @return address being search or string exception if failure
+     */
+    public Object searchAddress(Address address) {
+        System.out.println(String.format("Searching address : %s", address.toString()));
+        return null;
+    }
 
-		session.beginTransaction();
+    /**
+     * @param address
+     * @return return null or string exception
+     */
+    public Object updateAddress(Address address) {
+        System.out.println(String.format("Updating address : %s", address.toString()));
+        return null;
+    }
 
-		long id = (long) session.save(contactGroup);
-		contactGroup.setGroupId(id);
+    /**
+     * @param address
+     * @return return null or string exception
+     */
+    public Object deleteAddress(Address address) {
+        System.out.println(String.format("Deleting address : %s", address.toString()));
+        return null;
+    }
 
-		session.getTransaction().commit();
-		session.close();
+    /**
+     * @param phoneNumber
+     * @return null if phoneNumber was correctly being add or string exception if failure
+     */
+    public Object addPhoneNumber(final PhoneNumber phoneNumber) {
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 
-		System.out.println(String.format("Add contactGroup : %s", contactGroup.toString()));
-		return null;
-	}
+        session.beginTransaction();
 
-	public Object addContactToGroup(ContactGroup group, Contact contact) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        long id = (long) session.save(phoneNumber);
+        phoneNumber.setId(id);
 
-		session.beginTransaction();
+        session.getTransaction().commit();
+        session.close();
 
-		// TODO Comment faire pour mettre à jour l'association sans récupérer le group en entier sur la BDD ?
-		ContactGroup groupTmp = session.get(ContactGroup.class, group.getGroupId());
-		groupTmp.addContact(contact);
+        System.out.println(String.format("Add phoneNumber to database : %s", phoneNumber.toString()));
+        return null;
+    }
 
-		session.saveOrUpdate(groupTmp);
+    /**
+     * @param phoneNumber
+     * @return phoneNumber being search or string exception if failure
+     */
+    public Object searchPhoneNumber(PhoneNumber phoneNumber) {
+        System.out.println(String.format("Searching phoneNumber : %s", phoneNumber.toString()));
+        return null;
+    }
 
-		session.getTransaction().commit();
-		session.close();
+    /**
+     * @param phoneNumber
+     * @return return null or string exception
+     */
+    public Object updatePhoneNumber(PhoneNumber phoneNumber) {
+        System.out.println(String.format("Updating phoneNumber : %s", phoneNumber.toString()));
+        return null;
+    }
 
-		System.out.println(String.format("Add contact %s to group %s",
-				contact.toString(), group.toString()));
-		return null;
-	}
+    /**
+     * @param phoneNumber
+     * @return return null or string exception
+     */
+    public Object deletePhoneNumber(PhoneNumber phoneNumber) {
+        System.out.println(String.format("Deleting phoneNumber : %s", phoneNumber.toString()));
+        return null;
+    }
 
-	public Object loadContacts() {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		session.beginTransaction();
-		List<Contact> contacts = session.createQuery("from Contact contact").list();
-		session.close();
+    public Object addContactGroup(ContactGroup contactGroup) {
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 
-		return contacts;
-	}
+        session.beginTransaction();
 
-	public Object loadGroups() {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		session.beginTransaction();
-		List<ContactGroup> groups = session.createQuery("from ContactGroup contactGroup").list();
-		System.out.println(groups);
-		session.close();
+        long id = (long) session.save(contactGroup);
+        contactGroup.setGroupId(id);
 
-		return groups;
-	}
+        session.getTransaction().commit();
+        session.close();
+
+        System.out.println(String.format("Add contactGroup : %s", contactGroup.toString()));
+        return null;
+    }
+
+    public Object addContactToGroup(ContactGroup group, Contact contact) {
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+
+        session.beginTransaction();
+
+        // TODO Comment faire pour mettre à jour l'association sans récupérer le group en entier sur la BDD ?
+        ContactGroup groupTmp = session.get(ContactGroup.class, group.getGroupId());
+        groupTmp.addContact(contact);
+
+        session.saveOrUpdate(groupTmp);
+
+        session.getTransaction().commit();
+        session.close();
+
+        System.out.println(String.format("Add contact %s to group %s",
+                contact.toString(), group.toString()));
+        return null;
+    }
+
+    public Object loadContacts() {
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        Object contacts = session.createQuery("from Contact contact ORDER BY lastName").list();
+        session.close();
+        return contacts;
+    }
+
+    public Object loadContacts(String search) {
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        Object groups = session.createQuery(
+                "from Contact contact WHERE lastName like :name or firstName like :name or email like :name " +
+                        "ORDER BY lastName")
+                .setParameter("name", String.format("%s%%", search))
+                .list();
+        session.close();
+        return groups;
+    }
+
+    public Object loadGroups() {
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        List<ContactGroup> groups = session.createQuery("from ContactGroup contactGroup").list();
+        System.out.println(groups);
+        session.close();
+
+        return groups;
+    }
 }

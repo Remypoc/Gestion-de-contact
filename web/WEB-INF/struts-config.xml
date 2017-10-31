@@ -28,6 +28,9 @@
         <form-bean name="AddContactGroupValidationForm" type="actionForm.AddContactGroupValidationForm"/>
         <form-bean name="AddContactToGroupValidationForm" type="actionForm.AddContactToGroupValidationForm"/>
 
+        <!--Search contact Validation Form-->
+        <form-bean name="SearchContactValidationForm" type="actionForm.search.SearchContactValidationForm"/>
+
     </form-beans>
 
     <!-- ========== Forwards =============================== -->
@@ -146,6 +149,13 @@
             <forward name="success" path="/pages/success.jsp"/>
             <forward name="error" path="/pages/error.jsp"/>
         </action>
+
+        <!--Search contact-->
+        <action path="/SearchContact"
+        			  type="servletAction.search.SearchContactAction" name="SearchContactValidationForm" scope="request" input="/pages/contact/home.jsp">
+        		  <forward name="success" path="/pages/contact/home.jsp" />
+        		  <forward name="error" path="/pages/contact/home.jsp" />
+        	  </action>
 
     </action-mappings>
 
