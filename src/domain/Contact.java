@@ -144,9 +144,8 @@ public class Contact {
 	public boolean equals(Object obj) {
 		if (obj == null)
 			return false;
-		if (obj instanceof Contact) {
-			if (((Contact) obj).getId() == this.id)
-				return true;
+		else if (obj instanceof Contact) {
+			return ((Contact) obj).getId() == this.id;
 		}
 		return false;
 	}

@@ -73,6 +73,19 @@ public class ContactGroupDAOImpl implements ContactGroupDAO {
     }
 
     @Override
+    public void deleteContact(long groupId, long contactId) {
+        getCurrentSession().beginTransaction();
+
+        ContactGroup group = getCurrentSession().get(ContactGroup.class, groupId);
+
+        group.getContacts().remove(new Contact(contactId));
+        getCurrentSession().update(group);
+
+        getCurrentSession().getTransaction().commit();
+        getCurrentSession().close();
+    }
+
+    @Override
     public List<ContactGroup> search(String groupName) {
         getCurrentSession().beginTransaction();
         List<ContactGroup> groups = getCurrentSession().createQuery(

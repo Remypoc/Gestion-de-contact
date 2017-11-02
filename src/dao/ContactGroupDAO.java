@@ -12,6 +12,7 @@ public interface ContactGroupDAO {
         public ContactGroup getWithContacts(long id);
         public List<ContactGroup> getAll();
         public void delete(long id);
+        public void deleteContact(long groupId, long contactId);
         public List<ContactGroup> search(String groupName);
         public ContactGroup searchContactInGroup(final long groupId, final String name);
 }

@@ -41,6 +41,11 @@ public class ContactGroupServiceImpl implements ContactGroupService {
     }
 
     @Override
+    public void deleteContact(long groupId, long contactId) {
+        dao.deleteContact(groupId, contactId);
+    }
+
+    @Override
     public List<ContactGroup> search(String groupName) {
         return dao.search(groupName);
     }

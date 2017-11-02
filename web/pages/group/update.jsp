@@ -58,10 +58,11 @@
                         <%--</html:link>--%>
                     </td>
                     <td>
-                        <%--<html:form action="/DeleteContactGroup">--%>
-                            <%--<html:hidden property="groupId" value="${group.groupId}"/>--%>
-                            <%--<input type="submit" value=" <bean:message key="label.delete" />" />--%>
-                        <%--</html:form>--%>
+                        <html:form action="/DeleteContactFromGroup">
+                            <html:hidden property="groupId" name="group"/>
+                            <html:hidden property="contactId" value="${contact.id}"/>
+                            <input type="submit" value=" <bean:message key="label.delete" />" />
+                        </html:form>
                     </td>
                 </tr>
             </logic:iterate>
