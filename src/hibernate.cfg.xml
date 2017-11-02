@@ -27,6 +27,5 @@
         <mapping resource="domain/Contact.hbm.xml"/>
         <mapping resource="domain/ContactGroup.hbm.xml"/>
         <mapping resource="domain/PhoneNumber.hbm.xml"/>
-
     </session-factory>
 </hibernate-configuration>

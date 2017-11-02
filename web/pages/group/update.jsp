@@ -22,6 +22,25 @@
     <h1><bean:write name="group" property="groupName"/></h1>
 
     <h2>Contacts</h2>
+
+    <html:form action="/SearchContactInGroup">
+        <table>
+            <tr>
+                <td>
+                    <html:text property="name" maxlength="100"/>
+                    <html:hidden property="groupId" name="group"/>
+
+                    <input type="submit" class="btn btn-primary" value=" <bean:message key="label.search" />" />
+                    <html:link href="UpdateGroup.do">
+                        <html:param name="groupId"><bean:write name="group" property="groupId"/></html:param>
+                        <bean:message key="form.cancel" />
+                    </html:link> <!-- TODO Replace by a button -->
+                </td>
+            </tr>
+        </table>
+    </html:form>
+    <html:errors/>
+
     <table>
         <logic:present name="contacts">
             <logic:empty name="contacts">

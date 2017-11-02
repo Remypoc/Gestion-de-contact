@@ -1,9 +1,14 @@
 package domain;
 
-import javax.persistence.Entity;
+import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.FilterDef;
+import org.hibernate.annotations.ParamDef;
+
 import java.util.HashSet;
 import java.util.Set;
 
+@FilterDef(name="firstOrLastName", parameters=@ParamDef(name="name", type="string"))
+@Filter(name="firstOrLastName", condition="firstName LIKE :name OR lastName like :firstName")
 public class ContactGroup {
 
     private long groupId;

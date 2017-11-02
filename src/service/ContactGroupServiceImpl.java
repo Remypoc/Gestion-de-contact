@@ -2,6 +2,7 @@ package service;
 
 import dao.ContactGroupDAO;
 import dao.ContactGroupDAOImpl;
+import domain.Contact;
 import domain.ContactGroup;
 
 import java.util.List;
@@ -42,5 +43,10 @@ public class ContactGroupServiceImpl implements ContactGroupService {
     @Override
     public List<ContactGroup> search(String groupName) {
         return dao.search(groupName);
+    }
+
+    @Override
+    public ContactGroup searchContactInGroup(final long groupId, final String groupName) {
+        return dao.searchContactInGroup(groupId, groupName);
     }
 }

@@ -30,8 +30,8 @@
 
 	  <!-- Search ContactGroup Validation Form -->
 	  <form-bean name="SearchGroupValidationForm" type="actionForm.search.SearchGroupValidationForm"/>
-
 	  <form-bean name="DeleteContactGroupValidationForm" type="actionForm.contactgroup.DeleteContactGroupValidationForm"/>
+	  <form-bean name="SearchContactInGroupValidationForm" type="actionForm.contactgroup.SearchContactInGroupValidationForm"/>
 
   </form-beans>
 	
@@ -64,14 +64,14 @@
 		  <forward name="error" path="/pages/error.jsp" />
  	  </action>
 
-	  <!-- Loading group home -->
+	  <!-- Link to display all contact groups -->
 	  <action path="/Group"
 			  type="servletAction.loader.GroupLoader">
 		  <forward name="success" path="/pages/group/home.jsp" />
 		  <forward name="error" path="/pages/error.jsp" />
 	  </action>
 
-	  <!-- Loading group home -->
+	  <!-- Link to display contact group informations (with update option) -->
 	  <action path="/UpdateGroup"
 			  type="servletAction.contactgroup.UpdateContactGroupAction">
 		  <forward name="success" path="/pages/group/update.jsp" />
@@ -83,6 +83,13 @@
 			  type="servletAction.search.SearchGroupAction" name="SearchGroupValidationForm" scope="request" input="/pages/group/home.jsp">
 		  <forward name="success" path="/pages/group/home.jsp" />
 		  <forward name="error" path="/pages/group/home.jsp" />
+	  </action>
+
+	  <!-- Search contact in group -->
+	  <action path="/SearchContactInGroup"
+			  type="servletAction.contactgroup.SearchContactInGroupAction" name="SearchContactInGroupValidationForm" scope="request" input="/pages/group/update.jsp">
+		  <forward name="success" path="/pages/group/update.jsp" />
+		  <forward name="error" path="/pages/group/update.jsp" />
 	  </action>
 
 	  <!-- Contact Action path -->
@@ -162,6 +169,8 @@
 			  scope="request" input="/pages/contactGroupCreation.jsp">
 		  <forward name="success" path="/Group.do" />
 	  </action>
+
+
 
   </action-mappings>
   

@@ -1,5 +1,6 @@
 package dao;
 
+import domain.Contact;
 import domain.ContactGroup;
 
 import java.util.List;
@@ -12,4 +13,5 @@ public interface ContactGroupDAO {
         public List<ContactGroup> getAll();
         public void delete(long id);
         public List<ContactGroup> search(String groupName);
+        public ContactGroup searchContactInGroup(final long groupId, final String name);
 }
