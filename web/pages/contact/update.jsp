@@ -9,29 +9,55 @@
 </head>
 <body>
 <table>
-    <thead>
-    <tr>
-        <th><bean:message key="form.contact.creation.lastName"/></th>
-        <th><bean:message key="form.contact.creation.firstName"/></th>
-        <th><bean:message key="form.contact.creation.email"/></th>
-        <th><bean:message key="form.address.street"/></th>
-        <th><bean:message key="form.address.city"/></th>
-        <th><bean:message key="form.address.zip"/></th>
-        <th><bean:message key="form.address.country"/></th>
-    </tr>
-    </thead>
     <tbody>
     <tr>
-        <td><bean:write name="contact" property="lastName"/></td>
-        <td><bean:write name="contact" property="firstName"/></td>
-        <td><bean:write name="contact" property="email"/></td>
-        <logic:present name="contact" property="address">
-            <td><bean:write name="contact" property="address.street"/></td>
-            <td><bean:write name="contact" property="address.city"/></td>
-            <td><bean:write name="contact" property="address.zip"/></td>
-            <td><bean:write name="contact" property="address.country"/></td>
-        </logic:present>
+        <td><bean:message key="form.contact.creation.lastName"/></td>
+        <td><html:text name="contact" property="lastName" maxlength="200"/></td>
     </tr>
+    <tr>
+        <td><bean:message key="form.contact.creation.firstName"/></td>
+        <td><html:text name="contact" property="firstName" maxlength="200"/></td>
+    </tr>
+    <tr>
+        <td><bean:message key="form.contact.creation.email"/></td>
+        <td><html:text name="contact" property="email" maxlength="200"/></td>
+    </tr>
+    <logic:present name="contact" property="address">
+        <tr>
+            <td><bean:message key="form.address.street"/></td>
+            <td><html:text name="contact" property="address.street"/></td>
+        </tr>
+        <tr>
+            <td><bean:message key="form.address.city"/></td>
+            <td><html:text name="contact" property="address.city"/></td>
+        </tr>
+        <tr>
+            <td><bean:message key="form.address.zip"/></td>
+            <td><html:text name="contact" property="address.zip"/></td>
+        </tr>
+        <tr>
+            <td><bean:message key="form.address.country"/></td>
+            <td><html:text name="contact" property="address.country"/></td>
+        </tr>
+    </logic:present>
+    <logic:notPresent name="contact" property="address">
+        <tr>
+            <td><bean:message key="form.address.street"/></td>
+            <td><html:text property="street" maxlength="200"/></td>
+        </tr>
+        <tr>
+            <td><bean:message key="form.address.city"/></td>
+            <td><html:text property="city" maxlength="60"/></td>
+        </tr>
+        <tr>
+            <td><bean:message key="form.address.zip"/></td>
+            <td><html:text property="zip" maxlength="30"/></td>
+        </tr>
+        <tr>
+            <td><bean:message key="form.address.country"/></td>
+            <td><html:text property="country" maxlength="200"/></td>
+        </tr>
+    </logic:notPresent>
     </tbody>
 </table>
 <table>
@@ -44,8 +70,8 @@
     <tbody>
     <logic:iterate name="contact" id="phone" property="phones">
         <tr>
-            <td><bean:write name="phone" property="phoneNumber"/></td>
-            <td><bean:write name="phone" property="phoneKind"/></td>
+            <td><html:text name="phone" property="phoneNumber"/></td>
+            <td><html:text name="phone" property="phoneKind"/></td>
         </tr>
     </logic:iterate>
     </tbody>
