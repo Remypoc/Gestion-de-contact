@@ -52,6 +52,11 @@ public class DAOContact {
      */
     public Object updateContact(final Contact contact) {
         System.out.println(String.format("Updating contact : %s", contact.toString()));
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        session.update(contact);
+        session.getTransaction().commit();
+        session.close();
         return null;
     }
 

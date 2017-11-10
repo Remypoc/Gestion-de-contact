@@ -37,6 +37,9 @@
         <!--Display contact-->
         <form-bean name="DisplayContactValidationForm" type="actionForm.display.DisplayContactValidationForm"/>
 
+        <!--Update contact-->
+        <form-bean name="UpdateContactValidationForm" type="actionForm.update.UpdateContactValidationForm"/>
+
     </form-beans>
 
     <!-- ========== Forwards =============================== -->
@@ -177,6 +180,14 @@
                 type="servletAction.display.DisplayContactAction" name="DisplayContactValidationForm" scope="request"
                 input="/pages/contact/home.jsp">
             <forward name="success" path="/pages/contact/update.jsp"/>
+            <forward name="error" path="/ContactHome.do" redirect="true"/>
+        </action>
+
+        <!--Update contact-->
+        <action path="/UpdateContact"
+                type="servletAction.update.UpdateContactAction" name="UpdateContactValidationForm" scope="request"
+                input="/pages/contact/update.jsp">
+            <forward name="success" path="/pages/contact/home.jsp"/>
             <forward name="error" path="/ContactHome.do" redirect="true"/>
         </action>
 

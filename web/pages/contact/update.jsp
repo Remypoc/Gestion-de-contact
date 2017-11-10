@@ -8,58 +8,63 @@
     <title><bean:message key="contacthome.display.page.title"/></title>
 </head>
 <body>
-<table>
-    <tbody>
-    <tr>
-        <td><bean:message key="form.contact.creation.lastName"/></td>
-        <td><html:text name="contact" property="lastName" maxlength="200"/></td>
-    </tr>
-    <tr>
-        <td><bean:message key="form.contact.creation.firstName"/></td>
-        <td><html:text name="contact" property="firstName" maxlength="200"/></td>
-    </tr>
-    <tr>
-        <td><bean:message key="form.contact.creation.email"/></td>
-        <td><html:text name="contact" property="email" maxlength="200"/></td>
-    </tr>
-    <logic:present name="contact" property="address">
+<html:errors/>
+<html:form action="/UpdateContact">
+    <table>
+        <tbody>
         <tr>
-            <td><bean:message key="form.address.street"/></td>
-            <td><html:text name="contact" property="address.street"/></td>
+            <td><bean:message key="form.contact.creation.lastName"/></td>
+            <td><html:text name="DisplayContactValidationForm" property="lastName" maxlength="200"/></td>
         </tr>
         <tr>
-            <td><bean:message key="form.address.city"/></td>
-            <td><html:text name="contact" property="address.city"/></td>
+            <td><bean:message key="form.contact.creation.firstName"/></td>
+            <td><html:text name="contact" property="firstName" maxlength="200"/></td>
         </tr>
         <tr>
-            <td><bean:message key="form.address.zip"/></td>
-            <td><html:text name="contact" property="address.zip"/></td>
+            <td><bean:message key="form.contact.creation.email"/></td>
+            <td><html:text name="contact" property="email" maxlength="200"/></td>
         </tr>
-        <tr>
-            <td><bean:message key="form.address.country"/></td>
-            <td><html:text name="contact" property="address.country"/></td>
-        </tr>
-    </logic:present>
-    <logic:notPresent name="contact" property="address">
-        <tr>
-            <td><bean:message key="form.address.street"/></td>
-            <td><html:text property="street" maxlength="200"/></td>
-        </tr>
-        <tr>
-            <td><bean:message key="form.address.city"/></td>
-            <td><html:text property="city" maxlength="60"/></td>
-        </tr>
-        <tr>
-            <td><bean:message key="form.address.zip"/></td>
-            <td><html:text property="zip" maxlength="30"/></td>
-        </tr>
-        <tr>
-            <td><bean:message key="form.address.country"/></td>
-            <td><html:text property="country" maxlength="200"/></td>
-        </tr>
-    </logic:notPresent>
-    </tbody>
-</table>
+        <logic:present name="contact" property="address">
+            <tr>
+                <td><bean:message key="form.address.street"/></td>
+                <td><html:text name="contact" property="address.street"/></td>
+            </tr>
+            <tr>
+                <td><bean:message key="form.address.city"/></td>
+                <td><html:text name="contact" property="address.city"/></td>
+            </tr>
+            <tr>
+                <td><bean:message key="form.address.zip"/></td>
+                <td><html:text name="contact" property="address.zip"/></td>
+            </tr>
+            <tr>
+                <td><bean:message key="form.address.country"/></td>
+                <td><html:text name="contact" property="address.country"/></td>
+            </tr>
+        </logic:present>
+        <logic:notPresent name="contact" property="address">
+            <tr>
+                <td><bean:message key="form.address.street"/></td>
+                <td><html:text property="street" maxlength="200"/></td>
+            </tr>
+            <tr>
+                <td><bean:message key="form.address.city"/></td>
+                <td><html:text property="city" maxlength="60"/></td>
+            </tr>
+            <tr>
+                <td><bean:message key="form.address.zip"/></td>
+                <td><html:text property="zip" maxlength="30"/></td>
+            </tr>
+            <tr>
+                <td><bean:message key="form.address.country"/></td>
+                <td><html:text property="country" maxlength="200"/></td>
+            </tr>
+        </logic:notPresent>
+        </tbody>
+    </table>
+    <input type="submit" class="btn btn-primary"
+           value=" <bean:message key="form.contact.creation.validate" />"/>
+</html:form>
 <table>
     <thead>
     <tr>
