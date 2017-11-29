@@ -47,11 +47,21 @@ public class DAOContact {
     }
 
     /**
-     * @param contact
+     * @param contact Contact
      * @return return null or string exception
      */
     public Object updateContact(final Contact contact) {
         System.out.println(String.format("Updating contact : %s", contact.toString()));
+
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+
+        session.beginTransaction();
+        session.saveOrUpdate(contact);
+
+        session.getTransaction().commit();
+        session.close();
+
+        System.out.println(String.format("Update contact to database : %s", contact.toString()));
         return null;
     }
 

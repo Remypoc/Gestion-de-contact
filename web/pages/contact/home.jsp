@@ -21,8 +21,7 @@
             <td>
                 <input type="submit" class="btn btn-primary"
                        value=" <bean:message key="form.contact.search.validate" />"/>
-                <input type="reset" class="btn btn-primary"
-                       value="<bean:message key="form.cancel" />"/>
+                <a href="ContactHome.do" class="btn btn-primary"><bean:message key="form.cancel"/></a>
             </td>
         </tr>
     </table>
