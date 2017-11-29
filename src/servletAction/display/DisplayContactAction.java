@@ -19,8 +19,11 @@ public class DisplayContactAction extends Action {
         final DisplayContactValidationForm lForm = (DisplayContactValidationForm) pForm;
         final long id = lForm.getId();
 
+
         final ContactService cs = new ContactService();
-        final Object contact = cs.loadContact(id);
+        final Contact contact = (Contact) cs.loadContact(id);
+
+        ((DisplayContactValidationForm) pForm).setLastName(contact.getLastName());
 
         if(contact instanceof Contact) {
 
