@@ -9,7 +9,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import java.io.Serializable;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 @ManagedBean(name = "contact")
@@ -25,7 +25,7 @@ public class ContactBean implements Serializable {
     public void init() {
 
         contact.setAddress(new Address());
-        contact.setPhones(new HashSet<>());
+        contact.setPhones(new LinkedHashSet<>());
     }
 
     public String getFirstName() {
@@ -106,6 +106,8 @@ public class ContactBean implements Serializable {
         }
     }
 
+    /* PHONE */
+
     public Set<PhoneNumber> getPhones() {
         return contact.getPhones();
     }
@@ -116,7 +118,9 @@ public class ContactBean implements Serializable {
     }
 
     public void add() {
-        contact.getPhones().add(new PhoneNumber());
+        if (contact.getPhones().size() < 100) {
+            contact.getPhones().add(new PhoneNumber());
+        }
     }
 
     public void remove(PhoneNumber phoneNumber) {
@@ -129,6 +133,10 @@ public class ContactBean implements Serializable {
         if (!contact.getAddress().isValid()) {
             contact.setAddress(null);
         }
+        if (getPhones().isEmpty()) {
+            contact.setPhones(null);
+        }
+        System.out.println("Phones = " + getPhones());
         final ContactService cs = new ContactService();
         final Object lError = cs.addContact(contact);
         return null;
