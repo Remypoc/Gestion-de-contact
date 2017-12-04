@@ -129,14 +129,12 @@ public class ContactBean implements Serializable {
 
 
     public String validate() {
-        System.out.println("Validated contact : " + contact);
         if (!contact.getAddress().isValid()) {
             contact.setAddress(null);
         }
         if (getPhones().isEmpty()) {
             contact.setPhones(null);
         }
-        System.out.println("Phones = " + getPhones());
         final ContactService cs = new ContactService();
         final Object lError = cs.addContact(contact);
         return null;

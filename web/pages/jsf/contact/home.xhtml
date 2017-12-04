@@ -6,6 +6,12 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <f:view>
-    <h:outputLabel value="Hello, world"/>
+    <h:form rendered="#{not empty contactManager.contacts}">
+        <h:dataTable value="#{contactManager.model}" var="item">
+            <h:column><f:facet name="header">Last name</f:facet>#{item.lastName}</h:column>
+            <h:column><f:facet name="header">First name</f:facet>#{item.firstName}</h:column>
+            <h:column><f:facet name="header">Email</f:facet>#{item.email}</h:column>
+        </h:dataTable>
+    </h:form>
 </f:view>
 </html>

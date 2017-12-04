@@ -2,6 +2,8 @@ package service;
 
 import domain.*;
 
+import java.util.List;
+
 public class ContactService {
 
     @SuppressWarnings("unused")
@@ -123,7 +125,7 @@ public class ContactService {
         return (cdao = new DAOContact()).addContactToGroup(group, contact);
     }
 
-    public Object loadContacts() {
+    public List<Contact> loadContacts() {
         return (cdao = new DAOContact()).loadContacts();
     }
 

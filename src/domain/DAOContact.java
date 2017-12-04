@@ -213,10 +213,11 @@ public class DAOContact {
         return null;
     }
 
-    public Object loadContacts() {
+    public List<Contact> loadContacts() {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        Object contacts = session.createQuery("from Contact contact ORDER BY lastName").list();
+        List<Contact> contacts = session.createQuery("from Contact ORDER BY lastName", Contact.class).list();
+        System.out.println("DB : " + contacts);
         session.close();
         return contacts;
     }
