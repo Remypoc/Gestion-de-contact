@@ -22,7 +22,7 @@
         <property name="lastName" type="string" column="LASTNAME"/>
         <property name="email" type="string" column="EMAIL"/>
 
-        <many-to-one name="address" column="REFADDRESS"  not-null="false" cascade="all persist delete"/>
+        <many-to-one name="address" column="REFADDRESS"  not-null="false" cascade="all"/>
 
         <set name="phones" cascade="persist all-delete-orphan" lazy="true">
             <key column="id_contact"/>

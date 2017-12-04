@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:body>
+    <f:view>
+        <h:form id="form">
+            <h2>Contact</h2>
+
+            <h:panelGrid columns="3">
+                <h:outputLabel for="firstName" value="Firstname : "/>
+                <h:inputText id="firstName" value="#{contact.firstName}" required="true"
+                             requiredMessage="Required !"
+                             validator="noBlankSpaceValidator">
+                </h:inputText>
+                <h:message for="firstName" autoUpdate="true"/>
+
+                <h:outputLabel for="lastName" value="Lastname : "/>
+                <h:inputText id="lastName" value="#{contact.lastName}" required="true"
+                             requiredMessage="Required !"
+                             validator="noBlankSpaceValidator">
+                </h:inputText>
+                <h:message for="lastName" autoUpdate="true"/>
+
+                <h:outputLabel for="email" value="Email : "/>
+                <h:inputText id="email" value="#{contact.email}" required="true"
+                             requiredMessage="Required !"
+                             validator="noBlankSpaceValidator">
+                </h:inputText>
+                <h:message for="email" autoUpdate="true"/>
+            </h:panelGrid>
+
+            <h2>Address</h2>
+
+            <h:panelGrid columns="3">
+                <h:outputLabel for="street" value="Street : "/>
+                <h:inputText id="street" value="#{contact.street}"
+                             required="#{not empty param['form:city'] or not empty param['form:zip']
+                             or not empty param['form:country']}"
+                             requiredMessage="Required !"
+                             validator="noBlankSpaceValidator">
+                </h:inputText>
+                <h:message for="street" autoUpdate="true"/>
+
+                <h:outputLabel for="city" value="City : "/>
+                <h:inputText id="city" value="#{contact.city}"
+                             required="#{not empty param['form:street'] or not empty param['form:zip']
+                             or not empty param['form:country']}"
+                             requiredMessage="Required !"
+                             validator="noBlankSpaceValidator">
+                </h:inputText>
+                <h:message for="city" autoUpdate="true"/>
+
+                <h:outputLabel for="zip" value="Zip : "/>
+                <h:inputText id="zip" value="#{contact.zip}"
+                             required="#{not empty param['form:city'] or not empty param['form:street']
+                             or not empty param['form:country']}"
+                             requiredMessage="Required !"
+                             validator="noBlankSpaceValidator">
+                </h:inputText>
+                <h:message for="zip" autoUpdate="true"/>
+
+                <h:outputLabel for="country" value="Country : "/>
+                <h:inputText id="country" value="#{contact.country}"
+                             required="#{not empty param['form:city'] or not empty param['form:zip']
+                             or not empty param['form:street']}"
+                             requiredMessage="Required !"
+                             validator="noBlankSpaceValidator">
+                </h:inputText>
+                <h:message for="country" autoUpdate="true"/>
+            </h:panelGrid>
+
+            <h:dataTable value="#{contact.phones}" var="phone">
+                <h:column><h:inputText value="#{phone.phoneNumber}"/></h:column>
+                <h:column><h:inputText value="#{phone.phoneKind}"/></h:column>
+                <h:column><h:commandButton value="remove" action="#{contact.remove(phone)}"/></h:column>
+            </h:dataTable>
+            <h:commandButton value="add" action="#{contact.add}" immediate="true"/>
+
+            <h:commandButton value="create" action="#{contact.validate}"/>
+        </h:form>
+    </f:view>
+</h:body>
+</html>

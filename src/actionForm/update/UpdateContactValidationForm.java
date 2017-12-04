@@ -193,6 +193,8 @@ public class UpdateContactValidationForm extends ActionForm {
 
         System.out.println("UpdateContactValidationForm " + getId());
 
+        System.out.println("hasAddress" + getHasAddress() + getCity());
+
         if (getFirstName() == null || getFirstName().length() < 1) {
             errors.add("firstName", new ActionMessage("contact.creation.fn.error.required"));
         }

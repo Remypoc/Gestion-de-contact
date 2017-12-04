@@ -10,11 +10,10 @@ public class Contact {
     private String lastName;
     private String email;
     private Address address;
-    private Set<PhoneNumber> phones = new HashSet<PhoneNumber>();
-    private Set<ContactGroup> books = new HashSet<ContactGroup>();
+    private Set<PhoneNumber> phones = new HashSet<>();
+    private Set<ContactGroup> books = new HashSet<>();
 
     public Contact() {
-        // TODO Auto-generated constructor stub
     }
 
     public Contact(long id) {
@@ -156,8 +155,8 @@ public class Contact {
         StringBuilder sb = new StringBuilder();
         sb.append("Contact {\n");
         sb.append("id: ").append(id).append("\n");
-        sb.append("first name: ").append(firstName).append("\n");
-        sb.append("last name: ").append(lastName).append("\n");
+        sb.append("firstname: ").append(firstName).append("\n");
+        sb.append("lastname: ").append(lastName).append("\n");
         sb.append("Address: ").append(address).append("\n");
         sb.append("Phones = [\n");
         for (PhoneNumber p : phones) {

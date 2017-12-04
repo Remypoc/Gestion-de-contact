@@ -48,7 +48,7 @@ public class AddContactAction extends Action {
 
 		// create a new Contact
 		final ContactService cs = new ContactService();
-		final Object lError = cs.addContact(contact);
+		final Object lError = null;//cs.addContact(contact);
 		
 		if(lError == null) {
 			// if no exception is raised,  forward "success"
