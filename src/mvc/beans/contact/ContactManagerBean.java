@@ -11,8 +11,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import java.io.Serializable;
-import java.util.LinkedHashSet;
-import java.util.List;
+import java.util.*;
 
 @ManagedBean(name = "contactManager")
 @ViewScoped
@@ -22,7 +21,7 @@ public class ContactManagerBean implements Serializable {
     private transient DataModel<Contact> model;
     private Contact contact = new Contact();
     private Address address = new Address();
-    private LinkedHashSet<PhoneNumber> phones = new LinkedHashSet<>();
+    private Set<PhoneNumber> phones = new LinkedHashSet<>();
     private boolean edit;
 
     @PostConstruct
@@ -83,7 +82,6 @@ public class ContactManagerBean implements Serializable {
         if (contact.getPhones() == null) {
             contact.setPhones(phones);
         }
-
         edit = true;
     }
 
