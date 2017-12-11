@@ -67,10 +67,9 @@ public class PhoneNumber {
         sb.append("phoneNumber=").append(phoneNumber).append("\n");
         if (contact != null) {
             sb.append("contact=").append(contact.getId())
-                .append(", ").append(contact.getFullName())
+                    .append(", ").append(contact.getFullName())
                     .append("\n");
-        }
-        else
+        } else
             sb.append("contact=null\n");
         sb.append("}\n");
         return sb.toString();

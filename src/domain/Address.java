@@ -59,11 +59,12 @@ public class Address {
         this.country = country;
     }
 
+
     public boolean isValid() {
-        return !((street == null || street.trim().isEmpty()) ||
-                (city == null || city.trim().isEmpty()) ||
-                (zip == null || zip.trim().isEmpty()) ||
-                (country == null || country.trim().isEmpty()));
+        return street != null && !street.trim().isEmpty()
+                && city != null && !city.trim().isEmpty()
+                && zip != null && !zip.trim().isEmpty()
+                && country != null && !country.trim().isEmpty();
     }
 
     @Override

@@ -4,11 +4,19 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head><title>Home</title></h:head>
 <h:body>
     <f:view>
-        <h:form rendered="#{not empty contactManager.contacts}">
+        <h:form id="search">
+            <h:inputText id="searchInput" name="searchInput" a:placeholder="Search contact"/>
+            <h:commandButton id="searchButton" name="searchButton" value="Search"
+                             action="#{contactManager.search}"/>
+            <h:commandButton id="searchCancelButton" name="searchCancelButton" value="Cancel"
+                             action="#{contactManager.cancelSearch}"/>
+        </h:form>
+        <h:form rendered="#{not empty contactManager.contacts and !contactManager.search}">
             <h:dataTable value="#{contactManager.model}" var="item">
                 <h:column><f:facet name="header">Last name</f:facet>#{item.lastName}</h:column>
                 <h:column><f:facet name="header">First name</f:facet>#{item.firstName}</h:column>
@@ -17,8 +25,20 @@
                 <h:column><h:commandButton value="delete" action="#{contactManager.delete}"/></h:column>
             </h:dataTable>
         </h:form>
-        <h:panelGroup rendered="#{empty contactManager.contacts}">
+        <h:form rendered="#{not empty contactManager.contactsSearched and contactManager.search}">
+            <h:dataTable value="#{contactManager.modelSearch}" var="item">
+                <h:column><f:facet name="header">Last name</f:facet>#{item.lastName}</h:column>
+                <h:column><f:facet name="header">First name</f:facet>#{item.firstName}</h:column>
+                <h:column><f:facet name="header">Email</f:facet>#{item.email}</h:column>
+                <h:column><h:commandButton value="edit" action="#{contactManager.edit}"/></h:column>
+                <h:column><h:commandButton value="delete" action="#{contactManager.delete}"/></h:column>
+            </h:dataTable>
+        </h:form>
+        <h:panelGroup rendered="#{empty contactManager.contacts and !contactManager.search}">
             <p>Table is empty! Please add new items.</p>
+        </h:panelGroup>
+        <h:panelGroup rendered="#{empty contactManager.contactsSearched and contactManager.search}">
+            <p>No contact found !</p>
         </h:panelGroup>
         <h:panelGroup rendered="#{!contactManager.edit}">
             <h3>Add item</h3>
@@ -177,7 +197,7 @@
                     <h:outputLabel for="streetEdit" value="Street : "/>
                     <h:inputText id="streetEdit" value="#{contactManager.item.address.street}"
                                  required="#{not empty param['formEdit:cityEdit'] or not empty param['formEdit:zipEdit']
-                             or not empty param['formEdit:country']}"
+                             or not empty param['formEdit:countryEdit']}"
                                  requiredMessage="Required !"
                                  validator="noBlankSpaceValidator">
                     </h:inputText>

@@ -44,11 +44,28 @@ public class DAOContact {
     }
 
     /**
+     * Note : It is actually not possible to delete orphan of a one to one (or many to one) relation.
+     * It has to be done manually.
+     * See : https://hibernate.atlassian.net/browse/HHH-2608
      * @param contact Contact
      * @return return null or string exception
      */
     public Object updateContact(final Contact contact) {
-        System.out.println(String.format("Updating contact : %s", contact.toString()));
+
+        System.out.println("Save DB : " + contact);
+
+        System.out.println("Delete address : " + contact.getAddress().isValid());
+        System.out.println("Delete address : " + contact.getAddress());
+        System.out.println("Street : " + contact.getAddress().getStreet() + " : " + contact.getAddress().getStreet().trim().isEmpty());
+        if (!contact.getAddress().isValid()) {
+            if (contact.getAddress().getId() != 0) {
+                System.out.println("Deleting address !");
+                deleteAddress(contact.getAddress().getId());
+            }
+            contact.setAddress(null);
+        }
+
+        System.out.println("Save DB2 : " + contact);
 
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 
@@ -125,11 +142,19 @@ public class DAOContact {
     }
 
     /**
-     * @param address
-     * @return return null or string exception
+     * @param id
+     * @return null
      */
-    public Object deleteAddress(Address address) {
-        System.out.println(String.format("Deleting address : %s", address.toString()));
+    public Object deleteAddress(long id) {
+
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+
+        Address address = session.get(Address.class, id);
+
+        session.delete(address);
+        session.getTransaction().commit();
+        session.close();
         return null;
     }
 
@@ -217,7 +242,6 @@ public class DAOContact {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
         List<Contact> contacts = session.createQuery("from Contact ORDER BY lastName", Contact.class).list();
-        System.out.println("DB : " + contacts);
         session.close();
         return contacts;
     }
@@ -244,11 +268,11 @@ public class DAOContact {
         criteria.select(root).where(builder.equal(root.get("id"), id));
         Contact contact = session.createQuery(criteria).getSingleResult();
 
-        // Used to force load object
+        // Used to force load lazy collections
         Hibernate.initialize(contact.getAddress());
         Hibernate.initialize(contact.getPhones());
+
         session.close();
-        System.out.println(contact);
         return contact;
     }
 

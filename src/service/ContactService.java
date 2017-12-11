@@ -78,11 +78,11 @@ public class ContactService {
     }
 
     /**
-     * @param address
+     * @param id
      * @return return null or string exception
      */
-    public Object deleteAddress(Address address) {
-        return (cdao = new DAOContact()).deleteAddress(address);
+    public Object deleteAddress(long id) {
+        return (cdao = new DAOContact()).deleteAddress(id);
     }
 
     /**
