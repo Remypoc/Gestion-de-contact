@@ -9,6 +9,9 @@
 <h:head><title>Home</title></h:head>
 <h:body>
     <f:view>
+
+        <h:messages globalOnly="true" />
+
         <h:form id="search">
             <h:inputText id="searchInput" name="searchInput" a:placeholder="Search contact"/>
             <h:commandButton id="searchButton" name="searchButton" value="Search"
@@ -270,7 +273,6 @@
                     </h:column>
                 </h:dataTable>
                 <h:commandButton id="addPhoneEdit" value="add phone" action="#{contactManager.addPhone}"/>
-                <h:message for="formEdit" styleClasse="form-error" />
                 <p><h:commandButton id="saveEdit" value="save" action="#{contactManager.save}"/></p>
                 <p><h:commandButton id="cancel" value="cancel" action="#{contactManager.cancel}" immediate="true"/></p>
             </h:form>

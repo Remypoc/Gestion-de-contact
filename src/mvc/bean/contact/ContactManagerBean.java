@@ -39,7 +39,7 @@ public class ContactManagerBean implements Serializable {
         contact.setAddress(address);
         contact.setPhones(phones);
         final ContactService cs = new ContactService();
-        contacts = cs.loadContacts();
+        contacts = cs.loadContactsList();
     }
 
     // Reset placeholder
@@ -123,18 +123,17 @@ public class ContactManagerBean implements Serializable {
         edit = true;
     }
 
-    public String save() {
+    public void save() {
         final ContactService cs = new ContactService();
         try {
             final Object lError = cs.updateContact(contact);
         } catch (DAOException e) {
             FacesContext context = FacesContext.getCurrentInstance();
             ResourceBundle text = ResourceBundle.getBundle("resources.Resources", context.getViewRoot().getLocale());
-            context.addMessage("formEdit", new FacesMessage(text.getString("exception.edit.contact.lock.failed")));
+            context.addMessage(null, new FacesMessage(text.getString("exception.edit.contact.lock.failed")));
         }
         reset();
         edit = false;
-        return "home";
     }
 
     public void delete() {

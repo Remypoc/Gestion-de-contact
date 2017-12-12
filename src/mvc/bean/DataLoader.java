@@ -24,11 +24,11 @@ public class DataLoader {
         }
     }
 
-    public List<Contact> loadContacts() {
+    public Set<Contact> loadContacts() {
         //TODO catch exception if can't load
         System.out.println("DataLoader => load Contacts");
         ContactService service = ServiceFactory.getContactService();
-        List<Contact> contacts = service.loadContacts();
+        Set<Contact> contacts = service.loadContacts();
         return contacts;
     }
 

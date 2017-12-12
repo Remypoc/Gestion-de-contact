@@ -39,7 +39,7 @@ public class ContactService {
 	 * @param contact
 	 * @return return null or string exception
 	 */
-	public Object updateContact(Contact contact) {
+	public Object updateContact(Contact contact) throws  DAOException {
 		return (cdao = new DAOContact()).updateContact(contact);
 	}
 
@@ -138,7 +138,7 @@ public class ContactService {
 
 	//TODO TMP remove
 	public List<Contact> loadContactsList() {
-		return new ArrayList<>((cdao = new DAOContact()).loadContacts());
+		return new ArrayList<>((cdao = new DAOContact()).loadContactsList());
 	}
 
     public Set<Contact> loadContacts() {

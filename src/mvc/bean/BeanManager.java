@@ -191,7 +191,7 @@ public class BeanManager implements Serializable {
     }
 
     public void loadContacts() {
-        List<Contact> contacts = this.dataLoader.loadContacts();
+        Set<Contact> contacts = this.dataLoader.loadContacts();
         if (contacts == null) {
             FacesContext context = FacesContext.getCurrentInstance();
             ResourceBundle text = ResourceBundle.getBundle("resources.Resources", context.getViewRoot().getLocale());

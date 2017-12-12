@@ -1,14 +1,14 @@
 package domain;
 
-import org.hibernate.Hibernate;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import exception.DAOException;
+import org.hibernate.*;
 import util.HibernateUtil;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import javax.persistence.OptimisticLockException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -63,22 +63,29 @@ public class DAOContact {
      * @param contact Contact
      * @return return null or string exception
      */
-    public Object updateContact(final Contact contact) {
-
-        if (!contact.getAddress().isValid()) {
-            if (contact.getAddress().getId() != 0) {
-                deleteAddress(contact.getAddress().getId());
+    public Object updateContact(final Contact contact) throws DAOException {
+        try {
+            if (!contact.getAddress().isValid()) {
+                if (contact.getAddress().getId() != 0) {
+                    deleteAddress(contact.getAddress().getId());
+                }
+                contact.setAddress(null);
             }
-            contact.setAddress(null);
+
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+
+            session.beginTransaction();
+            session.saveOrUpdate(contact);
+
+            session.getTransaction().commit();
+            session.close();
+        } catch (OptimisticLockException e) {
+            throw new DAOException(
+                    String.format("Failed to update contact %s %s: ", contact.getFirstName(), contact.getLastName()), "exception.edit.contact.lock.failed");
+        } catch (HibernateException e) {
+            throw new DAOException(
+                    String.format("Failed to update contact %s %s: ", contact.getFirstName(), contact.getLastName()), "exception.connexion.database.failed");
         }
-
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-
-        session.beginTransaction();
-        session.saveOrUpdate(contact);
-
-        session.getTransaction().commit();
-        session.close();
 
         System.out.println(String.format("Update contact to database : %s", contact.toString()));
         return null;
@@ -254,7 +261,7 @@ public class DAOContact {
         return null;
     }
 
-    public List<Contact> loadContacts() {
+    public List<Contact> loadContactsList() {
         if (sessionFactory != null) {
             Session session = sessionFactory.getCurrentSession();
             session.beginTransaction();
@@ -262,6 +269,18 @@ public class DAOContact {
                     "from Contact contact ORDER BY lastName", Contact.class).list();
             session.close();
             return new ArrayList<>(contacts);
+        }
+        return null;
+    }
+
+    public Set<Contact> loadContacts() {
+        if (sessionFactory != null) {
+            Session session = sessionFactory.getCurrentSession();
+            session.beginTransaction();
+            List<Contact> contacts = session.createQuery(
+                    "from Contact contact ORDER BY lastName", Contact.class).list();
+            session.close();
+            return new HashSet<>(contacts);
         }
         return null;
     }

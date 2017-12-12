@@ -7,8 +7,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class DataManager {
+
     private Set<ContactGroup> groups;
-    private List<Contact> contacts;
+    private Set<Contact> contacts;
     private Contact contact;
     private ContactGroup group;
     private String filterGroups;
@@ -17,7 +18,7 @@ public class DataManager {
 
     public DataManager() {
         this.groups = new HashSet<>();
-        this.contacts = new ArrayList<>();
+        this.contacts = new HashSet<>();
         this.contact = null;
         this.group = null;
         this.filterContacts = null;
@@ -33,11 +34,11 @@ public class DataManager {
         this.groups = groups;
     }
 
-    public List<Contact> getContacts() {
+    public Set<Contact> getContacts() {
         return contacts;
     }
 
-    public void setContacts(List<Contact> contacts) {
+    public void setContacts(Set<Contact> contacts) {
         this.contacts = contacts;
     }
 
