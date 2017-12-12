@@ -198,6 +198,8 @@ public class BeanManager implements Serializable {
             context.addMessage("form-createGroup", new FacesMessage(text.getString("exception.load.groups.failed")));
             // TODO form-creategroup ??
         } else {
+            this.searchGroupBean.resetGroupSearch();
+            this.dataManager.setFilterGroups(null);
             this.dataManager.setGroups(groups);
         }
     }
@@ -210,6 +212,8 @@ public class BeanManager implements Serializable {
             context.addMessage("form-createGroup", new FacesMessage(text.getString("exception.load.contacts.failed")));
             // TODO form-creategroup ??
         } else {
+            this.searchGroupBean.resetContactSearch();
+            this.dataManager.setFilterContactsMain(null);
             this.dataManager.setContacts(contacts);
         }
     }
@@ -222,9 +226,9 @@ public class BeanManager implements Serializable {
             context.addMessage("form-createGroup", new FacesMessage(text.getString("exception.load.group.failed")));
             // TODO form-creategroup ??
         } else {
-            this.dataManager.setFilterContactsMain(null);
             this.dataManager.setFilterContacts(null);
-            dataManager.setGroup(group);
+            this.searchGroupBean.resetContactSearch();
+            this.dataManager.setGroup(group);
             this.viewManager.displayGroup();
         }
     }
@@ -271,8 +275,7 @@ public class BeanManager implements Serializable {
             context.addMessage("form-createGroup", new FacesMessage(text.getString("exception.load.contact.failed")));
             // TODO form-creategroup ??
         } else {
-            this.dataManager.setFilterContacts(null);
-            dataManager.setContact(contact);
+            this.dataManager.setContact(contact);
             this.viewManager.displayContact();
         }
     }
