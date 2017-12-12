@@ -1,4 +1,4 @@
-package mvc.beans.contact;
+package mvc.bean.contact;
 
 import domain.Address;
 import domain.Contact;
