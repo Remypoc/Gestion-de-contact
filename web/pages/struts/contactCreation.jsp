@@ -74,7 +74,7 @@
                 <input type="submit" class="btn btn-primary"
                        value=" <bean:message key="form.contact.creation.validate" />"/>
                 <input type="reset" class="btn btn-primary"
-                       value="<bean:message key="form.contact.creation.cancel" />"/>
+                       value="<bean:message key="form.cancel" />"/>
             </td>
         </tr>
     </table>

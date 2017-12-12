@@ -51,13 +51,29 @@
                         <ul>
                             <li>
                                 <h:form>
+                                    <h:commandLink action="#{viewManager.enableDisplayContacts}"
+                                                   class="btn-floating orange darken-1">
+                                        <i class="material-icons">person</i>
+                                    </h:commandLink>
+                                </h:form>
+                            </li>
+                            <li>
+                                <h:form>
+                                    <h:commandLink action="#{viewManager.enableDisplayGroups}"
+                                                   class="btn-floating blue darken-1">
+                                       <i class="material-icons">group</i>
+                                    </h:commandLink>
+                                </h:form>
+                            </li>
+                            <li><a class="btn-floating yellow darken-1" href="#"><i class="material-icons">person_add</i></a></li>
+                            <li>
+                                <h:form>
                                     <h:commandLink action="#{viewManager.enableDisplayCreateGroupForm}"
                                                    styleClass="btn-floating waves-effect waves-light">
                                         <i class="material-icons center">group_add</i>
                                     </h:commandLink>
                                 </h:form>
                             </li>
-                            <li><a class="btn-floating yellow darken-1" href="#"><i class="material-icons">person_add</i></a></li>
                         </ul>
                     </div>
                 </div>
@@ -72,14 +88,61 @@
         <div class="row">
             <div class="col s6">
             <div class="card-panel">
-            <div style="color: #3b5998;">
-                <i class="material-icons">book</i>
-                <i class="material-icons prefix">group</i>
-            </div>
+            <h:panelGroup rendered="#{viewManager.displayContacts}">
+                <div style="color: #3b5998;">
+                    <i class="material-icons prefix">person</i>
+                </div>
+            </h:panelGroup>
+            <h:panelGroup rendered="#{viewManager.displayGroups}" styleClass="color: #3b5998;">
+                <div style="color: #3b5998;">
+                    <i class="material-icons">group</i>
+                </div>
+            </h:panelGroup>
             <div class="container">
             <div class="row">
             <div class="col s12">
 
+
+            <!-- Display list contact block -->
+            <h:panelGroup layout="block" class="list-contact" rendered="#{viewManager.displayContacts}">
+                <!-- Search for contact -->
+                <h:form id="form-searchContact">
+                    <div class="row">
+                        <div class="input-field col s10">
+                            <i class="material-icons prefix">search</i>
+                            <h:inputText styleClass="validate" id="form-searchContact-name" value="#{searchContact.filterContacts}"
+                                         validatorMessage="#{msgs['search.contact.validator.size.min.max']}">
+                                <f:validateLength maximum="50" />
+                            </h:inputText>
+                            <h:outputLabel for="form-searchContact-name">#{msgs['label.search.contact']}</h:outputLabel>
+                        </div>
+                    </div>
+                    <h:message for="form-searchContact-name" styleClass="form-input-error" />
+                    <h:commandButton action="#{searchContact.searchContactByName}" styleClass="btn waves-effect waves-light postfix" style="display: none;"/>
+                </h:form>
+
+                <!-- List of group-->
+                <div class="row">
+                    <h:dataTable value="#{beanManager.dataManager.displayContacts}" var="contact" styleClass="responsive-table highlight bordered">
+                        <h:column>
+                            <h:form>
+                                <h:commandLink  action="#" style="color: black;">
+                                    <h:outputText value="#{contact.firstName} #{contact.lastName}"/></h:commandLink>
+                            </h:form>
+                        </h:column>
+                        <h:column>
+                            <h:form>
+                                <h:commandLink action="#{deleteContact.deleteContact(contact.id)}" styleClass="btn-floating waves-effect waves-light grey left-align" >
+                                    <i class="material-icons left-align">remove</i>
+                                </h:commandLink>
+                            </h:form>
+                        </h:column>
+                    </h:dataTable>
+                </div>
+            </h:panelGroup>
+
+            <!-- Display list group block -->
+            <h:panelGroup layout="block" class="list-group" rendered="#{viewManager.displayGroups}">
                 <!-- Search for group -->
                 <h:form id="form-searchGroup">
                     <div class="row">
@@ -97,7 +160,7 @@
 
                 <!-- List of group-->
                 <div class="row">
-                    <h:dataTable value="#{beanManager.dataManager.displayGroups}" var="group" rendered="#{viewManager.displayGroups}" styleClass="responsive-table highlight bordered">
+                    <h:dataTable value="#{beanManager.dataManager.displayGroups}" var="group" styleClass="responsive-table highlight bordered">
                         <h:column>
                             <h:form>
                                 <h:commandLink  action="#{beanManager.loadGroup(group.groupId)}" style="color: black;">
@@ -113,6 +176,7 @@
                         </h:column>
                     </h:dataTable>
                 </div>
+            </h:panelGroup>
 
             </div>
             </div>

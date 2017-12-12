@@ -1,6 +1,5 @@
 package mvc.bean;
 
-import domain.Contact;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -11,7 +10,8 @@ import java.io.Serializable;
 public class ViewManager implements Serializable {
     private BeanManager beanManager;
 
-    private boolean displayGroups = true;
+    private boolean displayGroups = false;
+    private boolean displayContacts = true;
     private boolean displayGroup = false;
     private boolean displayCreateGroupForm = false;
     private boolean displayUpdateGroupForm = false;
@@ -22,6 +22,14 @@ public class ViewManager implements Serializable {
 
     public void setBeanManager(BeanManager beanManager) {
         this.beanManager = beanManager;
+    }
+
+    public boolean isDisplayContacts() {
+        return displayContacts;
+    }
+
+    public void setDisplayContacts(boolean displayContacts) {
+        this.displayContacts = displayContacts;
     }
 
     public boolean isDisplayUpdateGroupForm() {
@@ -90,6 +98,18 @@ public class ViewManager implements Serializable {
         displayCreateGroupForm = true;
         displayUpdateGroupForm = false;
         this.beanManager.notifyDisplayCreateGroupForm();
+    }
+
+    public void enableDisplayContacts() {
+        displayContacts = true;
+        displayGroups = false;
+        this.beanManager.refreshContacts();
+    }
+
+    public void enableDisplayGroups() {
+        displayGroups = true;
+        displayContacts = false;
+        this.beanManager.refreshGroups();
     }
 
 }

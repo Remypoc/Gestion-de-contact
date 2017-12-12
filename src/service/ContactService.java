@@ -2,6 +2,8 @@ package service;
 
 import domain.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 public class ContactService {
@@ -47,6 +49,10 @@ public class ContactService {
 	 */
 	public Object deleteContact(Contact contact) {
 		return (cdao = new DAOContact()).deleteContact(contact);
+	}
+
+	public Object deleteContact(Long contactId) {
+		return (cdao = new DAOContact()).deleteContact(contactId);
 	}
 	
 	/**
@@ -129,15 +135,24 @@ public class ContactService {
 		return (cdao = new DAOContact()).addContactToGroup(group, contact);
 	}
 
+	//TODO TMP remove
+	public List<Contact> loadContactsList() {
+		return new ArrayList<>((cdao = new DAOContact()).loadContacts());
+	}
+
     public Set<Contact> loadContacts() {
-		return (cdao = new DAOContact()).loadContacts();
+        return (cdao = new DAOContact()).loadContacts();
     }
 
 	public Object loadGroups() {
 		return (cdao = new DAOContact()).loadGroups();
 	}
 
-	public Object loadGroups(String groupName) {
-		return (cdao = new DAOContact()).loadGroups(groupName);
-	}
+    public Object loadContacts(String search) {
+        return (cdao = new DAOContact()).loadContacts(search);
+    }
+
+    public Object loadContact(Long id) {
+        return (cdao = new DAOContact()).loadContact(id);
+    }
 }

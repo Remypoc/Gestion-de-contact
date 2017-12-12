@@ -15,6 +15,7 @@ public class DataManager {
     private ContactGroup group;
     private String filterGroups;
     private String filterContacts;
+    private String filterContactsMain;
 
     public DataManager() {
         this.groups = new HashSet<>();
@@ -23,6 +24,7 @@ public class DataManager {
         this.group = null;
         this.filterContacts = null;
         this.filterGroups = null;
+        this.filterContactsMain = null;
     }
 
     public Set<ContactGroup> getGroups() {
@@ -73,6 +75,21 @@ public class DataManager {
         this.group = group;
     }
 
+    public Set<Contact> getDisplayContacts() {
+        System.out.println("DataManger => getDisplayContacts");
+        if (contacts == null)
+            return null;
+        if (filterContactsMain == null)
+            return contacts;
+
+        Set<Contact> contacts2 = contacts.stream()
+                .filter(c -> c.getFirstName().toLowerCase().contains(filterContactsMain) ||
+                        c.getLastName().toLowerCase().contains(filterContactsMain))
+                .collect(Collectors.toSet());
+        System.out.println(contacts2.size());
+        return contacts2;
+    }
+
     // TODO function reload for Group and contacts
 
     public Set<ContactGroup> getDisplayGroups() {
@@ -84,11 +101,6 @@ public class DataManager {
         if (filterGroups == null) {
             return groups;
         }
-        if (groups.stream()
-                .filter(g -> g.getGroupName().toLowerCase()
-                        .contains(filterGroups.toLowerCase()))
-                .collect(Collectors.toSet()).isEmpty())
-            System.out.println("EMPTY GROUP");
         return groups.stream()
                 .filter(g -> g.getGroupName().toLowerCase()
                         .contains(filterGroups.toLowerCase()))
@@ -102,7 +114,6 @@ public class DataManager {
             return null;
         }
         if (filterContacts == null) {
-            System.out.println(group.getContacts().stream().map(Contact::getFullName).collect(Collectors.toList()));
             return group.getContacts();
         }
         return group.getContacts().stream()
@@ -137,5 +148,9 @@ public class DataManager {
         if (this.groups != null) {
             this.groups.add(group);
         }
+    }
+
+    public void setFilterContactsMain(String filterContactsMain) {
+        this.filterContactsMain = filterContactsMain;
     }
 }
