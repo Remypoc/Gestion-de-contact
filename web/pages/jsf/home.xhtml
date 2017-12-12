@@ -212,11 +212,11 @@
                         <div class="col s12">
                         <ul class="collection">
                             <li class="collection-item avatar">
-                                <i class="material-icons circle">email</i>
+                                <i class="material-icons circle light-blue darken-4">email</i>
                                 <p>#{beanManager.dataManager.contact.email}</p>
                             </li>
                             <li class="collection-item avatar">
-                                <i class="material-icons circle">add_location</i>
+                                <i class="material-icons circle light-blue darken-4">add_location</i>
                                 <c:if test="#{not empty beanManager.dataManager.contact.address}">
                                     <p>#{beanManager.dataManager.contact.address.street}</p>
                                     <p>#{beanManager.dataManager.contact.address.zip} #{beanManager.dataManager.contact.address.city}</p>
@@ -227,7 +227,7 @@
                                 </c:if>
                             </li>
                             <li class="collection-item avatar">
-                                <i class="material-icons circle">contact_phone</i>
+                                <i class="material-icons circle light-blue darken-4">contact_phone</i>
                                 <c:if test="#{not empty beanManager.dataManager.contact.phones }">
                                     <c:forEach var="phone" items="#{beanManager.dataManager.contact.phones}">
                                         <p>
