@@ -14,9 +14,6 @@ import javax.persistence.criteria.Root;
 
 
 public class DAOContact {
-	
-//	private final static String RESOURCE_JDBC = "java:comp/env/jdbc/gestion_contact";
-
 	private SessionFactory sessionFactory;
 
 	public DAOContact() {
@@ -34,9 +31,6 @@ public class DAOContact {
 	 * @return null if contact was correctly being add or string exception if failure
 	 */
 	public String addContact(Contact contact) {
-
-        System.out.println("contact : " + contact.toString());
-
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 
 		session.beginTransaction();
@@ -44,18 +38,6 @@ public class DAOContact {
 
 		session.getTransaction().commit();
 		session.close();
-
-		System.out.println(String.format("Add contact to database : %s", contact.toString()));
-
-        return null;
-    }
-
-    /**
-     * @param contact
-     * @return return null or string exception
-     */
-    public Object searchContact(final Contact contact) {
-        System.out.println(String.format("Searching contact : %s", contact.toString()));
         return null;
     }
 
@@ -64,8 +46,6 @@ public class DAOContact {
      * @return return null or string exception
      */
     public Object updateContact(final Contact contact) {
-        System.out.println(String.format("Updating contact : %s", contact.toString()));
-
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 
         session.beginTransaction();
@@ -74,16 +54,6 @@ public class DAOContact {
         session.getTransaction().commit();
         session.close();
 
-        System.out.println(String.format("Update contact to database : %s", contact.toString()));
-        return null;
-    }
-
-    /**
-     * @param contact
-     * @return return null or string exception
-     */
-    public Object deleteContact(final Contact contact) {
-        System.out.println(String.format("Deleting contact : %s", contact.toString()));
         return null;
     }
 
@@ -118,34 +88,6 @@ public class DAOContact {
 		session.getTransaction().commit();
 		session.close();
 
-        System.out.println(String.format("Add address to database : %s", address.toString()));
-        return null;
-    }
-
-    /**
-     * @param address
-     * @return address being search or string exception if failure
-     */
-    public Object searchAddress(Address address) {
-        System.out.println(String.format("Searching address : %s", address.toString()));
-        return null;
-    }
-
-    /**
-     * @param address
-     * @return return null or string exception
-     */
-    public Object updateAddress(Address address) {
-        System.out.println(String.format("Updating address : %s", address.toString()));
-        return null;
-    }
-
-    /**
-     * @param address
-     * @return return null or string exception
-     */
-    public Object deleteAddress(Address address) {
-        System.out.println(String.format("Deleting address : %s", address.toString()));
         return null;
     }
 
@@ -164,37 +106,6 @@ public class DAOContact {
 		session.getTransaction().commit();
 		session.close();
 
-		System.out.println(String.format("Add phoneNumber to database : %s", phoneNumber.toString()));
-		return null;
-	}
-	
-	/**
-	 * 
-	 * @param phoneNumber
-	 * @return phoneNumber being search or string exception if failure
-	 */
-	public Object searchPhoneNumber(PhoneNumber phoneNumber) {
-		System.out.println(String.format("Searching phoneNumber : %s", phoneNumber.toString()));
-		return null;
-	}
-	
-	/**
-	 * 
-	 * @param phoneNumber
-	 * @return return null or string exception
-	 */
-	public Object updatePhoneNumber(PhoneNumber phoneNumber) {
-		System.out.println(String.format("Updating phoneNumber : %s", phoneNumber.toString()));
-		return null;
-	}
-	
-	/**
-	 * 
-	 * @param phoneNumber
-	 * @return return null or string exception
-	 */
-	public Object deletePhoneNumber(PhoneNumber phoneNumber) {
-		System.out.println(String.format("Deleting phoneNumber : %s", phoneNumber.toString()));
 		return null;
 	}
 
@@ -271,7 +182,6 @@ public class DAOContact {
         Hibernate.initialize(contact.getAddress());
         Hibernate.initialize(contact.getPhones());
         session.close();
-        System.out.println(contact);
         return contact;
     }
 
@@ -279,20 +189,8 @@ public class DAOContact {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
         List<ContactGroup> groups = session.createQuery("from ContactGroup contactGroup").list();
-        System.out.println(groups);
         session.close();
 
-		return groups;
-	}
-
-	public Object loadGroups(String groupName) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		session.beginTransaction();
-		Object groups = session.createQuery(
-				"from ContactGroup contactGroup WHERE groupName like :name ORDER BY groupName")
-				.setParameter("name", String.format("%s%%", groupName))
-				.list();
-		session.close();
 		return groups;
 	}
 

@@ -4,6 +4,7 @@ import domain.Contact;
 import domain.ContactGroup;
 import mvc.bean.contact.DeleteContactBean;
 import mvc.bean.contact.SearchContactBean;
+import mvc.bean.contact.UpdateContactBean;
 import mvc.bean.group.*;
 
 import javax.faces.application.FacesMessage;
@@ -38,6 +39,8 @@ public class BeanManager implements Serializable {
     private DeleteContactBean deleteContactBean;
     @ManagedProperty(value="#{searchContact}")
     private SearchContactBean searchContactBean;
+    @ManagedProperty(value="#{updateContact}")
+    private UpdateContactBean updateContactBean;
 
     private String error;
 
@@ -85,6 +88,10 @@ public class BeanManager implements Serializable {
 
     public CreateGroupBean getCreateGroupBean() {
         return createGroupBean;
+    }
+
+    public UpdateContactBean getUpdateContactBean() {
+        return updateContactBean;
     }
 
     public void notifyDisplayCreateGroupForm() {
@@ -145,6 +152,11 @@ public class BeanManager implements Serializable {
     public void setSearchContactBean(SearchContactBean searchContactBean) {
         this.searchContactBean = searchContactBean;
         this.searchContactBean.setBeanManager(this);
+    }
+
+    public void setUpdateContactBean(UpdateContactBean updateContactBean) {
+        this.updateContactBean = updateContactBean;
+        this.updateContactBean.setBeanManager(this);
     }
 
     public void notifyDeletedGroup(long groupId) {
@@ -210,6 +222,8 @@ public class BeanManager implements Serializable {
             context.addMessage("form-createGroup", new FacesMessage(text.getString("exception.load.group.failed")));
             // TODO form-creategroup ??
         } else {
+            this.dataManager.setFilterContactsMain(null);
+            this.dataManager.setFilterContacts(null);
             dataManager.setGroup(group);
             this.viewManager.displayGroup();
         }
@@ -257,8 +271,19 @@ public class BeanManager implements Serializable {
             context.addMessage("form-createGroup", new FacesMessage(text.getString("exception.load.contact.failed")));
             // TODO form-creategroup ??
         } else {
+            this.dataManager.setFilterContacts(null);
             dataManager.setContact(contact);
             this.viewManager.displayContact();
         }
+    }
+
+    public void notifyUpdateContact(Contact contact) {
+        if ( contact != null) {
+            dataManager.setContact(contact);
+            Optional<Contact> c1 =dataManager.getContacts().stream()
+                    .filter(c -> c.getId() == contact.getId()).findFirst();
+            c1.ifPresent(c -> c = contact);
+        }
+        this.viewManager.hideUpdateContactForm();
     }
 }
