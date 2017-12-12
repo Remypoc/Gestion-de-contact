@@ -2,6 +2,8 @@ package mvc.bean;
 
 import domain.Contact;
 import domain.ContactGroup;
+import mvc.bean.contact.DeleteContactBean;
+import mvc.bean.contact.SearchContactBean;
 import mvc.bean.group.*;
 
 import javax.faces.application.FacesMessage;
@@ -33,6 +35,10 @@ public class BeanManager implements Serializable {
     private UpdateGroupBean updateGroupBean;
     @ManagedProperty(value="#{addContactToGroup}")
     private AddContactToGroupBean addContactToGroupBean;
+    @ManagedProperty(value="#{deleteContact}")
+    private DeleteContactBean deleteContactBean;
+    @ManagedProperty(value="#{searchContact}")
+    private SearchContactBean searchContactBean;
 
     private String error;
 
@@ -64,6 +70,14 @@ public class BeanManager implements Serializable {
 
     public DeleteGroupBean getDeleteGroupeBean() {
         return deleteGroupeBean;
+    }
+
+    public DeleteContactBean getDeleteContactBean() {
+        return deleteContactBean;
+    }
+
+    public SearchContactBean getSearchContactBean() {
+        return searchContactBean;
     }
 
     public ViewManager getViewManager() {
@@ -122,6 +136,16 @@ public class BeanManager implements Serializable {
     public void setCreateGroupBean(CreateGroupBean createGroupBean) {
         this.createGroupBean = createGroupBean;
         this.createGroupBean.setBeanManager(this);
+    }
+
+    public void setDeleteContactBean(DeleteContactBean deleteContactBean) {
+        this.deleteContactBean = deleteContactBean;
+        this.deleteContactBean.setBeanManager(this);
+    }
+
+    public void setSearchContactBean(SearchContactBean searchContactBean) {
+        this.searchContactBean = searchContactBean;
+        this.searchContactBean.setBeanManager(this);
     }
 
     public void notifyDeletedGroup(long groupId) {
@@ -203,5 +227,23 @@ public class BeanManager implements Serializable {
 
     public void notifyError(String error) {
         this.error = error;
+    }
+
+    void refreshContacts() {
+        Set<Contact> contacts = this.dataLoader.loadContacts();
+        this.dataManager.setContacts(contacts);
+    }
+
+    void refreshGroups() {
+        Set<ContactGroup> groups = this.dataLoader.loadGroups();
+        this.dataManager.setGroups(groups);
+    }
+
+    public void notifySearchContactMainByName(String s) {
+        this.dataManager.setFilterContactsMain(s);
+    }
+
+    public void notifyResetFilterContactsMain() {
+        this.dataManager.setFilterContactsMain(null);
     }
 }

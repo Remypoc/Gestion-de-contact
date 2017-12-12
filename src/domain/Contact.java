@@ -44,13 +44,13 @@ public class Contact {
         this.lastName = lastName;
         this.email = email;
         if (phones != null)
-        	this.phones = phones;
+            this.phones = phones;
         this.address = address;
     }
 
-	public String getFullName() {
-		return String.format("%s %s", getFirstName(), getLastName());
-	}
+    public String getFullName() {
+        return String.format("%s %s", getFirstName(), getLastName());
+    }
 
     public String getEmail() {
         return email;
@@ -90,7 +90,7 @@ public class Contact {
 
     public void setPhones(Set<PhoneNumber> phoneNumbers) {
         if (phoneNumbers != null)
-			phones = phoneNumbers;
+            phones = phoneNumbers;
     }
 
     public void addPhoneNumber(PhoneNumber phone) {

@@ -5,26 +5,29 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import util.HibernateUtil;
 
-import java.util.*;
-import javax.persistence.OptimisticLockException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+
 
 public class DAOContact {
 
 //	private final static String RESOURCE_JDBC = "java:comp/env/jdbc/gestion_contact";
 
-    private SessionFactory sessionFactory;
+	private SessionFactory sessionFactory;
 
-    public DAOContact() {
-        try {
-            sessionFactory = HibernateUtil.getSessionFactory();
-        } catch (NoClassDefFoundError e) {
-            System.err.println(e.getMessage());
-            sessionFactory = null;
-        }
-    }
+	public DAOContact() {
+		try {
+			sessionFactory = HibernateUtil.getSessionFactory();
+		} catch (NoClassDefFoundError e) {
+			System.err.println(e.getMessage());
+			sessionFactory = null;
+		}
+	}
 
     /**
      * @param contact
@@ -57,10 +60,6 @@ public class DAOContact {
     }
 
     /**
-     * Note : It is actually not possible to delete orphan of a one to one (or many to one) relation.
-     * It has to be done manually.
-     * See : https://hibernate.atlassian.net/browse/HHH-2608
-     *
      * @param contact Contact
      * @return return null or string exception
      */
@@ -187,36 +186,39 @@ public class DAOContact {
         session.getTransaction().commit();
         session.close();
 
-        System.out.println(String.format("Add phoneNumber to database : %s", phoneNumber.toString()));
-        return null;
-    }
+		System.out.println(String.format("Add phoneNumber to database : %s", phoneNumber.toString()));
+		return null;
+	}
 
-    /**
-     * @param phoneNumber
-     * @return phoneNumber being search or string exception if failure
-     */
-    public Object searchPhoneNumber(PhoneNumber phoneNumber) {
-        System.out.println(String.format("Searching phoneNumber : %s", phoneNumber.toString()));
-        return null;
-    }
+	/**
+	 *
+	 * @param phoneNumber
+	 * @return phoneNumber being search or string exception if failure
+	 */
+	public Object searchPhoneNumber(PhoneNumber phoneNumber) {
+		System.out.println(String.format("Searching phoneNumber : %s", phoneNumber.toString()));
+		return null;
+	}
 
-    /**
-     * @param phoneNumber
-     * @return return null or string exception
-     */
-    public Object updatePhoneNumber(PhoneNumber phoneNumber) {
-        System.out.println(String.format("Updating phoneNumber : %s", phoneNumber.toString()));
-        return null;
-    }
+	/**
+	 *
+	 * @param phoneNumber
+	 * @return return null or string exception
+	 */
+	public Object updatePhoneNumber(PhoneNumber phoneNumber) {
+		System.out.println(String.format("Updating phoneNumber : %s", phoneNumber.toString()));
+		return null;
+	}
 
-    /**
-     * @param phoneNumber
-     * @return return null or string exception
-     */
-    public Object deletePhoneNumber(PhoneNumber phoneNumber) {
-        System.out.println(String.format("Deleting phoneNumber : %s", phoneNumber.toString()));
-        return null;
-    }
+	/**
+	 *
+	 * @param phoneNumber
+	 * @return return null or string exception
+	 */
+	public Object deletePhoneNumber(PhoneNumber phoneNumber) {
+		System.out.println(String.format("Deleting phoneNumber : %s", phoneNumber.toString()));
+		return null;
+	}
 
     public Object addContactGroup(ContactGroup contactGroup) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -259,11 +261,23 @@ public class DAOContact {
             List<Contact> contacts = session.createQuery(
                     "from Contact contact ORDER BY lastName", Contact.class).list();
             session.close();
-
             return new ArrayList<>(contacts);
         }
         return null;
     }
+
+    public Object loadContacts(String search) {
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        Object contacts = session.createQuery(
+                "from Contact contact WHERE lastName like :name or firstName like :name or email like :name " +
+                        "ORDER BY lastName")
+                .setParameter("name", String.format("%s%%", search))
+                .list();
+        session.close();
+        return contacts;
+    }
+
 
     public Object loadContact(Long id) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -274,33 +288,33 @@ public class DAOContact {
         criteria.select(root).where(builder.equal(root.get("id"), id));
         Contact contact = session.createQuery(criteria).getSingleResult();
 
-        // Used to force load lazy collections
+        // Used to force load object
         Hibernate.initialize(contact.getAddress());
         Hibernate.initialize(contact.getPhones());
 
         session.close();
+        System.out.println(contact);
         return contact;
     }
 
     public Object loadGroups() {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        Object groups = session.createQuery(
-                "from ContactGroup contactGroup ORDER BY groupName").list();
+        List<ContactGroup> groups = session.createQuery("from ContactGroup contactGroup").list();
         System.out.println(groups);
         session.close();
 
-        return groups;
-    }
+		return groups;
+	}
 
-    public Object loadGroups(String groupName) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        Object groups = session.createQuery(
-                "from ContactGroup contactGroup WHERE groupName like :name ORDER BY groupName")
-                .setParameter("name", String.format("%s%%", groupName))
-                .list();
-        session.close();
-        return groups;
-    }
+	public Object loadGroups(String groupName) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		Object groups = session.createQuery(
+				"from ContactGroup contactGroup WHERE groupName like :name ORDER BY groupName")
+				.setParameter("name", String.format("%s%%", groupName))
+				.list();
+		session.close();
+		return groups;
+	}
 }
