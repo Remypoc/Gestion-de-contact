@@ -7,6 +7,7 @@ import service.ContactService;
 import service.GroupService;
 import service.ServiceFactory;
 
+import java.util.List;
 import java.util.Set;
 
 public class DataLoader {
@@ -23,11 +24,11 @@ public class DataLoader {
         }
     }
 
-    public Set<Contact> loadContacts() {
+    public List<Contact> loadContacts() {
         //TODO catch exception if can't load
         System.out.println("DataLoader => load Contacts");
         ContactService service = ServiceFactory.getContactService();
-        Set<Contact> contacts = service.loadContacts();
+        List<Contact> contacts = service.loadContacts();
         return contacts;
     }
 

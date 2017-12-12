@@ -3,16 +3,17 @@ package mvc.bean.contact;
 import domain.Address;
 import domain.Contact;
 import domain.PhoneNumber;
+import exception.DAOException;
 import service.ContactService;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
-import javax.persistence.OptimisticLockException;
 import java.io.Serializable;
 import java.util.*;
 
@@ -126,8 +127,10 @@ public class ContactManagerBean implements Serializable {
         final ContactService cs = new ContactService();
         try {
             final Object lError = cs.updateContact(contact);
-        } catch (OptimisticLockException e) {
-            e.printStackTrace();
+        } catch (DAOException e) {
+            FacesContext context = FacesContext.getCurrentInstance();
+            ResourceBundle text = ResourceBundle.getBundle("resources.Resources", context.getViewRoot().getLocale());
+            context.addMessage("formEdit", new FacesMessage(text.getString("exception.edit.contact.lock.failed")));
         }
         reset();
         edit = false;
@@ -205,8 +208,6 @@ public class ContactManagerBean implements Serializable {
     }
 
     public void cancelSearch() {
-        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-        String searchInput = ec.getRequestParameterMap().get("search:searchInput");
         search = false;
     }
 }

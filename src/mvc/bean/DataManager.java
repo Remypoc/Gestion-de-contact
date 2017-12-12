@@ -3,14 +3,12 @@ package mvc.bean;
 import domain.Contact;
 import domain.ContactGroup;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class DataManager {
     private Set<ContactGroup> groups;
-    private Set<Contact> contacts;
+    private List<Contact> contacts;
     private Contact contact;
     private ContactGroup group;
     private String filterGroups;
@@ -18,7 +16,7 @@ public class DataManager {
 
     public DataManager() {
         this.groups = new HashSet<>();
-        this.contacts = new HashSet<>();
+        this.contacts = new ArrayList<>();
         this.contact = null;
         this.group = null;
         this.filterContacts = null;
@@ -33,11 +31,11 @@ public class DataManager {
         this.groups = groups;
     }
 
-    public Set<Contact> getContacts() {
+    public List<Contact> getContacts() {
         return contacts;
     }
 
-    public void setContacts(Set<Contact> contacts) {
+    public void setContacts(List<Contact> contacts) {
         this.contacts = contacts;
     }
 

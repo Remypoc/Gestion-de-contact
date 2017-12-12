@@ -1,6 +1,7 @@
 package service;
 
 import domain.*;
+import exception.DAOException;
 
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class ContactService {
 	 * @param contact
 	 * @return return null or string exception
 	 */
-	public Object updateContact(Contact contact) {
+	public Object updateContact(Contact contact) throws DAOException {
 		return (cdao = new DAOContact()).updateContact(contact);
 	}
 	
@@ -119,6 +120,15 @@ public class ContactService {
 	 */
 	public Object deletePhoneNumber(PhoneNumber phoneNumber) {
 		return (cdao = new DAOContact()).deletePhoneNumber(phoneNumber);
+	}
+
+	/**
+	 *
+	 * @param id
+	 * @return return null or string exception
+	 */
+	public Object deleteContact(Long id) {
+		return (cdao = new DAOContact()).deleteContact(id);
 	}
 
 	public Object addContactGroup(ContactGroup contactGroup) {

@@ -10,6 +10,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -166,7 +167,7 @@ public class BeanManager implements Serializable {
     }
 
     public void loadContacts() {
-        Set<Contact> contacts = this.dataLoader.loadContacts();
+        List<Contact> contacts = this.dataLoader.loadContacts();
         if (contacts == null) {
             FacesContext context = FacesContext.getCurrentInstance();
             ResourceBundle text = ResourceBundle.getBundle("resources.Resources", context.getViewRoot().getLocale());
