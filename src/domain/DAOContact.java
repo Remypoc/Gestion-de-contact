@@ -1,12 +1,29 @@
 package domain;
 
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import util.HibernateUtil;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 
 public class DAOContact {
 	
-	private final static String RESOURCE_JDBC = "java:comp/env/jdbc/gestion_contact";
+//	private final static String RESOURCE_JDBC = "java:comp/env/jdbc/gestion_contact";
+
+	private SessionFactory sessionFactory;
+
+	public DAOContact() {
+		try {
+			sessionFactory = HibernateUtil.getSessionFactory();
+		} catch (NoClassDefFoundError e) {
+			System.err.println(e.getMessage());
+			sessionFactory = null;
+		}
+	}
 
 	/**
 	 * 
@@ -194,13 +211,17 @@ public class DAOContact {
 		return null;
 	}
 
-	public Object loadContacts() {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		session.beginTransaction();
-		Object contacts = session.createQuery("from Contact contact ORDER BY lastName").list();
-		session.close();
+	public Set<Contact> loadContacts() {
+		if (sessionFactory != null) {
+			Session session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			List<Contact> contacts = session.createQuery(
+					"from Contact contact ORDER BY lastName", Contact.class).list();
+			session.close();
 
-		return contacts;
+			return new HashSet<>(contacts);
+		}
+		return null;
 	}
 
 	public Object loadGroups() {

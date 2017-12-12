@@ -2,8 +2,8 @@ package service;
 
 public class ServiceFactory {
 
-    static public ContactGroupService getContactGroupService() {
-        return new ContactGroupServiceImpl();
+    static public GroupService getGroupService() {
+        return new GroupServiceImpl();
     }
 
     static public ContactService getContactService() {

@@ -20,6 +20,10 @@ public class ContactGroup {
         this.groupName = groupName;
     }
 
+    public ContactGroup(String groupName) {
+    	this.groupName = groupName;
+	}
+
     public ContactGroup(long groupId, String groupName, Set<Contact> contacts) {
         this.groupId = groupId;
         this.groupName = groupName;
@@ -60,6 +64,10 @@ public class ContactGroup {
 		contacts.remove(contact);
 		if (!contact.isMemberOfGroup(this))
 			contact.removeBook(this);
+	}
+
+	public void removeContact(long contactId) {
+		this.contacts.removeIf(contact -> contact.getId() == contactId);
 	}
 
 	public Boolean hasContact(Contact contact) {

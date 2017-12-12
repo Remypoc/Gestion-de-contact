@@ -6,7 +6,8 @@
 
     <display-name>gestion_contact</display-name>
     <welcome-file-list>
-        <welcome-file>pages/main.jsp</welcome-file>
+        <!--<welcome-file>pages/main.jsp</welcome-file>-->
+        <welcome-file>pages/jsf/home.xhtml</welcome-file>
     </welcome-file-list>
 
     <resource-ref>
