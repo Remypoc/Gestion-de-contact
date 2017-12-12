@@ -2,11 +2,11 @@ package domain;
 
 
 public class PhoneNumber {
-
     private long id;
     private String phoneKind;
     private String phoneNumber;
     private Contact contact;
+    private boolean isMobile;
 
     public PhoneNumber() {
     }
@@ -74,5 +74,9 @@ public class PhoneNumber {
             sb.append("contact=null\n");
         sb.append("}\n");
         return sb.toString();
+    }
+
+    public boolean isMobile() {
+        return phoneKind.equalsIgnoreCase("mobile") || phoneKind.equalsIgnoreCase("portable");
     }
 }

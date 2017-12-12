@@ -42,4 +42,12 @@ public class DataLoader {
             return null;
         }
     }
+
+    public Contact loadContact(long contactId) {
+        System.out.println("DataLoader => load Contact");
+        ContactService service = new ContactService();
+        Contact contact = (Contact) service.loadContact(contactId);
+        // TODO try catch exception
+        return contact;
+    }
 }

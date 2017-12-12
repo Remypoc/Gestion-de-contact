@@ -5,7 +5,8 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://struts.apache.org/tags-html">
+      xmlns:p="http://struts.apache.org/tags-html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 <h:head>
     <title><h:outputFormat value="#{msgs['home.title']}" /></title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
@@ -45,14 +46,14 @@
             <div class="col s2 offset-s10">
                 <div style="position: relative">
                     <div class="fixed-action-btn horizontal" style="position: absolute; right: auto; bottom: auto;">
-                        <a class="btn-floating btn-large light-blue darken-4">
+                        <a class="btn-floating btn-large light-blue darken-4" title="#{msgs['label.menu']}">
                             <i class="material-icons">menu</i>
                         </a>
                         <ul>
                             <li>
                                 <h:form>
                                     <h:commandLink action="#{viewManager.enableDisplayContacts}"
-                                                   class="btn-floating orange darken-1">
+                                                   class="btn-floating orange darken-1" title="#{msgs['label.display.contacts']}">
                                         <i class="material-icons">person</i>
                                     </h:commandLink>
                                 </h:form>
@@ -60,7 +61,7 @@
                             <li>
                                 <h:form>
                                     <h:commandLink action="#{viewManager.enableDisplayGroups}"
-                                                   class="btn-floating blue darken-1">
+                                                   class="btn-floating blue darken-1" title="#{msgs['label.display.groups']}">
                                        <i class="material-icons">group</i>
                                     </h:commandLink>
                                 </h:form>
@@ -69,7 +70,7 @@
                             <li>
                                 <h:form>
                                     <h:commandLink action="#{viewManager.enableDisplayCreateGroupForm}"
-                                                   styleClass="btn-floating waves-effect waves-light">
+                                                   styleClass="btn-floating waves-effect waves-light" title="#{msgs['label.add.contactgroup']}">
                                         <i class="material-icons center">group_add</i>
                                     </h:commandLink>
                                 </h:form>
@@ -126,8 +127,8 @@
                     <h:dataTable value="#{beanManager.dataManager.displayContacts}" var="contact" styleClass="responsive-table highlight bordered">
                         <h:column>
                             <h:form>
-                                <h:commandLink  action="#" style="color: black;">
-                                    <h:outputText value="#{contact.firstName} #{contact.lastName}"/></h:commandLink>
+                                <h:commandLink  action="#{beanManager.loadContact(contact.id)}" style="color: black;">
+                                    <h:outputText value="#{contact.firstName}"/> <b><h:outputText value="#{contact.lastName}" /></b></h:commandLink>
                             </h:form>
                         </h:column>
                         <h:column>
@@ -185,6 +186,72 @@
             </div>
 
             <div class="col s6">
+
+                <!-- Display contact informations -->
+                <h:panelGroup layout="block" rendered="#{viewManager.displayContact}">
+                    <div class="card-panel">
+                    <div class="container">
+                    <div class="row">
+                    <div class="col s10 center">
+                        <h5 class="center">
+                            <h:outputText value="#{beanManager.dataManager.contact.firstName}"/> <b><h:outputText value="#{beanManager.dataManager.contact.lastName}"/></b>
+                        </h5>
+                    </div>
+                    <div class="col s2">
+                        <h:form>
+                            <h:commandLink action="#{viewManager.enableDisplayUpdateContactForm}" rendered="#{!viewManager.displayUpdateContactForm}"
+                                           styleClass="btn-floating waves-effect waves-light orange">
+                                <i class="material-icons">mode_edit</i>
+                            </h:commandLink>
+                        </h:form>
+                    </div>
+                    </div>
+
+                    <!-- Contact email, address and phone -->
+                    <div class="row">
+                        <div class="col s12">
+                        <ul class="collection">
+                            <li class="collection-item avatar">
+                                <i class="material-icons circle">email</i>
+                                <p>#{beanManager.dataManager.contact.email}</p>
+                            </li>
+                            <li class="collection-item avatar">
+                                <i class="material-icons circle">add_location</i>
+                                <c:if test="#{not empty beanManager.dataManager.contact.address}">
+                                    <p>#{beanManager.dataManager.contact.address.street}</p>
+                                    <p>#{beanManager.dataManager.contact.address.zip} #{beanManager.dataManager.contact.address.city}</p>
+                                    <p>#{beanManager.dataManager.contact.address.country}</p>
+                                </c:if>
+                                <c:if test="#{empty beanManager.dataManager.contact.address}">
+                                    <p>#{msgs["label.no.address"]}</p>
+                                </c:if>
+                            </li>
+                            <li class="collection-item avatar">
+                                <i class="material-icons circle">contact_phone</i>
+                                <c:if test="#{not empty beanManager.dataManager.contact.phones }">
+                                    <c:forEach var="phone" items="#{beanManager.dataManager.contact.phones}">
+                                        <p>
+                                            <c:if test="#{phone.isMobile()}">
+                                                <i class="material-icons">phone_iphone</i>
+                                            </c:if>
+                                            <c:if test="#{not phone.isMobile()}">
+                                                <i class="material-icons">local_phone</i>
+                                            </c:if>
+                                            #{phone.phoneNumber}
+                                        </p>
+                                    </c:forEach>
+                                </c:if>
+                                <c:if test="#{empty beanManager.dataManager.contact.phones}">
+                                    <p>#{msgs["label.no.phone"]}</p>
+                                </c:if>
+                            </li>
+                        </ul>
+                        </div>
+                    </div>
+                    <br/>
+                    </div>
+                    </div>
+                </h:panelGroup>
 
                 <!-- Display group information (name and list of contacts -->
                 <h:panelGroup layout="block" rendered="#{viewManager.displayGroup}">

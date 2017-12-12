@@ -184,6 +184,7 @@ public class BeanManager implements Serializable {
             FacesContext context = FacesContext.getCurrentInstance();
             ResourceBundle text = ResourceBundle.getBundle("resources.Resources", context.getViewRoot().getLocale());
             context.addMessage("form-createGroup", new FacesMessage(text.getString("exception.load.groups.failed")));
+            // TODO form-creategroup ??
         } else {
             this.dataManager.setGroups(groups);
         }
@@ -195,6 +196,7 @@ public class BeanManager implements Serializable {
             FacesContext context = FacesContext.getCurrentInstance();
             ResourceBundle text = ResourceBundle.getBundle("resources.Resources", context.getViewRoot().getLocale());
             context.addMessage("form-createGroup", new FacesMessage(text.getString("exception.load.contacts.failed")));
+            // TODO form-creategroup ??
         } else {
             this.dataManager.setContacts(contacts);
         }
@@ -206,6 +208,7 @@ public class BeanManager implements Serializable {
             FacesContext context = FacesContext.getCurrentInstance();
             ResourceBundle text = ResourceBundle.getBundle("resources.Resources", context.getViewRoot().getLocale());
             context.addMessage("form-createGroup", new FacesMessage(text.getString("exception.load.group.failed")));
+            // TODO form-creategroup ??
         } else {
             dataManager.setGroup(group);
             this.viewManager.displayGroup();
@@ -244,5 +247,18 @@ public class BeanManager implements Serializable {
 
     public void notifyResetFilterContactsMain() {
         this.dataManager.setFilterContactsMain(null);
+    }
+
+    public void loadContact(long contactId) {
+        Contact contact = this.dataLoader.loadContact(contactId);
+        if (contact == null) {
+            FacesContext context = FacesContext.getCurrentInstance();
+            ResourceBundle text = ResourceBundle.getBundle("resources.Resources", context.getViewRoot().getLocale());
+            context.addMessage("form-createGroup", new FacesMessage(text.getString("exception.load.contact.failed")));
+            // TODO form-creategroup ??
+        } else {
+            dataManager.setContact(contact);
+            this.viewManager.displayContact();
+        }
     }
 }

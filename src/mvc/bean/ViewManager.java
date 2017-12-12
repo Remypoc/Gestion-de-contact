@@ -15,6 +15,9 @@ public class ViewManager implements Serializable {
     private boolean displayGroup = false;
     private boolean displayCreateGroupForm = false;
     private boolean displayUpdateGroupForm = false;
+    private boolean displayContact = false;
+    private boolean displayCreateContactForm = false;
+    private boolean displayUpdateContactForm = false;
 
     public BeanManager getBeanManager() {
         return beanManager;
@@ -30,6 +33,30 @@ public class ViewManager implements Serializable {
 
     public void setDisplayContacts(boolean displayContacts) {
         this.displayContacts = displayContacts;
+    }
+
+    public boolean isDisplayContact() {
+        return displayContact;
+    }
+
+    public void setDisplayContact(boolean displayContact) {
+        this.displayContact = displayContact;
+    }
+
+    public boolean isDisplayUpdateContactForm() {
+        return displayUpdateContactForm;
+    }
+
+    public void setDisplayUpdateContactForm(boolean displayUpdateContactForm) {
+        this.displayUpdateContactForm = displayUpdateContactForm;
+    }
+
+    public boolean isDisplayCreateContactForm() {
+        return displayCreateContactForm;
+    }
+
+    public void setDisplayCreateContactForm(boolean displayCreateContactForm) {
+        this.displayCreateContactForm = displayCreateContactForm;
     }
 
     public boolean isDisplayUpdateGroupForm() {
@@ -112,4 +139,16 @@ public class ViewManager implements Serializable {
         this.beanManager.refreshGroups();
     }
 
+    public void displayContact() {
+        displayContact = true;
+        displayGroup = false;
+        displayUpdateGroupForm = false;
+        displayCreateGroupForm = false;
+        displayCreateContactForm = false;
+    }
+
+    public void enableDisplayUpdateContactForm() {
+        this.displayUpdateContactForm = true;
+        this.displayContact = false;
+    }
 }

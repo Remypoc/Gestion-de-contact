@@ -155,4 +155,5 @@ public class ContactService {
     public Object loadContact(Long id) {
         return (cdao = new DAOContact()).loadContact(id);
     }
+
 }
