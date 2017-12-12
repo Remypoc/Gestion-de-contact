@@ -4,4 +4,20 @@
     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
     http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
 
+    <application>
+        <resource-bundle>
+            <base-name>resources.Resources</base-name>
+            <var>msgs</var>
+        </resource-bundle>
+
+        <locale-config>
+            <default-locale>en_GB</default-locale>
+            <supported-locale>fr</supported-locale>
+            <supported-locale>fr_FR</supported-locale>
+            <supported-locale>en_GB</supported-locale>
+        </locale-config>
+    </application>
+
+
+
 </faces-config>
