@@ -4,6 +4,7 @@ import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import util.HibernateUtil;
 
+import javax.persistence.OptimisticLockException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -50,22 +51,14 @@ public class DAOContact {
      * @param contact Contact
      * @return return null or string exception
      */
-    public Object updateContact(final Contact contact) {
+    public Object updateContact(final Contact contact) throws OptimisticLockException {
 
-        System.out.println("Save DB : " + contact);
-
-        System.out.println("Delete address : " + contact.getAddress().isValid());
-        System.out.println("Delete address : " + contact.getAddress());
-        System.out.println("Street : " + contact.getAddress().getStreet() + " : " + contact.getAddress().getStreet().trim().isEmpty());
         if (!contact.getAddress().isValid()) {
             if (contact.getAddress().getId() != 0) {
-                System.out.println("Deleting address !");
                 deleteAddress(contact.getAddress().getId());
             }
             contact.setAddress(null);
         }
-
-        System.out.println("Save DB2 : " + contact);
 
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 

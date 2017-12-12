@@ -12,6 +12,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
+import javax.persistence.OptimisticLockException;
 import java.io.Serializable;
 import java.util.*;
 
@@ -123,7 +124,11 @@ public class ContactManagerBean implements Serializable {
 
     public String save() {
         final ContactService cs = new ContactService();
-        final Object lError = cs.updateContact(contact);
+        try {
+            final Object lError = cs.updateContact(contact);
+        } catch (OptimisticLockException e) {
+            e.printStackTrace();
+        }
         reset();
         edit = false;
         return "home";

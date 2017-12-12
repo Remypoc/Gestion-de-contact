@@ -13,6 +13,8 @@ public class Contact {
     private Set<PhoneNumber> phones = new HashSet<>();
     private Set<ContactGroup> books = new HashSet<>();
 
+    private int version;
+
     public Contact() {
     }
 

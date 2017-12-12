@@ -2,6 +2,7 @@ package service;
 
 import domain.*;
 
+import javax.persistence.OptimisticLockException;
 import java.util.List;
 
 public class ContactService {
@@ -33,7 +34,7 @@ public class ContactService {
      * @param contact
      * @return return null or string exception
      */
-    public Object updateContact(Contact contact) {
+    public Object updateContact(Contact contact) throws OptimisticLockException {
         return (cdao = new DAOContact()).updateContact(contact);
     }
 
