@@ -11,6 +11,12 @@ public class PhoneNumber {
     public PhoneNumber() {
     }
 
+    public PhoneNumber(Contact contact) {
+        phoneKind = null;
+        phoneNumber = null;
+        this.contact = contact;
+    }
+
     public PhoneNumber(long id, String phoneNumber, String phoneKind) {
         this.id = id;
         this.phoneKind = phoneKind;
@@ -77,6 +83,15 @@ public class PhoneNumber {
     }
 
     public boolean isMobile() {
+        if (phoneKind == null)
+            return false;
         return phoneKind.equalsIgnoreCase("mobile") || phoneKind.equalsIgnoreCase("portable");
+    }
+
+    public PhoneNumber copy(PhoneNumber phone) {
+        this.phoneNumber = phone.getPhoneNumber();
+        this.phoneKind = phone.getPhoneKind();
+        this.contact = phone.getContact();
+        return this;
     }
 }

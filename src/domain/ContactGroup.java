@@ -103,4 +103,11 @@ public class ContactGroup {
 		sb.append("]}\n");
 		return sb.toString();
 	}
+
+    public ContactGroup copy(ContactGroup contactGroup) {
+    	this.groupName = contactGroup.getGroupName();
+    	this.contacts = contactGroup.getContacts();
+    	return this;
+
+    }
 }

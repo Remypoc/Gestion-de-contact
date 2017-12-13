@@ -150,6 +150,7 @@ public class ViewManager implements Serializable {
         displayContact = true;
         displayGroup = false;
         displayUpdateGroupForm = false;
+        displayUpdateContactForm = false;
         displayCreateGroupForm = false;
         displayCreateContactForm = false;
     }

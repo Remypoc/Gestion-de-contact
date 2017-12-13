@@ -135,6 +135,19 @@ public class Contact {
 		return phones.contains(phoneNumber);
 	}
 
+	public void copy(Contact contact) {
+		this.id = contact.getId();
+		this.firstName = contact.getFirstName();
+		this.lastName = contact.getLastName();
+		this.email = contact.getEmail();
+		this.address = contact.getAddress();
+		this.phones = new HashSet<>();
+		this.phones = contact.phones;
+//		for (PhoneNumber phone : contact.phones)
+//			this.phones.add(new PhoneNumber().copy(phone));
+		this.books = contact.getBooks();
+	}
+
 	@Override
 	public int hashCode() {
 		return (int) this.id;
@@ -165,5 +178,9 @@ public class Contact {
 		}
 		sb.append("]}\n");
 		return sb.toString();
+	}
+
+	public void removePhoneNumber(PhoneNumber phoneNumber) {
+		this.phones.remove(phoneNumber);
 	}
 }

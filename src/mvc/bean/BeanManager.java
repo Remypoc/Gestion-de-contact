@@ -281,11 +281,13 @@ public class BeanManager implements Serializable {
     }
 
     public void notifyUpdateContact(Contact contact) {
+        System.out.println("BeanManager => notifyUpdateContact");
         if ( contact != null) {
+            System.out.println("update contact not null");
             dataManager.setContact(contact);
             Optional<Contact> c1 =dataManager.getContacts().stream()
                     .filter(c -> c.getId() == contact.getId()).findFirst();
-            c1.ifPresent(c -> c = contact);
+            c1.ifPresent(c -> c.copy(contact));
         }
         this.viewManager.hideUpdateContactForm();
     }

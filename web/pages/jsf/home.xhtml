@@ -433,7 +433,7 @@
                                             <h:inputText id="zipEdit" value="#{updateContact.contact.address.zip}"
                                                          required="#{not empty param['formEdit:cityEdit'] or not empty param['formEdit:streetEdit']
                                                        or not empty param['formEdit:countryEdit']}"
-                                                         requiredMessage="Required !"
+                                                         requiredMessage="#{msgs['label.required']}"
                                                          validator="noBlankSpaceValidator"
                                                          validatorMessage="Invalid zip code ! Only numbers are allowed !">
                                                 <f:validateRegex pattern="[0-9]*"/>
@@ -456,6 +456,40 @@
                                         </div>
                                         <h:message for="countryEdit" autoUpdate="true"/>
                                     </div>
+                                </div>
+
+                                <!-- Update phones numbers -->
+                                <div class="row">
+                                <h:dataTable id="phonesEdit" value="#{updateContact.contact.phones}" var="phone">
+                                    <h:column class="col s7">
+                                        <div class="input-field">
+                                        <i class="material-icons prefix">phone</i>
+                                        <h:inputText id="phoneNumberEdit" value="#{phone.phoneNumber}"
+                                                     required="true"
+                                                     requiredMessage="#{msgs['label.required']}"
+                                                     validator="noBlankSpaceValidator"
+                                                     validatorMessage="#{msgs['form.phonenumber.validator']}">
+                                            <f:validateRegex pattern="[0-9]*"/>
+                                        </h:inputText>
+                                        <h:outputLabel for="phoneNumberEdit" value="#{msgs['label.phonenumber']}"/>
+                                        </div>
+                                    </h:column>
+                                    <h:column class="col s4">
+                                        <div class="input-field">
+                                            <h:inputText id="phoneKindEdit" value="#{phone.phoneKind}"
+                                                         required="true"
+                                                         requiredMessage="#{msgs['label.required']}"
+                                                         validator="noBlankSpaceValidator">
+                                            </h:inputText>
+                                            <h:outputLabel for="phoneKindEdit" value="#{msgs['label.label']}"/>
+                                        </div>
+                                    </h:column>
+                                    <h:column class="col s1">
+                                        <h:commandLink action="#{updateContact.remove(phone)}" styleClass="btn-floating waves-effect waves-light red" immediate="true">
+                                            <i class="material-icons center">remove</i>
+                                        </h:commandLink>
+                                    </h:column>
+                                </h:dataTable>
                                 </div>
 
                                 <div class="row">
@@ -537,6 +571,8 @@
         </div>
 
     </div>
+
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/>
 
     <footer class="page-footer" style="background-color: #3b5998;">
         <div class="container">
