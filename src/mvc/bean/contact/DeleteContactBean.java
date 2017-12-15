@@ -1,5 +1,6 @@
 package mvc.bean.contact;
 
+import domain.Contact;
 import mvc.bean.BeanManager;
 import service.ContactService;
 
@@ -40,6 +41,7 @@ public class DeleteContactBean {
     public void deleteContact(long contactId) {
         final ContactService service = new ContactService();
         service.deleteContact(contactId);
+        beanManager.notifyDeleteContact(new Contact(contactId));
         reset();
     }
 }

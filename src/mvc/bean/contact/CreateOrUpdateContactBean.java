@@ -11,20 +11,50 @@ import javax.faces.bean.ViewScoped;
 import java.io.Serializable;
 import java.util.LinkedHashSet;
 
-@ManagedBean(name="updateContact")
+@ManagedBean(name="createOrUpdateContact")
 @ViewScoped
-public class UpdateContactBean implements Serializable {
+public class CreateOrUpdateContactBean implements Serializable {
     private BeanManager beanManager;
 
     private Contact contact;
+    private String firtName;
+    private String lastName;
+    private String email;
 
-    public UpdateContactBean() {
+    public String getFirtName() {
+        return firtName;
+    }
+
+    public void setFirtName(String firtName) {
+        this.firtName = firtName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public CreateOrUpdateContactBean() {
         this.beanManager = beanManager;
-        this.contact = null;
+        this.contact = new Contact();
+        this.contact.setAddress(new Address());
     }
 
     public void setBeanManager(BeanManager beanManager) {
         this.beanManager = beanManager;
+        this.contact = new Contact();
+        this.contact.setAddress(new Address());
     }
 
     public Contact getContact() {
@@ -37,9 +67,28 @@ public class UpdateContactBean implements Serializable {
 
     public void reset() {
         this.contact = null;
+        this.firtName = null;
+        this.lastName = null;
+        this.email = null;
     }
 
-    public void save() {
+    public void createContact() {
+        System.out.println("createOrUpdateContactBean => createContact");
+        if (contact == null)
+            System.out.println("Contact is null");
+        if (contact.getAddress() != null && !contact.getAddress().isValid()) {
+            contact.setAddress(null);
+        }
+        contact.setFirstName(firtName);
+        contact.setLastName(lastName);
+        contact.setEmail(email);
+        final ContactService service = new ContactService();
+        final Object lError = service.addContact(contact);
+        beanManager.notifyCreateContact(contact);
+        reset();
+    }
+
+    public void updateContact() {
         if (contact.getAddress() != null && !contact.getAddress().isValid()) {
             contact.setAddress(null);
         }
@@ -49,9 +98,14 @@ public class UpdateContactBean implements Serializable {
         reset();
     }
 
-    public void cancel() {
+    public void cancelUpdateContact() {
         this.reset();
         this.beanManager.notifyUpdateContact(null);
+    }
+
+    public void cancelCreateContact() {
+        this.reset();
+        this.beanManager.notifyCreateContact(null);
     }
 
     public void addPhone() {
@@ -76,6 +130,5 @@ public class UpdateContactBean implements Serializable {
         if (this.contact.getPhones() == null) {
             this.contact.setPhones(new LinkedHashSet<>());
         }
-
     }
 }

@@ -146,6 +146,12 @@ public class ViewManager implements Serializable {
         this.beanManager.refreshGroups();
     }
 
+    public void enableDisplayCreateContactForm() {
+        displayCreateContactForm = true;
+        displayContact = false;
+        displayUpdateContactForm = false;
+    }
+
     public void displayContact() {
         displayContact = true;
         displayGroup = false;
@@ -162,6 +168,11 @@ public class ViewManager implements Serializable {
 
     public void hideUpdateContactForm() {
         this.displayUpdateContactForm = false;
+        this.displayContact = true;
+    }
+
+    public void hideCreateContactForm2() {
+        this.displayCreateContactForm = false;
         this.displayContact = true;
     }
 }
