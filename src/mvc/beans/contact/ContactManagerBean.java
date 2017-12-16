@@ -3,11 +3,14 @@ package mvc.beans.contact;
 import domain.Address;
 import domain.Contact;
 import domain.PhoneNumber;
+import exception.DAOException;
 import service.ContactService;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import java.io.Serializable;
@@ -87,11 +90,17 @@ public class ContactManagerBean implements Serializable {
     }
 
     public String save() {
-        if (contact.getAddress() != null && !contact.getAddress().isValid()) {
-            contact.setAddress(null);
-        }
+
         final ContactService cs = new ContactService();
-        final Object lError = cs.updateContact(contact);
+
+        try {
+            final Object lError = cs.updateContact(contact);
+        } catch (DAOException e) {
+            FacesContext context = FacesContext.getCurrentInstance();
+            ResourceBundle text = ResourceBundle.getBundle("resources.Resources", context.getViewRoot().getLocale());
+            context.addMessage(null, new FacesMessage(text.getString(e.getMessageBundleName())));
+        }
+
         reset();
         edit = false;
         return "home";

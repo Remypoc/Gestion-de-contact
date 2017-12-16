@@ -1,6 +1,7 @@
 package service;
 
 import domain.*;
+import exception.DAOException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,7 @@ public class ContactService {
 		return (cdao = new DAOContact()).addContact(contact);
 	}
 
-	public Object updateContact(Contact contact) {
+	public Object updateContact(Contact contact) throws DAOException {
 		return (cdao = new DAOContact()).updateContact(contact);
 	}
 

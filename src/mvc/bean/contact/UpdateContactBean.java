@@ -3,13 +3,17 @@ package mvc.bean.contact;
 import domain.Address;
 import domain.Contact;
 import domain.PhoneNumber;
+import exception.DAOException;
 import mvc.bean.BeanManager;
 import service.ContactService;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import java.io.Serializable;
 import java.util.LinkedHashSet;
+import java.util.ResourceBundle;
 
 @ManagedBean(name="updateContact")
 @ViewScoped
@@ -44,7 +48,13 @@ public class UpdateContactBean implements Serializable {
             contact.setAddress(null);
         }
         final ContactService service = new ContactService();
-        final Object lError = service.updateContact(contact);
+        try {
+            final Object lError = service.updateContact(contact);
+        } catch (DAOException e) {
+            FacesContext context = FacesContext.getCurrentInstance();
+            ResourceBundle text = ResourceBundle.getBundle("resources.Resources", context.getViewRoot().getLocale());
+            context.addMessage(null, new FacesMessage(text.getString(e.getMessageBundleName())));
+        }
         beanManager.notifyUpdateContact(contact);
         reset();
     }
