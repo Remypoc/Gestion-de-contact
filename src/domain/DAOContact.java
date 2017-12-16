@@ -210,7 +210,9 @@ public class DAOContact {
         CriteriaQuery<Contact> criteria = builder.createQuery(Contact.class);
         Root<Contact> root = criteria.from(Contact.class);
         criteria.select(root).where(builder.equal(root.get("id"), id));
-        Contact contact = session.createQuery(criteria).getSingleResult();
+        Contact contact = session.createQuery(criteria)
+                .setCacheable(true)
+                .getSingleResult();
 
         // Used to force load object
         Hibernate.initialize(contact.getAddress());
