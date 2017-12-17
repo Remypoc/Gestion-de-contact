@@ -76,7 +76,7 @@ public class ContactManagerBean implements Serializable {
 
     public void edit() {
         final ContactService cs = new ContactService();
-        final Object lError = cs.loadContact(model.getRowData().getId());
+        /*final Object lError = cs.loadContact(model.getRowData().getId());
         if (lError instanceof Contact) {
             contact = (Contact) lError;
         }
@@ -85,7 +85,7 @@ public class ContactManagerBean implements Serializable {
         }
         if (contact.getPhones() == null) {
             contact.setPhones(phones);
-        }
+        }*/
         edit = true;
     }
 

@@ -182,11 +182,12 @@ public class DAOContact {
             Session session = sessionFactory.getCurrentSession();
             session.beginTransaction();
             List<Contact> contacts = session.createQuery(
-                    "from Contact contact ORDER BY lastName", Contact.class)
+                    "from Contact contact ORDER BY lastName")
                     .setCacheable(true)
                     .list();
             session.close();
 
+            System.out.println(contacts.get(0).getFirstName());
             return new HashSet<>(contacts);
         }
         return null;
@@ -206,7 +207,7 @@ public class DAOContact {
     }
 
 
-    public Object loadContact(Long id) {
+    /*public Object loadContact(Long id) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
         CriteriaBuilder builder = session.getCriteriaBuilder();
@@ -222,12 +223,12 @@ public class DAOContact {
         Hibernate.initialize(contact.getPhones());
         session.close();
         return contact;
-    }
+    }*/
 
     public Object loadGroups() {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        List<ContactGroup> groups = session.createQuery("from ContactGroup contactGroup", ContactGroup.class)
+        List<ContactGroup> groups = session.createQuery("from ContactGroup contactGroup")
                 .setCacheable(true)
                 .list();
         session.close();

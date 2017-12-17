@@ -33,8 +33,8 @@ public class ContactService {
         return (cdao = new DAOContact()).loadContacts();
     }
 
-    public Object loadContact(Long id) {
+    /*public Object loadContact(Long id) {
         return (cdao = new DAOContact()).loadContact(id);
-    }
+    }*/
 
 }

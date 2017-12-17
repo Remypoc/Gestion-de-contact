@@ -8,6 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import util.HibernateUtil;
 
+import javax.annotation.PostConstruct;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -97,15 +98,16 @@ public class GroupDAOImpl implements GroupDAO {
         Session session = getCurrentSession();
         try {
             session.beginTransaction();
-            ContactGroup group = session
+            /*ContactGroup group = session
                     .createQuery("SELECT contactGroup FROM ContactGroup contactGroup " +
                             "LEFT JOIN FETCH contactGroup.contacts contact " +
-                            "WHERE contactGroup.groupId=:id", ContactGroup.class)
+                            "WHERE contactGroup.groupId=:id")
                     .setParameter("id", id)
                     .setCacheable(true)
-                    .getSingleResult();
+                    .getComment();*/
             session.close();
-            return group;
+            /*return group;*/
+            return null;
         } catch(HibernateException e) {
             System.err.println(e.getMessage());
             session.close();
@@ -120,8 +122,7 @@ public class GroupDAOImpl implements GroupDAO {
             session.beginTransaction();
             List<ContactGroup> groups =
                     session.createQuery(
-                            "from ContactGroup contactGroup ORDER BY groupName",
-                            ContactGroup.class)
+                            "from ContactGroup contactGroup ORDER BY groupName")
                             .setCacheable(true)
                             .list();
             session.close();
@@ -176,8 +177,7 @@ public class GroupDAOImpl implements GroupDAO {
             List<ContactGroup> groups =
                     session
                             .createQuery("from ContactGroup contactGroup " +
-                                            "WHERE groupName like lower(:name) ORDER BY groupName",
-                                    ContactGroup.class)
+                                            "WHERE groupName like lower(:name) ORDER BY groupName")
                             .setParameter("name", String.format("%s%%", groupName))
                             .list();
             session.close();
@@ -235,7 +235,7 @@ public class GroupDAOImpl implements GroupDAO {
 
             List<Contact> contactsNotInSet = session
                     .createQuery("select contact from Contact contact " +
-                            "where contact.id not in :contacts", Contact.class)
+                            "where contact.id not in :contacts")
                     .setParameter("contacts", contactsId)
                     .setCacheable(true)
                     .list();
