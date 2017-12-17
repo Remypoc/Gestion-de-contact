@@ -7,43 +7,19 @@ import mvc.bean.BeanManager;
 import service.ContactService;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import java.io.Serializable;
 import java.util.LinkedHashSet;
 
-@ManagedBean(name="createOrUpdateContact")
-@ViewScoped
+//@ManagedBean(name="createOrUpdateContact")
+//@ViewScoped
 public class CreateOrUpdateContactBean implements Serializable {
     private BeanManager beanManager;
+//    @ManagedProperty(value = "#{contactService}")
+    private ContactService contactService;
 
     private Contact contact;
-    private String firtName;
-    private String lastName;
-    private String email;
-
-    public String getFirtName() {
-        return firtName;
-    }
-
-    public void setFirtName(String firtName) {
-        this.firtName = firtName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
     public CreateOrUpdateContactBean() {
         this.beanManager = beanManager;
@@ -51,10 +27,12 @@ public class CreateOrUpdateContactBean implements Serializable {
         this.contact.setAddress(new Address());
     }
 
+    public void setContactService(ContactService contactService) {
+        this.contactService = contactService;
+    }
+
     public void setBeanManager(BeanManager beanManager) {
         this.beanManager = beanManager;
-        this.contact = new Contact();
-        this.contact.setAddress(new Address());
     }
 
     public Contact getContact() {
@@ -66,10 +44,8 @@ public class CreateOrUpdateContactBean implements Serializable {
     }
 
     public void reset() {
-        this.contact = null;
-        this.firtName = null;
-        this.lastName = null;
-        this.email = null;
+        this.contact = new Contact();
+        this.contact.setAddress(new Address());
     }
 
     public void createContact() {
@@ -79,11 +55,7 @@ public class CreateOrUpdateContactBean implements Serializable {
         if (contact.getAddress() != null && !contact.getAddress().isValid()) {
             contact.setAddress(null);
         }
-        contact.setFirstName(firtName);
-        contact.setLastName(lastName);
-        contact.setEmail(email);
-        final ContactService service = new ContactService();
-        final Object lError = service.addContact(contact);
+        final Object lError = contactService.addContact(contact);
         beanManager.notifyCreateContact(contact);
         reset();
     }
@@ -92,8 +64,7 @@ public class CreateOrUpdateContactBean implements Serializable {
         if (contact.getAddress() != null && !contact.getAddress().isValid()) {
             contact.setAddress(null);
         }
-        final ContactService service = new ContactService();
-        final Object lError = service.updateContact(contact);
+        final Object lError = contactService.updateContact(contact);
         beanManager.notifyUpdateContact(contact);
         reset();
     }

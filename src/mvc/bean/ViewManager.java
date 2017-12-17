@@ -5,8 +5,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import java.io.Serializable;
 
-@ManagedBean(name="viewManager")
-@ViewScoped
+//@ManagedBean(name="viewManager")
+//@ViewScoped
 public class ViewManager implements Serializable {
     private BeanManager beanManager;
 
@@ -143,7 +143,7 @@ public class ViewManager implements Serializable {
         displayContacts = false;
         displayCreateContactForm = false;
         displayUpdateContactForm = false;
-        this.beanManager.refreshGroups();
+        this.beanManager.loadGroups();
     }
 
     public void enableDisplayCreateContactForm() {
@@ -171,8 +171,17 @@ public class ViewManager implements Serializable {
         this.displayContact = true;
     }
 
-    public void hideCreateContactForm2() {
+    public void hideCreateContactForm() {
         this.displayCreateContactForm = false;
         this.displayContact = true;
+    }
+
+    public void hideRightPane() {
+        this.displayCreateContactForm = false;
+        this.displayContact = false;
+        this.displayUpdateContactForm = false;
+        this.displayGroup = false;
+        this.displayUpdateGroupForm = false;
+        this.displayCreateGroupForm = false;
     }
 }

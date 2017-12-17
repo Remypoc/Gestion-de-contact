@@ -6,9 +6,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import java.io.Serializable;
 
-@ManagedBean(name="searchGroup")
-@ViewScoped
 
+//@ManagedBean(name="searchGroup")
+//@ViewScoped
 public class SearchGroupBean implements Serializable{
     private BeanManager beanManager;
 

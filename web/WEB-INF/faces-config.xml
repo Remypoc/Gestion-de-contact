@@ -5,6 +5,11 @@
     http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
 
     <application>
+
+        <el-resolver>
+            org.springframework.web.jsf.el.SpringBeanFacesELResolver
+        </el-resolver>
+
         <resource-bundle>
             <base-name>resources.Resources</base-name>
             <var>msgs</var>
@@ -16,8 +21,19 @@
             <supported-locale>fr_FR</supported-locale>
             <supported-locale>en_GB</supported-locale>
         </locale-config>
+
     </application>
 
+    <!--<managed-bean>-->
+        <!--<managed-bean-name>beanManager</managed-bean-name>-->
+        <!--<managed-bean-class>mvc.bean.BeanManager</managed-bean-class>-->
+        <!--<managed-bean-scope>view</managed-bean-scope>-->
+    <!--</managed-bean>-->
 
+    <!--<managed-bean>-->
+        <!--<managed-bean-name>viewManager</managed-bean-name>-->
+        <!--<managed-bean-class>mvc.bean.ViewManager</managed-bean-class>-->
+        <!--<managed-bean-scope>view</managed-bean-scope>-->
+    <!--</managed-bean>-->
 
 </faces-config>

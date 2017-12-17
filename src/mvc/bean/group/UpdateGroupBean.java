@@ -1,24 +1,26 @@
 package mvc.bean.group;
 
-import domain.Contact;
 import domain.ContactGroup;
 import exception.DAOException;
 import mvc.bean.BeanManager;
 import service.GroupService;
-import service.ServiceFactory;
 import util.Word;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
 import java.util.ResourceBundle;
 
-@ManagedBean(name="updateGroup")
-@ViewScoped
+
+//@ManagedBean(name="updateGroup")
+//@ViewScoped
 public class UpdateGroupBean implements Serializable{
     private BeanManager beanManager;
+//    @ManagedProperty(value = "#{groupService}")
+    private GroupService groupService;
 
     private long groupId = 0;
     private String groupName;
@@ -26,6 +28,10 @@ public class UpdateGroupBean implements Serializable{
     public UpdateGroupBean() {
         groupId = 0;
         groupName = null;
+    }
+
+    public void setGroupService(GroupService groupService) {
+        this.groupService = groupService;
     }
 
     public void setBeanManager(BeanManager beanManager) {
@@ -55,10 +61,9 @@ public class UpdateGroupBean implements Serializable{
 
     public void updateGroup() {
         System.out.println(String.format("UpdateGroupBean => updateGroup: %d %s", groupId, groupName));
-        GroupService service = ServiceFactory.getGroupService();
         ContactGroup group = new ContactGroup(groupId, Word.capitalize(groupName));
         try {
-            service.updateGroup(group);
+            groupService.updateGroup(group);
             this.beanManager.notifyUpdateGroup(group);
             this.reset();
         } catch (DAOException e) {

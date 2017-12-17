@@ -4,19 +4,23 @@ import domain.Contact;
 import exception.DAOException;
 import mvc.bean.BeanManager;
 import service.GroupService;
-import service.ServiceFactory;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
 import java.util.ResourceBundle;
 
-@ManagedBean(name="addContactToGroup")
-@ViewScoped
+
+//@ManagedBean(name="addContactToGroup")
+//@ViewScoped
 public class AddContactToGroupBean implements Serializable {
     private BeanManager beanManager;
+//    @ManagedProperty(value = "#{groupService}")
+    private GroupService groupService;
 
     private long contactId;
     private long groupId;
@@ -24,6 +28,10 @@ public class AddContactToGroupBean implements Serializable {
     public AddContactToGroupBean() {
         this.contactId = 0;
         this.groupId = 0;
+    }
+
+    public void setGroupService(GroupService groupService) {
+        this.groupService = groupService;
     }
 
     public void setBeanManager(BeanManager beanManager) {
@@ -58,9 +66,8 @@ public class AddContactToGroupBean implements Serializable {
     public void addContactToGroup() {
         System.out.println(String.format("AddContactToGroupBean => addContactToGroup: %d, %d", contactId, groupId));
         if (validate()) {
-            GroupService service = ServiceFactory.getGroupService();
             try {
-                service.addContactToGroup(contactId, groupId);
+                groupService.addContactToGroup(contactId, groupId);
                 Contact contact = new Contact(contactId);
                 this.beanManager.notifyAddContactToGroup(contact);
                 this.reset();

@@ -25,9 +25,10 @@
             src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.js"/>
     <script type="text/javascript" src="/gestion_contact/pages/jsf/main.js"/>
 
-    <!-- Load contacts and groups on first launch -->
+    <!-- Load contacts on first launch -->
     <f:metadata>
-        <f:viewAction action="#{beanManager.loadContacts}"/>
+        <f:viewAction action="#{beanManager.loadContacts}" />
+        <f:viewAction action="#{beanManager.loadGroups}" />
         <f:view locale="#{facesContext.externalContext.requestLocale}"/>
     </f:metadata>
 
@@ -171,7 +172,7 @@
                                                 <h:form>
                                                     <h:commandLink
                                                             action="#{deleteContact.deleteContact(contact.id)}"
-                                                            styleClass="btn-floating waves-effect waves-light pink accent-3 left-align">
+                                                            styleClass="btn-floating waves-effect waves-light pink accent-3 left-align keep-scroll-pos">
                                                         <i class="material-icons left-align">remove</i>
                                                     </h:commandLink>
                                                 </h:form>
@@ -225,7 +226,7 @@
                                                 <h:form>
                                                     <h:commandLink
                                                             action="#{deleteGroup.deleteGroup(group.groupId)}"
-                                                            styleClass="btn-floating waves-effect waves-light pink accent-3 left-align">
+                                                            styleClass="btn-floating waves-effect waves-light pink accent-3 left-align keep-scroll-pos">
                                                         <i class="material-icons left-align">remove</i>
                                                     </h:commandLink>
                                                 </h:form>
@@ -378,7 +379,7 @@
                                         <h:form>
                                             <h:commandLink
                                                     action="#{deleteGroup.deleteContactFromGroup(contact.id, beanManager.dataManager.group.groupId)}"
-                                                    styleClass="btn-floating waves-effect waves-light pink accent-3">
+                                                    styleClass="btn-floating waves-effect waves-light pink accent-3 keep-scroll-pos">
                                                 <i class="material-icons">remove</i>
                                             </h:commandLink>
                                         </h:form>
@@ -413,7 +414,7 @@
                                         <div class="input-field col s12">
                                             <h:commandLink
                                                     action="#{addContactToGroup.addContactToGroup}"
-                                                    styleClass="btn waves-effect waves-light light-blue darken-4">
+                                                    styleClass="btn waves-effect waves-light light-blue darken-4 keep-scroll-pos">
                                                 <i class="material-icons">person_add</i>
                                             </h:commandLink>
                                         </div>
@@ -599,7 +600,7 @@
                                         <h:column class="col s1">
                                             <h:commandLink
                                                     action="#{createOrUpdateContact.remove(phone)}"
-                                                    styleClass="btn-floating waves-effect waves-light red"
+                                                    styleClass="btn-floating waves-effect waves-light red keep-scroll-pos"
                                                     immediate="true">
                                                 <i class="material-icons center">remove</i>
                                             </h:commandLink>
@@ -611,7 +612,7 @@
                                     <div class="col s2 offset-s10">
                                         <h:commandLink id="addPhoneEdit"
                                                        action="#{createOrUpdateContact.addPhone}"
-                                                       styleClass="btn waves-effect waves-light light-blue darken-4">
+                                                       styleClass="btn waves-effect waves-light light-blue darken-4 keep-scroll-pos">
                                             <i class="material-icons center">add</i> <i
                                                 class="material-icons center">phone</i>
                                         </h:commandLink>
@@ -621,7 +622,7 @@
                                 <div class="row">
                                     <div class="col s2 offset-s10">
                                         <h:commandLink action="#{createOrUpdateContact.updateContact}"
-                                                       styleClass="btn-large waves-effect waves-light green accent-3">
+                                                       styleClass="btn-large waves-effect waves-light green accent-3 keep-scroll-pos">
                                             <i class="material-icons center">send</i>
                                         </h:commandLink>
                                     </div>
@@ -660,7 +661,7 @@
                                         <div class="input-field">
                                             <i class="material-icons prefix">account_circle</i>
                                             <h:inputText id="firstNameCreate"
-                                                         value="#{createOrUpdateContact.firtName}"
+                                                         value="#{createOrUpdateContact.contact.firstName}"
                                                          required="#{param['formCreate:firstNameCreate'] != null}"
                                                          requiredMessage="#{msgs['label.required']}"
                                                          validator="noBlankSpaceValidator">
@@ -676,7 +677,7 @@
                                         <div class="input-field">
                                             <i class="material-icons prefix">account_circle</i>
                                             <h:inputText id="lastNameCreate"
-                                                         value="#{createOrUpdateContact.lastName}"
+                                                         value="#{createOrUpdateContact.contact.lastName}"
                                                          required="#{param['formCreate:lastNameCreate'] != null}"
                                                          requiredMessage="#{msgs['label.required']}"
                                                          validator="noBlankSpaceValidator">
@@ -692,7 +693,7 @@
                                         <div class="input-field">
                                             <i class="material-icons prefix">email</i>
                                             <h:inputText id="emailCreate"
-                                                         value="#{createOrUpdateContact.email}"
+                                                         value="#{createOrUpdateContact.contact.email}"
                                                          required="#{param['formCreate:emailCreate'] != null}"
                                                          requiredMessage="#{msgs['label.required']}"
                                                          validator="noBlankSpaceValidator"
@@ -811,7 +812,7 @@
                                         <h:column class="col s1">
                                             <h:commandLink
                                                     action="#{createOrUpdateContact.remove(phone)}"
-                                                    styleClass="btn-floating waves-effect waves-light red"
+                                                    styleClass="btn-floating waves-effect waves-light red keep-scroll-pos keep-scroll-pos"
                                                     immediate="true">
                                                 <i class="material-icons center">remove</i>
                                             </h:commandLink>
@@ -823,7 +824,7 @@
                                     <div class="col s2 offset-s10">
                                         <h:commandLink id="addPhoneCreate"
                                                        action="#{createOrUpdateContact.addPhone}"
-                                                       styleClass="btn waves-effect waves-light light-blue darken-4">
+                                                       styleClass="btn waves-effect waves-light light-blue darken-4 keep-scroll-pos keep-scroll-pos">
                                             <i class="material-icons center">add</i> <i
                                                 class="material-icons center">phone</i>
                                         </h:commandLink>
@@ -833,13 +834,13 @@
                                 <div class="row">
                                     <div class="col s2 offset-s10">
                                         <h:commandLink action="#{createOrUpdateContact.createContact}"
-                                                       styleClass="btn-large waves-effect waves-light green accent-3">
+                                                       styleClass="btn-large waves-effect waves-light green accent-3 keep-scroll-pos">
                                             <i class="material-icons center">send</i>
                                         </h:commandLink>
                                     </div>
                                 </div>
 
-                                <h:commandButton id="saveCreate" value="save"
+                                <h:commandButton id="saveCreate" styleClass="keep-scroll-pos" value="save"
                                                  action="#{createOrUpdateContact.createContact}"
                                                  style="display: None;"/>
                             </h:form>

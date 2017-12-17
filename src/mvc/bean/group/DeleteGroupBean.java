@@ -3,20 +3,22 @@ package mvc.bean.group;
 import exception.DAOException;
 import mvc.bean.BeanManager;
 import service.GroupService;
-import service.ServiceFactory;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
 import java.util.ResourceBundle;
 
 
-@ManagedBean(name="deleteGroup")
-@ViewScoped
+//@ManagedBean(name="deleteGroup")
+//@ViewScoped
 public class DeleteGroupBean implements Serializable {
     private BeanManager beanManager;
+//    @ManagedProperty(value = "#{groupService}")
+    private GroupService groupService;
 
     private long groupId;
 
@@ -26,6 +28,10 @@ public class DeleteGroupBean implements Serializable {
 
     public void setBeanManager(BeanManager beanManager) {
         this.beanManager = beanManager;
+    }
+
+    public void setGroupService(GroupService groupService) {
+        this.groupService = groupService;
     }
 
     public long getGroupId() {
@@ -42,9 +48,8 @@ public class DeleteGroupBean implements Serializable {
 
     public void deleteGroup(long groupId) {
         System.out.println(String.format("DeleteGroupBean => deleteGroup %d", groupId));
-        GroupService service = ServiceFactory.getGroupService();
         try {
-            service.deleteGroup(groupId);
+            groupService.deleteGroup(groupId);
             this.beanManager.notifyDeletedGroup(groupId);
         } catch (DAOException e) {
             FacesContext context = FacesContext.getCurrentInstance();
@@ -54,9 +59,8 @@ public class DeleteGroupBean implements Serializable {
 
     public void deleteContactFromGroup(long contactId, long groupId) {
         System.out.println(String.format("DeleteGroupBean => deleteContactFromGroup %d - %d", contactId, groupId));
-        GroupService service = ServiceFactory.getGroupService();
         try {
-            service.deleteContactFromGroup(contactId, groupId);
+            groupService.deleteContactFromGroup(contactId, groupId);
             this.beanManager.notifyDeleteContactFromGroup(contactId);
         } catch (DAOException e) {
             FacesContext context = FacesContext.getCurrentInstance();

@@ -4,26 +4,32 @@ import domain.ContactGroup;
 import exception.DAOException;
 import mvc.bean.BeanManager;
 import service.GroupService;
-import service.ServiceFactory;
 import util.Word;
 
-import javax.faces.FacesException;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
 import java.util.ResourceBundle;
 
-@ManagedBean(name="createGroup")
-@ViewScoped
+
+//@ManagedBean(name="createGroup")
+//@ViewScoped
 public class CreateGroupBean implements Serializable {
     private BeanManager beanManager;
+//    @ManagedProperty(value = "#{groupService}")
+    private GroupService groupService;
 
     private String groupName;
 
     public CreateGroupBean() {
         this.groupName = null;
+    }
+
+    public void setGroupService(GroupService groupService) {
+        this.groupService = groupService;
     }
 
     public void setBeanManager(BeanManager beanManager) {
@@ -48,10 +54,9 @@ public class CreateGroupBean implements Serializable {
 
     public void createGroup() {
         System.out.println(String.format("CreateGroupBean => createGroup: %s", groupName));
-        GroupService service = ServiceFactory.getGroupService();
         ContactGroup group = new ContactGroup(Word.capitalize(groupName));
         try {
-            service.addGroup(group);
+            groupService.addGroup(group);
             this.beanManager.notifyCreateGroup(group);
             this.reset();
         } catch (DAOException e) {
