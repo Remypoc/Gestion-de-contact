@@ -3,10 +3,11 @@ package dao;
 import domain.Contact;
 import domain.ContactGroup;
 import exception.DAOException;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Set;
 
+@Transactional(readOnly = false)
 public interface GroupDAO {
     void addGroup(ContactGroup group) throws DAOException;
     void updateGroup(ContactGroup group) throws DAOException;

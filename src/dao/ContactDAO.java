@@ -3,6 +3,7 @@ package dao;
 import domain.Address;
 import domain.Contact;
 import domain.PhoneNumber;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Set;
 

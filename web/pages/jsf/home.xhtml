@@ -58,7 +58,7 @@
                             <li>
                                 <h:form>
                                     <h:commandLink
-                                            action="#{viewManager.enableDisplayContacts}"
+                                            action="#{beanManager.viewManager.enableDisplayContacts}"
                                             class="btn-floating orange darken-1"
                                             title="#{msgs['label.display.contacts']}">
                                         <i class="material-icons">person</i>
@@ -68,7 +68,7 @@
                             <li>
                                 <h:form>
                                     <h:commandLink
-                                            action="#{viewManager.enableDisplayGroups}"
+                                            action="#{beanManager.viewManager.enableDisplayGroups}"
                                             class="btn-floating blue darken-1"
                                             title="#{msgs['label.display.groups']}">
                                         <i class="material-icons">group</i>
@@ -78,7 +78,7 @@
                             <li>
                                 <h:form>
                                     <h:commandLink
-                                            action="#{viewManager.enableDisplayCreateContactForm}"
+                                            action="#{beanManager.viewManager.enableDisplayCreateContactForm}"
                                             class="btn-floating yellow darken-1"
                                             title="#{msgs['label.add.contact']}">
                                         <i class="material-icons">person_add</i>
@@ -88,7 +88,7 @@
                             <li>
                                 <h:form>
                                     <h:commandLink
-                                            action="#{viewManager.enableDisplayCreateGroupForm}"
+                                            action="#{beanManager.viewManager.enableDisplayCreateGroupForm}"
                                             styleClass="btn-floating waves-effect waves-light"
                                             title="#{msgs['label.add.contactgroup']}">
                                         <i class="material-icons center">group_add</i>
@@ -109,12 +109,12 @@
         <div class="row">
             <div class="col s6">
                 <div class="card-panel">
-                    <h:panelGroup rendered="#{viewManager.displayContacts}">
+                    <h:panelGroup rendered="#{beanManager.viewManager.displayContacts}">
                         <div style="color: #3b5998;">
                             <i class="material-icons prefix">person</i>
                         </div>
                     </h:panelGroup>
-                    <h:panelGroup rendered="#{viewManager.displayGroups}"
+                    <h:panelGroup rendered="#{beanManager.viewManager.displayGroups}"
                                   styleClass="color: #3b5998;">
                         <div style="color: #3b5998;">
                             <i class="material-icons">group</i>
@@ -127,7 +127,7 @@
 
                                 <!-- Display list contact block -->
                                 <h:panelGroup layout="block" class="list-contact"
-                                              rendered="#{viewManager.displayContacts}">
+                                              rendered="#{beanManager.viewManager.displayContacts}">
                                     <!-- Search for contact -->
                                     <h:form id="form-searchContact">
                                         <div class="row">
@@ -135,7 +135,7 @@
                                                 <i class="material-icons prefix">search</i>
                                                 <h:inputText styleClass="validate"
                                                              id="form-searchContact-name"
-                                                             value="#{searchContact.filterContacts}"
+                                                             value="#{beanManager.searchContactBean.filterContacts}"
                                                              validatorMessage="#{msgs['search.contact.validator.size.min.max']}">
                                                     <f:validateLength maximum="50"/>
                                                 </h:inputText>
@@ -146,7 +146,7 @@
                                         <h:message for="form-searchContact-name"
                                                    styleClass="form-input-error"/>
                                         <h:commandButton
-                                                action="#{searchContact.searchContactByName}"
+                                                action="#{beanManager.searchContactBean.searchContactByName}"
                                                 styleClass="btn waves-effect waves-light postfix"
                                                 style="display: none;"/>
                                     </h:form>
@@ -171,7 +171,7 @@
                                             <h:column>
                                                 <h:form>
                                                     <h:commandLink
-                                                            action="#{deleteContact.deleteContact(contact.id)}"
+                                                            action="#{beanManager.deleteContactBean.deleteContact(contact.id)}"
                                                             styleClass="btn-floating waves-effect waves-light pink accent-3 left-align keep-scroll-pos">
                                                         <i class="material-icons left-align">remove</i>
                                                     </h:commandLink>
@@ -183,7 +183,7 @@
 
                                 <!-- Display list group block -->
                                 <h:panelGroup layout="block" class="list-group"
-                                              rendered="#{viewManager.displayGroups}">
+                                              rendered="#{beanManager.viewManager.displayGroups}">
                                     <!-- Search for group -->
                                     <h:form id="form-searchGroup">
                                         <div class="row">
@@ -191,7 +191,7 @@
                                                 <i class="material-icons prefix">search</i>
                                                 <h:inputText styleClass="validate"
                                                              id="groupName"
-                                                             value="#{searchGroup.filterGroups}"
+                                                             value="#{beanManager.searchGroupBean.filterGroups}"
                                                              validatorMessage="#{msgs['search.groupname.validator.size.min.max']}">
                                                     <f:validateLength maximum="50"/>
                                                 </h:inputText>
@@ -202,7 +202,7 @@
                                         <h:message for="groupName"
                                                    styleClass="form-input-error"/>
                                         <h:commandButton
-                                                action="#{searchGroup.searchGroupByName}"
+                                                action="#{beanManager.searchGroupBean.searchGroupByName}"
                                                 styleClass="btn waves-effect waves-light postfix"
                                                 style="display: none;"/>
                                     </h:form>
@@ -225,7 +225,7 @@
                                             <h:column>
                                                 <h:form>
                                                     <h:commandLink
-                                                            action="#{deleteGroup.deleteGroup(group.groupId)}"
+                                                            action="#{beanManager.deleteGroupBean.deleteGroup(group.groupId)}"
                                                             styleClass="btn-floating waves-effect waves-light pink accent-3 left-align keep-scroll-pos">
                                                         <i class="material-icons left-align">remove</i>
                                                     </h:commandLink>
@@ -244,7 +244,7 @@
             <div class="col s6">
 
                 <!-- Display contact informations -->
-                <h:panelGroup layout="block" rendered="#{viewManager.displayContact}">
+                <h:panelGroup layout="block" rendered="#{beanManager.viewManager.displayContact}">
                     <div class="card-panel">
                         <div class="container">
                             <div class="row">
@@ -259,8 +259,8 @@
                                 <div class="col s2">
                                     <h:form>
                                         <h:commandLink
-                                                action="#{viewManager.enableDisplayUpdateContactForm}"
-                                                rendered="#{!viewManager.displayUpdateContactForm}"
+                                                action="#{beanManager.viewManager.enableDisplayUpdateContactForm}"
+                                                rendered="#{!beanManager.viewManager.displayUpdateContactForm}"
                                                 styleClass="btn-floating waves-effect waves-light orange">
                                             <i class="material-icons">mode_edit</i>
                                         </h:commandLink>
@@ -316,7 +316,7 @@
                 </h:panelGroup>
 
                 <!-- Display group information (name and list of contacts -->
-                <h:panelGroup layout="block" rendered="#{viewManager.displayGroup}">
+                <h:panelGroup layout="block" rendered="#{beanManager.viewManager.displayGroup}">
                     <div class="card-panel">
                         <div class="container">
                             <div class="row">
@@ -329,8 +329,8 @@
                                 <div class="col s2">
                                     <h:form>
                                         <h:commandLink
-                                                action="#{viewManager.enableDisplayUpdateGroupForm}"
-                                                rendered="#{!viewManager.displayUpdateGroupForm}"
+                                                action="#{beanManager.viewManager.enableDisplayUpdateGroupForm}"
+                                                rendered="#{!beanManager.viewManager.displayUpdateGroupForm}"
                                                 styleClass="btn-floating waves-effect waves-light orange">
                                             <i class="material-icons">mode_edit</i>
                                         </h:commandLink>
@@ -345,7 +345,7 @@
                                         <i class="material-icons prefix">search</i>
                                         <h:inputText
                                                 id="input-form-searchContactInGroup-name"
-                                                value="#{searchGroup.filterContacts}"
+                                                value="#{beanManager.searchGroupBean.filterContacts}"
                                                 validatorMessage="#{msgs['search.contact.validator.size.min.max']}"
                                                 styleClass="validate">
                                             <f:validateLength minimum="1" maximum="50"/>
@@ -354,7 +354,7 @@
                                                 for="input-form-searchContactInGroup-name">#{msgs['label.search.contact']}</h:outputLabel>
                                     </div>
                                     <h:commandButton
-                                            action="#{searchGroup.searchContactByName}"
+                                            action="#{beanManager.searchGroupBean.searchContactByName}"
                                             styleClass="btn-floating waves-effect waves-light light-blue darken-4"
                                             style="display: none;"/>
                                 </div>
@@ -367,7 +367,7 @@
                                 <h:dataTable
                                         value="#{beanManager.dataManager.displayContactsOfGroup}"
                                         var="contact"
-                                        rendered="#{viewManager.displayGroup}"
+                                        rendered="#{beanManager.viewManager.displayGroup}"
                                         styleClass="responsive-table highlight bordered">
                                     <h:column>
                                         <h:outputText
@@ -378,7 +378,7 @@
                                     <h:column>
                                         <h:form>
                                             <h:commandLink
-                                                    action="#{deleteGroup.deleteContactFromGroup(contact.id, beanManager.dataManager.group.groupId)}"
+                                                    action="#{beanManager.deleteGroupBean.deleteContactFromGroup(contact.id, beanManager.dataManager.group.groupId)}"
                                                     styleClass="btn-floating waves-effect waves-light pink accent-3 keep-scroll-pos">
                                                 <i class="material-icons">remove</i>
                                             </h:commandLink>
@@ -392,11 +392,11 @@
                             <!-- Add contact to group -->
                             <div class="row">
                                 <h:form>
-                                    #{addContactToGroup.setGroupId(beanManager.dataManager.group.groupId)}
+                                    #{beanManager.addContactToGroupBean.setGroupId(beanManager.dataManager.group.groupId)}
                                     <h:inputHidden value="#{addContactToGroup.groupId}"/>
                                     <div class="input-field col s6 offset-s2">
                                         <h:selectOneMenu
-                                                value="#{addContactToGroup.contactId}">
+                                                value="#{beanManager.addContactToGroupBean.contactId}">
                                             <f:selectItem itemValue="0"
                                                           itemDisabled="true"
                                                           itemLabel="#{msgs['label.select.contact']}"
@@ -413,7 +413,7 @@
                                     <div class="input-field col s2">
                                         <div class="input-field col s12">
                                             <h:commandLink
-                                                    action="#{addContactToGroup.addContactToGroup}"
+                                                    action="#{beanManager.addContactToGroupBean.addContactToGroup}"
                                                     styleClass="btn waves-effect waves-light light-blue darken-4 keep-scroll-pos">
                                                 <i class="material-icons">person_add</i>
                                             </h:commandLink>
@@ -427,14 +427,14 @@
 
                 <!-- Update contact informations -->
                 <h:panelGroup layout="block"
-                              rendered="#{viewManager.displayUpdateContactForm}">
-                    #{createOrUpdateContact.loadContact(beanManager.dataManager.contact)}
+                              rendered="#{beanManager.viewManager.displayUpdateContactForm}">
+                    #{beanManager.createOrUpdateContactBean.loadContact(beanManager.dataManager.contact)}
                     <div class="card-panel">
 
                         <div class="row">
                             <div class="col s2">
                                 <h:form>
-                                    <h:commandLink action="#{createOrUpdateContact.cancelUpdateContact}"
+                                    <h:commandLink action="#{beanManager.createOrUpdateContactBean.cancelUpdateContact}"
                                                    styleClass="btn-floating waves-effect waves-light grey">
                                         <i class="material-icons">chevron_left</i>
                                     </h:commandLink>
@@ -451,7 +451,7 @@
                                         <div class="input-field">
                                             <i class="material-icons prefix">account_circle</i>
                                             <h:inputText id="firstNameEdit"
-                                                         value="#{createOrUpdateContact.contact.firstName}"
+                                                         value="#{beanManager.createOrUpdateContactBean.contact.firstName}"
                                                          required="#{param['formEdit:firstNameEdit'] != null}"
                                                          requiredMessage="#{msgs['label.required']}"
                                                          validator="noBlankSpaceValidator">
@@ -466,7 +466,7 @@
                                         <div class="input-field">
                                             <i class="material-icons prefix">account_circle</i>
                                             <h:inputText id="lastNameEdit"
-                                                         value="#{createOrUpdateContact.contact.lastName}"
+                                                         value="#{beanManager.createOrUpdateContactBean.contact.lastName}"
                                                          required="#{param['formEdit:lastNameEdit'] != null}"
                                                          requiredMessage="#{msgs['label.required']}"
                                                          validator="noBlankSpaceValidator">
@@ -481,7 +481,7 @@
                                         <div class="input-field">
                                             <i class="material-icons prefix">email</i>
                                             <h:inputText id="emailEdit"
-                                                         value="#{createOrUpdateContact.contact.email}"
+                                                         value="#{beanManager.createOrUpdateContactBean.contact.email}"
                                                          required="#{param['formEdit:emailEdit'] != null}"
                                                          requiredMessage="#{msgs['label.required']}"
                                                          validator="noBlankSpaceValidator"
@@ -502,7 +502,7 @@
                                         <div class="input-field">
                                             <i class="material-icons prefix">location_city</i>
                                             <h:inputText id="streetEdit"
-                                                         value="#{createOrUpdateContact.contact.address.street}"
+                                                         value="#{beanManager.createOrUpdateContactBean.contact.address.street}"
                                                          required="#{not empty param['formEdit:cityEdit'] or not empty param['formEdit:zipEdit']
                                                        or not empty param['formEdit:country']}"
                                                          requiredMessage="#{msgs['label.required']}"
@@ -518,7 +518,7 @@
                                         <div class="input-field">
                                             <i class="material-icons prefix">location_city</i>
                                             <h:inputText id="cityEdit"
-                                                         value="#{createOrUpdateContact.contact.address.city}"
+                                                         value="#{beanManager.createOrUpdateContactBean.contact.address.city}"
                                                          required="#{not empty param['formEdit:streetEdit'] or not empty param['formEdit:zipEdit']
                                                        or not empty param['formEdit:countryEdit']}"
                                                          requiredMessage="#{msgs['label.required']}"
@@ -534,7 +534,7 @@
                                         <div class="input-field">
                                             <i class="material-icons prefix">location_city</i>
                                             <h:inputText id="zipEdit"
-                                                         value="#{createOrUpdateContact.contact.address.zip}"
+                                                         value="#{beanManager.createOrUpdateContactBean.contact.address.zip}"
                                                          required="#{not empty param['formEdit:cityEdit'] or not empty param['formEdit:streetEdit']
                                                        or not empty param['formEdit:countryEdit']}"
                                                          requiredMessage="#{msgs['label.required']}"
@@ -552,7 +552,7 @@
                                         <div class="input-field">
                                             <i class="material-icons prefix">location_city</i>
                                             <h:inputText id="countryEdit"
-                                                         value="#{createOrUpdateContact.contact.address.country}"
+                                                         value="#{beanManager.createOrUpdateContactBean.contact.address.country}"
                                                          required="#{not empty param['formEdit:cityEdit'] or not empty param['formEdit:zipEdit']
                                                                    or not empty param['formEdit:streetEdit']}"
                                                          requiredMessage="#{msgs['label.required']}"
@@ -568,7 +568,7 @@
                                 <!-- Update phones numbers -->
                                 <div class="row">
                                     <h:dataTable id="phonesEdit"
-                                                 value="#{createOrUpdateContact.contact.phones}"
+                                                 value="#{beanManager.createOrUpdateContactBean.contact.phones}"
                                                  var="phone">
                                         <h:column class="col s7">
                                             <div class="input-field">
@@ -599,7 +599,7 @@
                                         </h:column>
                                         <h:column class="col s1">
                                             <h:commandLink
-                                                    action="#{createOrUpdateContact.remove(phone)}"
+                                                    action="#{beanManager.createOrUpdateContactBean.remove(phone)}"
                                                     styleClass="btn-floating waves-effect waves-light red keep-scroll-pos"
                                                     immediate="true">
                                                 <i class="material-icons center">remove</i>
@@ -611,7 +611,7 @@
                                 <div class="row">
                                     <div class="col s2 offset-s10">
                                         <h:commandLink id="addPhoneEdit"
-                                                       action="#{createOrUpdateContact.addPhone}"
+                                                       action="#{beanManager.createOrUpdateContactBean.addPhone}"
                                                        styleClass="btn waves-effect waves-light light-blue darken-4 keep-scroll-pos">
                                             <i class="material-icons center">add</i> <i
                                                 class="material-icons center">phone</i>
@@ -621,7 +621,7 @@
 
                                 <div class="row">
                                     <div class="col s2 offset-s10">
-                                        <h:commandLink action="#{createOrUpdateContact.updateContact}"
+                                        <h:commandLink action="#{beanManager.createOrUpdateContactBean.updateContact}"
                                                        styleClass="btn-large waves-effect waves-light green accent-3 keep-scroll-pos">
                                             <i class="material-icons center">send</i>
                                         </h:commandLink>
@@ -629,7 +629,7 @@
                                 </div>
 
                                 <h:commandButton id="saveEdit" value="save"
-                                                 action="#{createOrUpdateContact.updateContact}"
+                                                 action="#{beanManager.createOrUpdateContactBean.updateContact}"
                                                  style="display: None;"/>
                             </h:form>
                         </div>
@@ -638,15 +638,15 @@
 
                 <!-- Create contact -->
                 <h:panelGroup layout="block"
-                              rendered="#{viewManager.displayCreateContactForm}">
+                              rendered="#{beanManager.viewManager.displayCreateContactForm}">
                     <div class="card-panel">
 
                         <div class="row">
                             <div class="col s2">
                                 <h:form>
-                                    <h:commandLink action="#{createOrUpdateContact.cancelCreateContact}"
+                                    <h:commandLink action="#{beanManager.createOrUpdateContactBean.cancelCreateContact}"
                                                    styleClass="btn-floating waves-effect waves-light grey">
-                                        <i class="material-icons">chevron_left</i>
+                                        #{msgs['label.cancel']}
                                     </h:commandLink>
                                 </h:form>
                             </div>
@@ -661,7 +661,7 @@
                                         <div class="input-field">
                                             <i class="material-icons prefix">account_circle</i>
                                             <h:inputText id="firstNameCreate"
-                                                         value="#{createOrUpdateContact.contact.firstName}"
+                                                         value="#{beanManager.createOrUpdateContactBean.contact.firstName}"
                                                          required="#{param['formCreate:firstNameCreate'] != null}"
                                                          requiredMessage="#{msgs['label.required']}"
                                                          validator="noBlankSpaceValidator">
@@ -677,7 +677,7 @@
                                         <div class="input-field">
                                             <i class="material-icons prefix">account_circle</i>
                                             <h:inputText id="lastNameCreate"
-                                                         value="#{createOrUpdateContact.contact.lastName}"
+                                                         value="#{beanManager.createOrUpdateContactBean.contact.lastName}"
                                                          required="#{param['formCreate:lastNameCreate'] != null}"
                                                          requiredMessage="#{msgs['label.required']}"
                                                          validator="noBlankSpaceValidator">
@@ -693,7 +693,7 @@
                                         <div class="input-field">
                                             <i class="material-icons prefix">email</i>
                                             <h:inputText id="emailCreate"
-                                                         value="#{createOrUpdateContact.contact.email}"
+                                                         value="#{beanManager.createOrUpdateContactBean.contact.email}"
                                                          required="#{param['formCreate:emailCreate'] != null}"
                                                          requiredMessage="#{msgs['label.required']}"
                                                          validator="noBlankSpaceValidator"
@@ -714,7 +714,7 @@
                                         <div class="input-field">
                                             <i class="material-icons prefix">location_city</i>
                                             <h:inputText id="streetCreate"
-                                                         value="#{createOrUpdateContact.contact.address.street}"
+                                                         value="#{beanManager.createOrUpdateContactBean.contact.address.street}"
                                                          required="#{not empty param['formCreate:streetCreate'] or not empty param['formCreate:cityCreate']
                                                        or not empty param['formCreate:zipCreate']}"
                                                          requiredMessage="#{msgs['label.required']}"
@@ -730,7 +730,7 @@
                                         <div class="input-field">
                                             <i class="material-icons prefix">location_city</i>
                                             <h:inputText id="cityCreate"
-                                                         value="#{createOrUpdateContact.contact.address.city}"
+                                                         value="#{beanManager.createOrUpdateContactBean.contact.address.city}"
                                                          required="#{not empty param['formCreate:cityCreate'] or not empty param['formCreate:streetCreate']
                                                        or not empty param['formCreate:zipCreate']}"
                                                          requiredMessage="#{msgs['label.required']}"
@@ -746,7 +746,7 @@
                                         <div class="input-field">
                                             <i class="material-icons prefix">location_city</i>
                                             <h:inputText id="zipCreate"
-                                                         value="#{createOrUpdateContact.contact.address.zip}"
+                                                         value="#{beanManager.createOrUpdateContactBean.contact.address.zip}"
                                                          required="#{not empty param['formCreate:zipCreate'] or not empty param['formCreate:cityCreate']
                                                        or not empty param['formCreate:streetCreate']}"
                                                          requiredMessage="#{msgs['label.required']}"
@@ -764,7 +764,7 @@
                                         <div class="input-field">
                                             <i class="material-icons prefix">location_city</i>
                                             <h:inputText id="countryCreate"
-                                                         value="#{createOrUpdateContact.contact.address.country}"
+                                                         value="#{beanManager.createOrUpdateContactBean.contact.address.country}"
                                                          required="#{not empty param['formCreate:cityCreate'] or not empty param['formCreate:zipCreate']
                                                                    or not empty param['formCreate:streetCreate']}"
                                                          requiredMessage="#{msgs['label.required']}"
@@ -780,7 +780,7 @@
                                 <!-- Update phones numbers -->
                                 <div class="row">
                                     <h:dataTable id="phonesCreate"
-                                                 value="#{createOrUpdateContact.contact.phones}"
+                                                 value="#{beanManager.createOrUpdateContactBean.contact.phones}"
                                                  var="phone">
                                         <h:column class="col s7">
                                             <div class="input-field">
@@ -811,7 +811,7 @@
                                         </h:column>
                                         <h:column class="col s1">
                                             <h:commandLink
-                                                    action="#{createOrUpdateContact.remove(phone)}"
+                                                    action="#{beanManager.createOrUpdateContactBean.remove(phone)}"
                                                     styleClass="btn-floating waves-effect waves-light red keep-scroll-pos keep-scroll-pos"
                                                     immediate="true">
                                                 <i class="material-icons center">remove</i>
@@ -823,7 +823,7 @@
                                 <div class="row">
                                     <div class="col s2 offset-s10">
                                         <h:commandLink id="addPhoneCreate"
-                                                       action="#{createOrUpdateContact.addPhone}"
+                                                       action="#{beanManager.createOrUpdateContactBean.addPhone}"
                                                        styleClass="btn waves-effect waves-light light-blue darken-4 keep-scroll-pos keep-scroll-pos">
                                             <i class="material-icons center">add</i> <i
                                                 class="material-icons center">phone</i>
@@ -833,7 +833,7 @@
 
                                 <div class="row">
                                     <div class="col s2 offset-s10">
-                                        <h:commandLink action="#{createOrUpdateContact.createContact}"
+                                        <h:commandLink action="#{beanManager.createOrUpdateContactBean.createContact}"
                                                        styleClass="btn-large waves-effect waves-light green accent-3 keep-scroll-pos">
                                             <i class="material-icons center">send</i>
                                         </h:commandLink>
@@ -841,7 +841,7 @@
                                 </div>
 
                                 <h:commandButton id="saveCreate" styleClass="keep-scroll-pos" value="save"
-                                                 action="#{createOrUpdateContact.createContact}"
+                                                 action="#{beanManager.createOrUpdateContactBean.createContact}"
                                                  style="display: None;"/>
                             </h:form>
                         </div>
@@ -850,21 +850,21 @@
 
                 <!-- Update group information-->
                 <h:panelGroup layout="block"
-                              rendered="#{viewManager.displayUpdateGroupForm}">
+                              rendered="#{beanManager.viewManager.displayUpdateGroupForm}">
                     <div class="card-panel">
                         <div class="container">
                             <h5 class="center"><h:outputFormat
                                     value="#{msgs['label.update']} #{msgs['label.group']}"/>
                             </h5>
                             <h:form id="form-updateGroup">
-                                #{updateGroup.setGroupName(beanManager.dataManager.group.groupName)}
-                                #{updateGroup.setGroupId(beanManager.dataManager.group.groupId)}
+                                #{beanManager.updateGroupBean.setGroupName(beanManager.dataManager.group.groupName)}
+                                #{beanManager.updateGroupBean.setGroupId(beanManager.dataManager.group.groupId)}
                                 <div class="row">
                                     <div class="input-field col s10">
                                         <i class="material-icons prefix">mode_edit</i>
                                         <h:inputText id="updateGroup-groupName"
                                                      class="validate"
-                                                     value="#{updateGroup.groupName}"
+                                                     value="#{beanManager.updateGroupBean.groupName}"
                                                      validatorMessage="#{msgs['input.groupname.validator.min.max']}">
                                             <f:validateLength minimum="3" maximum="50"/>
                                         </h:inputText>
@@ -872,8 +872,8 @@
                                                 for="updateGroup-groupName">#{msgs['label.groupname']}</h:outputLabel>
                                     </div>
                                 </div>
-                                <h:inputHidden value="#{updateGroup.groupId}"/>
-                                <h:commandButton action="#{updateGroup.updateGroup}"
+                                <h:inputHidden value="#{beanManager.updateGroupBean.groupId}"/>
+                                <h:commandButton action="#{beanManager.updateGroupBean.updateGroup}"
                                                  styleClass="btn waves-effect waves-light postfix"
                                                  style="display: none;"/>
                             </h:form>
@@ -886,7 +886,7 @@
 
                 <!-- Create new group -->
                 <h:panelGroup layout="block"
-                              rendered="#{viewManager.displayCreateGroupForm}">
+                              rendered="#{beanManager.viewManager.displayCreateGroupForm}">
                     <div class="card-panel">
                         <div class="container">
                             <h5 class="center">#{msgs['label.add.contactgroup']}</h5>
@@ -895,7 +895,7 @@
                                     <div class="input-field col s10">
                                         <h:inputText styleClass="validate"
                                                      id="createGroup-groupName"
-                                                     value="#{createGroup.groupName}"
+                                                     value="#{beanManager.createGroupBean.groupName}"
                                                      required="true"
                                                      requiredMessage="#{msgs['label.input.required']}"
                                                      validatorMessage="#{msgs['input.groupname.validator.min.max']}">
@@ -905,7 +905,7 @@
                                                 for="createGroup-groupName">#{msgs['label.groupname']}</h:outputLabel>
                                     </div>
                                     <div class="input-field col s2">
-                                        <h:commandLink action="#{createGroup.createGroup}"
+                                        <h:commandLink action="#{beanManager.createGroupBean.createGroup}"
                                                        styleClass="btn waves-effect waves-light light-blue darken-4">
                                             <i class="material-icons center">group_add</i>
                                         </h:commandLink>

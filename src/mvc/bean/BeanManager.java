@@ -6,13 +6,8 @@ import mvc.bean.contact.CreateOrUpdateContactBean;
 import mvc.bean.contact.DeleteContactBean;
 import mvc.bean.contact.SearchContactBean;
 import mvc.bean.group.*;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
 import java.util.Optional;
@@ -32,7 +27,7 @@ public class BeanManager implements Serializable {
 //    @ManagedProperty(value = "#{searchGroup}")
     private SearchGroupBean searchGroupBean;
 //    @ManagedProperty(value = "#{deleteGroup}")
-    private DeleteGroupBean deleteGroupeBean;
+    private DeleteGroupBean deleteGroupBean;
 //    @ManagedProperty(value = "#{createGroup}")
     private CreateGroupBean createGroupBean;
 //    @ManagedProperty(value = "#{updateGroup}")
@@ -77,8 +72,8 @@ public class BeanManager implements Serializable {
         return dataLoader;
     }
 
-    public DeleteGroupBean getDeleteGroupeBean() {
-        return deleteGroupeBean;
+    public DeleteGroupBean getDeleteGroupBean() {
+        return deleteGroupBean;
     }
 
     public DeleteContactBean getDeleteContactBean() {
@@ -131,9 +126,9 @@ public class BeanManager implements Serializable {
         this.searchGroupBean.setBeanManager(this);
     }
 
-    public void setDeleteGroupeBean(DeleteGroupBean deleteGroupeBean) {
-        this.deleteGroupeBean = deleteGroupeBean;
-        this.deleteGroupeBean.setBeanManager(this);
+    public void setDeleteGroupBean(DeleteGroupBean deleteGroupBean) {
+        this.deleteGroupBean = deleteGroupBean;
+        this.deleteGroupBean.setBeanManager(this);
     }
 
     public void setUpdateGroupBean(UpdateGroupBean updateGroupBean) {
@@ -278,12 +273,19 @@ public class BeanManager implements Serializable {
         Contact contact = this.dataLoader.loadContact(contactId);
         if (contact == null) {
             FacesContext context = FacesContext.getCurrentInstance();
-            ResourceBundle text = ResourceBundle.getBundle("resources.Resources", context.getViewRoot().getLocale());
-            context.addMessage("form-createGroup", new FacesMessage(text.getString("exception.load.contact.failed")));
+            ResourceBundle text = ResourceBundle.getBundle("resources.Resources",
+                    context.getViewRoot().getLocale());
+            context.addMessage("form-createGroup", new FacesMessage(
+                    text.getString("exception.load.contact.failed"),
+                    "BeanManager, loadContact failed: contact is null"));
             // TODO form-creategroup ??
         } else {
             this.dataManager.setContact(contact);
             this.viewManager.displayContact();
+            if (this.viewManager.isDisplayContact())
+                System.out.println("DEBUG => displayContact TRUE");
+            else
+                System.out.println("DEBUG => dipslayContact FALSE");
         }
     }
 
