@@ -102,6 +102,7 @@ public class GroupDAOImpl implements GroupDAO {
                             "LEFT JOIN FETCH contactGroup.contacts contact " +
                             "WHERE contactGroup.groupId=:id", ContactGroup.class)
                     .setParameter("id", id)
+                    .setCacheable(true)
                     .getSingleResult();
             session.close();
             return group;
@@ -120,7 +121,9 @@ public class GroupDAOImpl implements GroupDAO {
             List<ContactGroup> groups =
                     session.createQuery(
                             "from ContactGroup contactGroup ORDER BY groupName",
-                            ContactGroup.class).list();
+                            ContactGroup.class)
+                            .setCacheable(true)
+                            .list();
             session.close();
             return new HashSet<>(groups);
         } catch(HibernateException e) {
@@ -199,6 +202,7 @@ public class GroupDAOImpl implements GroupDAO {
                         .createFilter(group.getContacts(),
                                 "WHERE firstName LIKE :name OR lastName LIKE :name")
                         .setParameter("name", String.format("%s%%", name))
+                        .setCacheable(true)
                         .list();
             } else {
                 contacts = session
@@ -207,6 +211,7 @@ public class GroupDAOImpl implements GroupDAO {
                                         "OR firstName LIKE :token2 AND lastName LIKE :token1")
                         .setParameter("token1", String.format("%s%%", token[0]))
                         .setParameter("token2", String.format("%s%%", token[1]))
+                        .setCacheable(true)
                         .list();
             }
             session.close();
@@ -232,6 +237,7 @@ public class GroupDAOImpl implements GroupDAO {
                     .createQuery("select contact from Contact contact " +
                             "where contact.id not in :contacts", Contact.class)
                     .setParameter("contacts", contactsId)
+                    .setCacheable(true)
                     .list();
             session.close();
             return new HashSet<>(contactsNotInSet);

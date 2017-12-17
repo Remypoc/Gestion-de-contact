@@ -10,6 +10,14 @@
     <!--timeToIdleSeconds : as long as object is requested within the time limit it will be kept in the cache-->
     <cache name="domain.Contact" maxEntriesLocalHeap="1000" eternal="false"
            timeToIdleSeconds="10">
-        <persistence strategy="localTempSwap" />
+        <persistence strategy="localTempSwap"/>
+    </cache>
+    <cache name="domain.Address" maxEntriesLocalHeap="1000" eternal="false"
+           timeToIdleSeconds="10">
+        <persistence strategy="localTempSwap"/>
+    </cache>
+    <cache name="domain.ContactGroup" maxEntriesLocalHeap="1000" eternal="false"
+           timeToIdleSeconds="10">
+        <persistence strategy="localTempSwap"/>
     </cache>
 </ehcache>

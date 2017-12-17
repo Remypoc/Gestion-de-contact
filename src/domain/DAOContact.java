@@ -182,7 +182,9 @@ public class DAOContact {
             Session session = sessionFactory.getCurrentSession();
             session.beginTransaction();
             List<Contact> contacts = session.createQuery(
-                    "from Contact contact ORDER BY lastName", Contact.class).list();
+                    "from Contact contact ORDER BY lastName", Contact.class)
+                    .setCacheable(true)
+                    .list();
             session.close();
 
             return new HashSet<>(contacts);
@@ -197,6 +199,7 @@ public class DAOContact {
                 "from Contact contact WHERE lastName like :name or firstName like :name or email like :name " +
                         "ORDER BY lastName")
                 .setParameter("name", String.format("%s%%", search))
+                .setCacheable(true)
                 .list();
         session.close();
         return contacts;
@@ -224,7 +227,9 @@ public class DAOContact {
     public Object loadGroups() {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        List<ContactGroup> groups = session.createQuery("from ContactGroup contactGroup").list();
+        List<ContactGroup> groups = session.createQuery("from ContactGroup contactGroup", ContactGroup.class)
+                .setCacheable(true)
+                .list();
         session.close();
 
         return groups;

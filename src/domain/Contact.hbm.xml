@@ -25,9 +25,11 @@
         <property name="lastName" type="string" column="LASTNAME"/>
         <property name="email" type="string" column="EMAIL"/>
 
-        <many-to-one name="address" column="REFADDRESS"  not-null="false" cascade="all"/>
+        <many-to-one name="address" column="REFADDRESS" not-null="false" cascade="all"/>
 
         <set name="phones" cascade="persist all-delete-orphan" lazy="true">
+            <cache usage="read-write"/>
+
             <key column="id_contact"/>
             <one-to-many class="PhoneNumber"/>
         </set>
@@ -35,6 +37,8 @@
         <!-- ContactGroup est le possédant de l'association. Pour sauvegarder, mettre à jour, ou supprimer
         il faut passer par le contactGroup -->
         <set name="books" table="CONTACTINGROUP" inverse="true" lazy="true" cascade="persist">
+            <cache usage="read-write"/>
+
             <key column="ID_CONTACT"/>
             <many-to-many class="ContactGroup" column="ID_GROUP"/>
         </set>
