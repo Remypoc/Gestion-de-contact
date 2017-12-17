@@ -2,10 +2,12 @@ package mvc.bean;
 
 import domain.Contact;
 import domain.ContactGroup;
+import mvc.bean.contact.CreateOrUpdateContactBean;
 import mvc.bean.contact.DeleteContactBean;
 import mvc.bean.contact.SearchContactBean;
-import mvc.bean.contact.UpdateContactBean;
 import mvc.bean.group.*;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -17,36 +19,41 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-@ManagedBean(name="beanManager")
-@ViewScoped
+//@ManagedBean(name="beanManager")
+//@ViewScoped
 public class BeanManager implements Serializable {
+//    @ManagedProperty(value = "#{dataManager}")
     private DataManager dataManager;
+//    @ManagedProperty(value = "#{dataLoader}")
     private DataLoader dataLoader;
-    @ManagedProperty(value="#{viewManager}")
+//    @ManagedProperty(value = "#{viewManager}")
     private ViewManager viewManager;
     
-    @ManagedProperty(value="#{searchGroup}")
+//    @ManagedProperty(value = "#{searchGroup}")
     private SearchGroupBean searchGroupBean;
-    @ManagedProperty(value="#{deleteGroup}")
+//    @ManagedProperty(value = "#{deleteGroup}")
     private DeleteGroupBean deleteGroupeBean;
-    @ManagedProperty(value="#{createGroup}")
+//    @ManagedProperty(value = "#{createGroup}")
     private CreateGroupBean createGroupBean;
-    @ManagedProperty(value="#{updateGroup}")
+//    @ManagedProperty(value = "#{updateGroup}")
     private UpdateGroupBean updateGroupBean;
-    @ManagedProperty(value="#{addContactToGroup}")
+//    @ManagedProperty(value = "#{addContactToGroup}")
     private AddContactToGroupBean addContactToGroupBean;
-    @ManagedProperty(value="#{deleteContact}")
+//    @ManagedProperty(value = "#{deleteContact}")
     private DeleteContactBean deleteContactBean;
-    @ManagedProperty(value="#{searchContact}")
+//    @ManagedProperty(value = "#{searchContact}")
     private SearchContactBean searchContactBean;
-    @ManagedProperty(value="#{updateContact}")
-    private UpdateContactBean updateContactBean;
+//    @ManagedProperty(value = "#{createOrUpdateContact}")
+    private CreateOrUpdateContactBean createOrUpdateContactBean;
 
     private String error;
 
     public BeanManager() {
-        this.dataLoader = new DataLoader();
-        this.dataManager = new DataManager();
+//        ApplicationContext context = new ClassPathXmlApplicationContext("WEB-INF/applicationContext.xml");
+//        this.dataLoader = (DataLoader) context.getBean("dataLoader");
+//        this.dataManager = (DataManager) context.getBean("dataManager");
+//        this.dataLoader = new DataLoader();
+//        this.dataManager = new DataManager();
         this.error = null;
     }
 
@@ -90,8 +97,8 @@ public class BeanManager implements Serializable {
         return createGroupBean;
     }
 
-    public UpdateContactBean getUpdateContactBean() {
-        return updateContactBean;
+    public CreateOrUpdateContactBean getCreateOrUpdateContactBean() {
+        return createOrUpdateContactBean;
     }
 
     public void notifyDisplayCreateGroupForm() {
@@ -154,9 +161,9 @@ public class BeanManager implements Serializable {
         this.searchContactBean.setBeanManager(this);
     }
 
-    public void setUpdateContactBean(UpdateContactBean updateContactBean) {
-        this.updateContactBean = updateContactBean;
-        this.updateContactBean.setBeanManager(this);
+    public void setCreateOrUpdateContactBean(CreateOrUpdateContactBean createOrUpdateContactBean) {
+        this.createOrUpdateContactBean = createOrUpdateContactBean;
+        this.createOrUpdateContactBean.setBeanManager(this);
     }
 
     public void notifyDeletedGroup(long groupId) {
@@ -283,12 +290,31 @@ public class BeanManager implements Serializable {
     public void notifyUpdateContact(Contact contact) {
         System.out.println("BeanManager => notifyUpdateContact");
         if ( contact != null) {
-            System.out.println("update contact not null");
             dataManager.setContact(contact);
-            Optional<Contact> c1 =dataManager.getContacts().stream()
+            Optional<Contact> c1 = dataManager.getContacts().stream()
                     .filter(c -> c.getId() == contact.getId()).findFirst();
             c1.ifPresent(c -> c.copy(contact));
         }
         this.viewManager.hideUpdateContactForm();
+    }
+
+    public void notifyCreateContact(Contact contact) {
+        System.out.println("BeanManager => notifyCreateContact");
+        if ( contact != null ) {
+            dataManager.getContacts().add(contact);
+            dataManager.setContact(contact);
+        }
+        this.viewManager.hideRightPane();
+    }
+
+    public void notifyDeleteContact(Contact contact) {
+        System.out.println("BeanManager => notifyDeleteContact");
+        if (contact != null) {
+            if (dataManager.getContact() != null && dataManager.getContact().equals(contact)) {
+                dataManager.setContact(null);
+            }
+            dataManager.getContacts().removeIf(contact1 -> contact1.equals(contact));
+            this.viewManager.hideRightPane();
+        }
     }
 }

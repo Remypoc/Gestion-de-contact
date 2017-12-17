@@ -1,17 +1,26 @@
 package mvc.bean.contact;
 
+import domain.Contact;
 import mvc.bean.BeanManager;
 import service.ContactService;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
-@ManagedBean(name="deleteContact")
-@ViewScoped
+
+//@ManagedBean(name="deleteContact")
+//@ViewScoped
 public class DeleteContactBean {
     private BeanManager beanManager;
+//    @ManagedProperty(value = "#{contactService}")
+    private ContactService contactService;
 
     private long contactId;
+
+    public void setContactService(ContactService contactService) {
+        this.contactService = contactService;
+    }
 
     public DeleteContactBean() {
         this.contactId = 0;
@@ -38,8 +47,8 @@ public class DeleteContactBean {
     }
 
     public void deleteContact(long contactId) {
-        final ContactService service = new ContactService();
-        service.deleteContact(contactId);
+        contactService.deleteContact(contactId);
+        beanManager.notifyDeleteContact(new Contact(contactId));
         reset();
     }
 }

@@ -3,28 +3,29 @@ package mvc.bean.contact;
 import domain.Address;
 import domain.Contact;
 import domain.PhoneNumber;
-import exception.DAOException;
 import mvc.bean.BeanManager;
 import service.ContactService;
 
-import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 import java.io.Serializable;
 import java.util.LinkedHashSet;
-import java.util.ResourceBundle;
 
-@ManagedBean(name="updateContact")
-@ViewScoped
-public class UpdateContactBean implements Serializable {
+//@ManagedBean(name="createOrUpdateContact")
+//@ViewScoped
+public class CreateOrUpdateContactBean implements Serializable {
     private BeanManager beanManager;
+//    @ManagedProperty(value = "#{contactService}")
+    private ContactService contactService;
 
     private Contact contact;
 
-    public UpdateContactBean() {
+    public CreateOrUpdateContactBean() {
         this.beanManager = beanManager;
-        this.contact = null;
+        this.contact = new Contact();
+        this.contact.setAddress(new Address());
+    }
+
+    public void setContactService(ContactService contactService) {
+        this.contactService = contactService;
     }
 
     public void setBeanManager(BeanManager beanManager) {
@@ -40,28 +41,39 @@ public class UpdateContactBean implements Serializable {
     }
 
     public void reset() {
-        this.contact = null;
+        this.contact = new Contact();
+        this.contact.setAddress(new Address());
     }
 
-    public void save() {
+    public void createContact() {
+        System.out.println("createOrUpdateContactBean => createContact");
+        if (contact == null)
+            System.out.println("Contact is null");
         if (contact.getAddress() != null && !contact.getAddress().isValid()) {
             contact.setAddress(null);
         }
-        final ContactService service = new ContactService();
-        try {
-            final Object lError = service.updateContact(contact);
-        } catch (DAOException e) {
-            FacesContext context = FacesContext.getCurrentInstance();
-            ResourceBundle text = ResourceBundle.getBundle("resources.Resources", context.getViewRoot().getLocale());
-            context.addMessage(null, new FacesMessage(text.getString(e.getMessageBundleName())));
+        final Object lError = contactService.addContact(contact);
+        beanManager.notifyCreateContact(contact);
+        reset();
+    }
+
+    public void updateContact() {
+        if (contact.getAddress() != null && !contact.getAddress().isValid()) {
+            contact.setAddress(null);
         }
+        final Object lError = contactService.updateContact(contact);
         beanManager.notifyUpdateContact(contact);
         reset();
     }
 
-    public void cancel() {
+    public void cancelUpdateContact() {
         this.reset();
         this.beanManager.notifyUpdateContact(null);
+    }
+
+    public void cancelCreateContact() {
+        this.reset();
+        this.beanManager.notifyCreateContact(null);
     }
 
     public void addPhone() {
@@ -86,6 +98,5 @@ public class UpdateContactBean implements Serializable {
         if (this.contact.getPhones() == null) {
             this.contact.setPhones(new LinkedHashSet<>());
         }
-
     }
 }

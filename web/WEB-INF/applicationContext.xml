@@ -1,48 +1,133 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
-    <bean id="dataSource"
-          class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+ 	<bean id="dataSource"
+		  class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 
-        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://localhost:3306/gestion_contact"/>
-        <property name="username" value="root"/>
-        <property name="password" value="root"/>
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+		<property name="url" value="jdbc:mysql://localhost:3306/gestion_contact"/>
+		<property name="username" value="root"/>
+		<property name="password" value="root"/>
 
-    </bean>
+	</bean>
 
-    <bean id="sessionFactory"
-          class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
-        <property name="dataSource" ref="dataSource"/>
+	<bean id="sessionFactory"
+		  class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
 
-        <property name="mappingResources">
-            <list>
-                <value>domain/Address.hbm.xml</value>
-                <value>domain/Contact.hbm.xml</value>
-                <value>domain/ContactGroup.hbm.xml</value>
-                <value>domain/PhoneNumber.hbm.xml</value>
-            </list>
-        </property>
+		<property name="mappingResources">
+			<list>
+				<value>domain/Address.hbm.xml</value>
+				<value>domain/Contact.hbm.xml</value>
+				<value>domain/ContactGroup.hbm.xml</value>
+				<value>domain/PhoneNumber.hbm.xml</value>
+			</list>
+		</property>
 
-        <property name="hibernateProperties">
-            <props>
-                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
-                <prop key="hibernate.show_sql">true</prop>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
 
-                <!--Second level cache-->
-                <prop key="cache.use_second_level_cache">true</prop>
-                <prop key="hibernate.cache.use_query_cache">true</prop>
-                <prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory</prop>
-                <prop key="net.sf.ehcache.configurationResourceName">ehcache.xml</prop>
-                <prop key="hibernate.generate_statistics">true</prop>
-            </props>
-        </property>
-    </bean>
+				<!--Second level cache-->
+				<prop key="cache.use_second_level_cache">true</prop>
+				<prop key="hibernate.cache.use_query_cache">true</prop>
+				<prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory</prop>
+				<prop key="net.sf.ehcache.configurationResourceName">ehcache.xml</prop>
+				<prop key="hibernate.generate_statistics">true</prop>
+			</props>
+		</property>
+	</bean>
 
-    <bean id="transactionManager"
-          class="org.springframework.orm.hibernate5.HibernateTransactionManager">
-        <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
+	<bean id="transactionManager"
+		  class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+
+	<!-- DAOS -->
+	<bean id="groupDAO" class="dao.GroupDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+
+	<bean id="contactDAO" class="dao.ContactDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+
+
+	<!-- SERVICES -->
+	<bean id="contactService" class="service.ContactServiceImpl">
+		<property name="contactDAO" ref="contactDAO"/>
+	</bean>
+
+	<bean id="groupService" class="service.GroupServiceImpl">
+		<property name="groupDAO" ref="groupDAO"/>
+	</bean>
+
+
+	<!-- JSF BEAN -->
+	<bean id="beanManager" class="mvc.bean.BeanManager">
+		<property name="dataLoader" ref="dataLoader"/>
+		<property name="dataManager" ref="dataManager"/>
+
+		<property name="viewManager" ref="viewManager" />
+		<property name="addContactToGroupBean" ref="addContactToGroup"/>
+		<property name="createGroupBean" ref="createGroup"/>
+		<property name="createOrUpdateContactBean" ref="createOrUpdateContact"/>
+		<property name="deleteContactBean" ref="deleteContact"/>
+		<property name="deleteGroupeBean" ref="deleteGroup"/>
+		<property name="searchContactBean" ref="searchContact"/>
+		<property name="searchGroupBean" ref="searchGroup"/>
+		<property name="updateGroupBean" ref="updateGroup"/>
+	</bean>
+
+	<bean id="dataLoader" class="mvc.bean.DataLoader">
+		<property name="contactService" ref="contactService"/>
+		<property name="groupService" ref="groupService"/>
+ 	</bean>
+
+	<bean id="dataManager" class="mvc.bean.DataManager"/>
+
+	<bean id="viewManager" class="mvc.bean.ViewManager">
+		<!--<property name="beanManager" ref="beanManager" />-->
+	</bean>
+
+	<bean id="deleteGroup" class="mvc.bean.group.DeleteGroupBean">
+		<property name="groupService" ref="groupService"/>
+		<!--<property name="beanManager" ref="beanManager" />-->
+	</bean>
+
+	<bean id="addContactToGroup" class="mvc.bean.group.AddContactToGroupBean">
+		<property name="groupService" ref="groupService"/>
+		<!--<property name="beanManager" ref="beanManager" />-->
+	</bean>
+
+	<bean id="createGroup" class="mvc.bean.group.CreateGroupBean">
+		<property name="groupService" ref="groupService"/>
+		<!--<property name="beanManager" ref="beanManager" />-->
+	</bean>
+
+	<bean id="updateGroup" class="mvc.bean.group.UpdateGroupBean">
+		<property name="groupService" ref="groupService"/>
+		<!--<property name="beanManager" ref="beanManager" />-->
+	</bean>
+
+	<bean id="createOrUpdateContact" class="mvc.bean.contact.CreateOrUpdateContactBean">
+		<property name="contactService" ref="contactService"/>
+		<!--<property name="beanManager" ref="beanManager" />-->
+	</bean>
+
+	<bean id="deleteContact" class="mvc.bean.contact.DeleteContactBean">
+		<property name="contactService" ref="contactService"/>
+		<!--<property name="beanManager" ref="beanManager" />-->
+	</bean>
+
+	<bean id="searchContact" class="mvc.bean.contact.SearchContactBean">
+		<!--<property name="beanManager" ref="beanManager" />-->
+	</bean>
+
+	<bean id="searchGroup" class="mvc.bean.group.SearchGroupBean">
+		<!--<property name="beanManager" ref="beanManager" />-->
+	</bean>
 </beans>

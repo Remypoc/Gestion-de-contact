@@ -8,24 +8,27 @@
       xmlns:p="http://struts.apache.org/tags-html"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 <h:head>
-    <title><h:outputFormat value="#{msgs['home.title']}" /></title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.css" />
-    <link rel="stylesheet" href="/gestion_contact/pages/jsf/main.css" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title><h:outputFormat value="#{msgs['home.title']}"/></title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet"/>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.css"/>
+    <link rel="stylesheet" href="/gestion_contact/pages/jsf/main.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </h:head>
 
 <h:body style="background-color: #f7f7f7;">
 
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js" />
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.js" />
-    <script type="text/javascript" src="/gestion_contact/pages/jsf/main.js" />
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"/>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.js"/>
+    <script type="text/javascript" src="/gestion_contact/pages/jsf/main.js"/>
 
-    <!-- Load contacts and groups on first launch -->
+    <!-- Load contacts on first launch -->
     <f:metadata>
-        <f:viewAction action="#{beanManager.loadGroups}"/>
-        <f:viewAction action="#{beanManager.loadContacts}"/>
+        <f:viewAction action="#{beanManager.loadContacts}" />
+        <f:viewAction action="#{beanManager.loadGroups}" />
         <f:view locale="#{facesContext.externalContext.requestLocale}"/>
     </f:metadata>
 
@@ -33,7 +36,7 @@
     <nav>
         <div class="nav-wrapper" style="background-color: #3b5998;">
             <a href="#" class="brand-logo center">
-                <h:outputFormat value="#{msgs['home.title']}" />
+                <h:outputFormat value="#{msgs['home.title']}"/>
             </a>
         </div>
     </nav>
@@ -45,32 +48,49 @@
         <div class="row">
             <div class="col s2 offset-s10">
                 <div style="position: relative">
-                    <div class="fixed-action-btn horizontal" style="position: absolute; right: auto; bottom: auto;">
-                        <a class="btn-floating btn-large light-blue darken-4" title="#{msgs['label.menu']}">
+                    <div class="fixed-action-btn horizontal"
+                         style="position: absolute; right: auto; bottom: auto;">
+                        <a class="btn-floating btn-large light-blue darken-4"
+                           title="#{msgs['label.menu']}">
                             <i class="material-icons">menu</i>
                         </a>
                         <ul>
                             <li>
                                 <h:form>
-                                    <h:commandLink action="#{viewManager.enableDisplayContacts}"
-                                                   class="btn-floating orange darken-1" title="#{msgs['label.display.contacts']}">
+                                    <h:commandLink
+                                            action="#{viewManager.enableDisplayContacts}"
+                                            class="btn-floating orange darken-1"
+                                            title="#{msgs['label.display.contacts']}">
                                         <i class="material-icons">person</i>
                                     </h:commandLink>
                                 </h:form>
                             </li>
                             <li>
                                 <h:form>
-                                    <h:commandLink action="#{viewManager.enableDisplayGroups}"
-                                                   class="btn-floating blue darken-1" title="#{msgs['label.display.groups']}">
-                                       <i class="material-icons">group</i>
+                                    <h:commandLink
+                                            action="#{viewManager.enableDisplayGroups}"
+                                            class="btn-floating blue darken-1"
+                                            title="#{msgs['label.display.groups']}">
+                                        <i class="material-icons">group</i>
                                     </h:commandLink>
                                 </h:form>
                             </li>
-                            <li><a class="btn-floating yellow darken-1" href="#"><i class="material-icons">person_add</i></a></li>
                             <li>
                                 <h:form>
-                                    <h:commandLink action="#{viewManager.enableDisplayCreateGroupForm}"
-                                                   styleClass="btn-floating waves-effect waves-light" title="#{msgs['label.add.contactgroup']}">
+                                    <h:commandLink
+                                            action="#{viewManager.enableDisplayCreateContactForm}"
+                                            class="btn-floating yellow darken-1"
+                                            title="#{msgs['label.add.contact']}">
+                                        <i class="material-icons">person_add</i>
+                                    </h:commandLink>
+                                </h:form>
+                            </li>
+                            <li>
+                                <h:form>
+                                    <h:commandLink
+                                            action="#{viewManager.enableDisplayCreateGroupForm}"
+                                            styleClass="btn-floating waves-effect waves-light"
+                                            title="#{msgs['label.add.contactgroup']}">
                                         <i class="material-icons center">group_add</i>
                                     </h:commandLink>
                                 </h:form>
@@ -82,107 +102,143 @@
         </div>
 
         <!-- Put error message in a notification box -->
-        <h:messages globalOnly="true" styleClasse="global-error" />
+        <h:messages globalOnly="true" styleClasse="global-error"/>
         <br/><br/><br/>
 
         <!-- Main page display -->
         <div class="row">
             <div class="col s6">
-            <div class="card-panel">
-            <h:panelGroup rendered="#{viewManager.displayContacts}">
-                <div style="color: #3b5998;">
-                    <i class="material-icons prefix">person</i>
-                </div>
-            </h:panelGroup>
-            <h:panelGroup rendered="#{viewManager.displayGroups}" styleClass="color: #3b5998;">
-                <div style="color: #3b5998;">
-                    <i class="material-icons">group</i>
-                </div>
-            </h:panelGroup>
-            <div class="container">
-            <div class="row">
-            <div class="col s12">
+                <div class="card-panel">
+                    <h:panelGroup rendered="#{viewManager.displayContacts}">
+                        <div style="color: #3b5998;">
+                            <i class="material-icons prefix">person</i>
+                        </div>
+                    </h:panelGroup>
+                    <h:panelGroup rendered="#{viewManager.displayGroups}"
+                                  styleClass="color: #3b5998;">
+                        <div style="color: #3b5998;">
+                            <i class="material-icons">group</i>
+                        </div>
+                    </h:panelGroup>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col s12">
 
 
-            <!-- Display list contact block -->
-            <h:panelGroup layout="block" class="list-contact" rendered="#{viewManager.displayContacts}">
-                <!-- Search for contact -->
-                <h:form id="form-searchContact">
-                    <div class="row">
-                        <div class="input-field col s10">
-                            <i class="material-icons prefix">search</i>
-                            <h:inputText styleClass="validate" id="form-searchContact-name" value="#{searchContact.filterContacts}"
-                                         validatorMessage="#{msgs['search.contact.validator.size.min.max']}">
-                                <f:validateLength maximum="50" />
-                            </h:inputText>
-                            <h:outputLabel for="form-searchContact-name">#{msgs['label.search.contact']}</h:outputLabel>
+                                <!-- Display list contact block -->
+                                <h:panelGroup layout="block" class="list-contact"
+                                              rendered="#{viewManager.displayContacts}">
+                                    <!-- Search for contact -->
+                                    <h:form id="form-searchContact">
+                                        <div class="row">
+                                            <div class="input-field col s10">
+                                                <i class="material-icons prefix">search</i>
+                                                <h:inputText styleClass="validate"
+                                                             id="form-searchContact-name"
+                                                             value="#{searchContact.filterContacts}"
+                                                             validatorMessage="#{msgs['search.contact.validator.size.min.max']}">
+                                                    <f:validateLength maximum="50"/>
+                                                </h:inputText>
+                                                <h:outputLabel
+                                                        for="form-searchContact-name">#{msgs['label.search.contact']}</h:outputLabel>
+                                            </div>
+                                        </div>
+                                        <h:message for="form-searchContact-name"
+                                                   styleClass="form-input-error"/>
+                                        <h:commandButton
+                                                action="#{searchContact.searchContactByName}"
+                                                styleClass="btn waves-effect waves-light postfix"
+                                                style="display: none;"/>
+                                    </h:form>
+
+                                    <!-- List of group-->
+                                    <div class="row">
+                                        <h:dataTable
+                                                value="#{beanManager.dataManager.displayContacts}"
+                                                var="contact"
+                                                styleClass="responsive-table highlight bordered">
+                                            <h:column>
+                                                <h:form>
+                                                    <h:commandLink
+                                                            action="#{beanManager.loadContact(contact.id)}"
+                                                            style="color: black;">
+                                                        <h:outputText
+                                                                value="#{contact.firstName}"/>
+                                                        <b><h:outputText
+                                                                value="#{contact.lastName}"/></b></h:commandLink>
+                                                </h:form>
+                                            </h:column>
+                                            <h:column>
+                                                <h:form>
+                                                    <h:commandLink
+                                                            action="#{deleteContact.deleteContact(contact.id)}"
+                                                            styleClass="btn-floating waves-effect waves-light pink accent-3 left-align keep-scroll-pos">
+                                                        <i class="material-icons left-align">remove</i>
+                                                    </h:commandLink>
+                                                </h:form>
+                                            </h:column>
+                                        </h:dataTable>
+                                    </div>
+                                </h:panelGroup>
+
+                                <!-- Display list group block -->
+                                <h:panelGroup layout="block" class="list-group"
+                                              rendered="#{viewManager.displayGroups}">
+                                    <!-- Search for group -->
+                                    <h:form id="form-searchGroup">
+                                        <div class="row">
+                                            <div class="input-field col s10">
+                                                <i class="material-icons prefix">search</i>
+                                                <h:inputText styleClass="validate"
+                                                             id="groupName"
+                                                             value="#{searchGroup.filterGroups}"
+                                                             validatorMessage="#{msgs['search.groupname.validator.size.min.max']}">
+                                                    <f:validateLength maximum="50"/>
+                                                </h:inputText>
+                                                <h:outputLabel
+                                                        for="groupName">#{msgs['label.search.group']}</h:outputLabel>
+                                            </div>
+                                        </div>
+                                        <h:message for="groupName"
+                                                   styleClass="form-input-error"/>
+                                        <h:commandButton
+                                                action="#{searchGroup.searchGroupByName}"
+                                                styleClass="btn waves-effect waves-light postfix"
+                                                style="display: none;"/>
+                                    </h:form>
+
+                                    <!-- List of group-->
+                                    <div class="row">
+                                        <h:dataTable
+                                                value="#{beanManager.dataManager.displayGroups}"
+                                                var="group"
+                                                styleClass="responsive-table highlight bordered">
+                                            <h:column>
+                                                <h:form>
+                                                    <h:commandLink
+                                                            action="#{beanManager.loadGroup(group.groupId)}"
+                                                            style="color: black;">
+                                                        <h:outputText
+                                                                value="#{group.groupName}"/></h:commandLink>
+                                                </h:form>
+                                            </h:column>
+                                            <h:column>
+                                                <h:form>
+                                                    <h:commandLink
+                                                            action="#{deleteGroup.deleteGroup(group.groupId)}"
+                                                            styleClass="btn-floating waves-effect waves-light pink accent-3 left-align keep-scroll-pos">
+                                                        <i class="material-icons left-align">remove</i>
+                                                    </h:commandLink>
+                                                </h:form>
+                                            </h:column>
+                                        </h:dataTable>
+                                    </div>
+                                </h:panelGroup>
+
+                            </div>
                         </div>
                     </div>
-                    <h:message for="form-searchContact-name" styleClass="form-input-error" />
-                    <h:commandButton action="#{searchContact.searchContactByName}" styleClass="btn waves-effect waves-light postfix" style="display: none;"/>
-                </h:form>
-
-                <!-- List of group-->
-                <div class="row">
-                    <h:dataTable value="#{beanManager.dataManager.displayContacts}" var="contact" styleClass="responsive-table highlight bordered">
-                        <h:column>
-                            <h:form>
-                                <h:commandLink  action="#{beanManager.loadContact(contact.id)}" style="color: black;">
-                                    <h:outputText value="#{contact.firstName}"/> <b><h:outputText value="#{contact.lastName}" /></b></h:commandLink>
-                            </h:form>
-                        </h:column>
-                        <h:column>
-                            <h:form>
-                                <h:commandLink action="#{deleteContact.deleteContact(contact.id)}" styleClass="btn-floating waves-effect waves-light pink accent-3 left-align" >
-                                    <i class="material-icons left-align">remove</i>
-                                </h:commandLink>
-                            </h:form>
-                        </h:column>
-                    </h:dataTable>
                 </div>
-            </h:panelGroup>
-
-            <!-- Display list group block -->
-            <h:panelGroup layout="block" class="list-group" rendered="#{viewManager.displayGroups}">
-                <!-- Search for group -->
-                <h:form id="form-searchGroup">
-                    <div class="row">
-                        <div class="input-field col s10">
-                            <i class="material-icons prefix">search</i>
-                            <h:inputText styleClass="validate" id="groupName" value="#{searchGroup.filterGroups}" validatorMessage="#{msgs['search.groupname.validator.size.min.max']}">
-                                <f:validateLength maximum="50" />
-                            </h:inputText>
-                            <h:outputLabel for="groupName">#{msgs['label.search.group']}</h:outputLabel>
-                        </div>
-                    </div>
-                    <h:message for="groupName" styleClass="form-input-error" />
-                    <h:commandButton action="#{searchGroup.searchGroupByName}" styleClass="btn waves-effect waves-light postfix" style="display: none;"/>
-                </h:form>
-
-                <!-- List of group-->
-                <div class="row">
-                    <h:dataTable value="#{beanManager.dataManager.displayGroups}" var="group" styleClass="responsive-table highlight bordered">
-                        <h:column>
-                            <h:form>
-                                <h:commandLink  action="#{beanManager.loadGroup(group.groupId)}" style="color: black;">
-                                    <h:outputText value="#{group.groupName}"/></h:commandLink>
-                            </h:form>
-                        </h:column>
-                        <h:column>
-                            <h:form>
-                                <h:commandLink action="#{deleteGroup.deleteGroup(group.groupId)}" styleClass="btn-floating waves-effect waves-light pink accent-3 left-align" >
-                                    <i class="material-icons left-align">remove</i>
-                                </h:commandLink>
-                            </h:form>
-                        </h:column>
-                    </h:dataTable>
-                </div>
-            </h:panelGroup>
-
-            </div>
-            </div>
-            </div>
-            </div>
             </div>
 
             <div class="col s6">
@@ -190,160 +246,196 @@
                 <!-- Display contact informations -->
                 <h:panelGroup layout="block" rendered="#{viewManager.displayContact}">
                     <div class="card-panel">
-                    <div class="container">
-                    <div class="row">
-                    <div class="col s10 center">
-                        <h5 class="center">
-                            <h:outputText value="#{beanManager.dataManager.contact.firstName}"/> <b><h:outputText value="#{beanManager.dataManager.contact.lastName}"/></b>
-                        </h5>
-                    </div>
-                    <div class="col s2">
-                        <h:form>
-                            <h:commandLink action="#{viewManager.enableDisplayUpdateContactForm}" rendered="#{!viewManager.displayUpdateContactForm}"
-                                           styleClass="btn-floating waves-effect waves-light orange">
-                                <i class="material-icons">mode_edit</i>
-                            </h:commandLink>
-                        </h:form>
-                    </div>
-                    </div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col s10 center">
+                                    <h5 class="center">
+                                        <h:outputText
+                                                value="#{beanManager.dataManager.contact.firstName}"/>
+                                        <b><h:outputText
+                                                value="#{beanManager.dataManager.contact.lastName}"/></b>
+                                    </h5>
+                                </div>
+                                <div class="col s2">
+                                    <h:form>
+                                        <h:commandLink
+                                                action="#{viewManager.enableDisplayUpdateContactForm}"
+                                                rendered="#{!viewManager.displayUpdateContactForm}"
+                                                styleClass="btn-floating waves-effect waves-light orange">
+                                            <i class="material-icons">mode_edit</i>
+                                        </h:commandLink>
+                                    </h:form>
+                                </div>
+                            </div>
 
-                    <!-- Contact email, address and phone -->
-                    <div class="row">
-                        <div class="col s12">
-                        <ul class="collection">
-                            <li class="collection-item avatar">
-                                <i class="material-icons circle light-blue darken-4">email</i>
-                                <p>#{beanManager.dataManager.contact.email}</p>
-                            </li>
-                            <li class="collection-item avatar">
-                                <i class="material-icons circle light-blue darken-4">add_location</i>
-                                <c:if test="#{not empty beanManager.dataManager.contact.address}">
-                                    <p>#{beanManager.dataManager.contact.address.street}</p>
-                                    <p>#{beanManager.dataManager.contact.address.zip} #{beanManager.dataManager.contact.address.city}</p>
-                                    <p>#{beanManager.dataManager.contact.address.country}</p>
-                                </c:if>
-                                <c:if test="#{empty beanManager.dataManager.contact.address}">
-                                    <p>#{msgs["label.no.address"]}</p>
-                                </c:if>
-                            </li>
-                            <li class="collection-item avatar">
-                                <i class="material-icons circle light-blue darken-4">contact_phone</i>
-                                <c:if test="#{not empty beanManager.dataManager.contact.phones }">
-                                    <c:forEach var="phone" items="#{beanManager.dataManager.contact.phones}">
-                                        <p>
-                                            <c:if test="#{phone.isMobile()}">
-                                                <i class="material-icons">phone_iphone</i>
+                            <!-- Contact email, address and phone -->
+                            <div class="row">
+                                <div class="col s12">
+                                    <ul class="collection">
+                                        <li class="collection-item avatar">
+                                            <i class="material-icons circle light-blue darken-4">email</i>
+                                            <p>#{beanManager.dataManager.contact.email}</p>
+                                        </li>
+                                        <li class="collection-item avatar">
+                                            <i class="material-icons circle light-blue darken-4">add_location</i>
+                                            <c:if test="#{not empty beanManager.dataManager.contact.address}">
+                                                <p>#{beanManager.dataManager.contact.address.street}</p>
+                                                <p>#{beanManager.dataManager.contact.address.zip} #{beanManager.dataManager.contact.address.city}</p>
+                                                <p>#{beanManager.dataManager.contact.address.country}</p>
                                             </c:if>
-                                            <c:if test="#{not phone.isMobile()}">
-                                                <i class="material-icons">local_phone</i>
+                                            <c:if test="#{empty beanManager.dataManager.contact.address}">
+                                                <p>#{msgs["label.no.address"]}</p>
                                             </c:if>
-                                            #{phone.phoneNumber}
-                                        </p>
-                                    </c:forEach>
-                                </c:if>
-                                <c:if test="#{empty beanManager.dataManager.contact.phones}">
-                                    <p>#{msgs["label.no.phone"]}</p>
-                                </c:if>
-                            </li>
-                        </ul>
+                                        </li>
+                                        <li class="collection-item avatar">
+                                            <i class="material-icons circle light-blue darken-4">contact_phone</i>
+                                            <c:if test="#{not empty beanManager.dataManager.contact.phones }">
+                                                <c:forEach var="phone"
+                                                           items="#{beanManager.dataManager.contact.phones}">
+                                                    <p>
+                                                        <c:if test="#{phone.isMobile()}">
+                                                            <i class="material-icons">phone_iphone</i>
+                                                        </c:if>
+                                                        <c:if test="#{not phone.isMobile()}">
+                                                            <i class="material-icons">local_phone</i>
+                                                        </c:if>
+                                                        #{phone.phoneNumber}
+                                                    </p>
+                                                </c:forEach>
+                                            </c:if>
+                                            <c:if test="#{empty beanManager.dataManager.contact.phones}">
+                                                <p>#{msgs["label.no.phone"]}</p>
+                                            </c:if>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <br/>
                         </div>
-                    </div>
-                    <br/>
-                    </div>
                     </div>
                 </h:panelGroup>
 
                 <!-- Display group information (name and list of contacts -->
                 <h:panelGroup layout="block" rendered="#{viewManager.displayGroup}">
                     <div class="card-panel">
-                    <div class="container">
-                    <div class="row">
-                        <div class="col s10 center">
-                            <h5 class="center">
-                                <h:outputText value="#{beanManager.dataManager.group.groupName}"/>
-                            </h5>
-                        </div>
-                        <div class="col s2">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col s10 center">
+                                    <h5 class="center">
+                                        <h:outputText
+                                                value="#{beanManager.dataManager.group.groupName}"/>
+                                    </h5>
+                                </div>
+                                <div class="col s2">
+                                    <h:form>
+                                        <h:commandLink
+                                                action="#{viewManager.enableDisplayUpdateGroupForm}"
+                                                rendered="#{!viewManager.displayUpdateGroupForm}"
+                                                styleClass="btn-floating waves-effect waves-light orange">
+                                            <i class="material-icons">mode_edit</i>
+                                        </h:commandLink>
+                                    </h:form>
+                                </div>
+                            </div>
+
+                            <!-- Search for contact in group -->
                             <h:form>
-                                <h:commandLink action="#{viewManager.enableDisplayUpdateGroupForm}" rendered="#{!viewManager.displayUpdateGroupForm}"
-                                               styleClass="btn-floating waves-effect waves-light orange">
-                                    <i class="material-icons">mode_edit</i>
-                                </h:commandLink>
+                                <div class="row">
+                                    <div class="input-field col s10">
+                                        <i class="material-icons prefix">search</i>
+                                        <h:inputText
+                                                id="input-form-searchContactInGroup-name"
+                                                value="#{searchGroup.filterContacts}"
+                                                validatorMessage="#{msgs['search.contact.validator.size.min.max']}"
+                                                styleClass="validate">
+                                            <f:validateLength minimum="1" maximum="50"/>
+                                        </h:inputText>
+                                        <h:outputLabel
+                                                for="input-form-searchContactInGroup-name">#{msgs['label.search.contact']}</h:outputLabel>
+                                    </div>
+                                    <h:commandButton
+                                            action="#{searchGroup.searchContactByName}"
+                                            styleClass="btn-floating waves-effect waves-light light-blue darken-4"
+                                            style="display: none;"/>
+                                </div>
                             </h:form>
-                        </div>
-                    </div>
+                            <h:message for="input-form-searchContactInGroup-name"
+                                       styleClass="form-input-error"/>
 
-                    <!-- Search for contact in group -->
-                    <h:form>
-                        <div class="row">
-                        <div class="input-field col s10">
-                        <i class="material-icons prefix">search</i>
-                        <h:inputText id="input-form-searchContactInGroup-name" value="#{searchGroup.filterContacts}" validatorMessage="#{msgs['search.contact.validator.size.min.max']}"
-                                     styleClass="validate">
-                            <f:validateLength minimum="1" maximum="50" />
-                        </h:inputText>
-                            <h:outputLabel for="input-form-searchContactInGroup-name">#{msgs['label.search.contact']}</h:outputLabel>
-                        </div>
-                        <h:commandButton action="#{searchGroup.searchContactByName}" styleClass="btn-floating waves-effect waves-light light-blue darken-4" style="display: none;"/>
-                        </div>
-                    </h:form>
-                    <h:message for="input-form-searchContactInGroup-name" styleClass="form-input-error" />
+                            <!-- List of contact in group (by firstname and lastname) -->
+                            <div class="row">
+                                <h:dataTable
+                                        value="#{beanManager.dataManager.displayContactsOfGroup}"
+                                        var="contact"
+                                        rendered="#{viewManager.displayGroup}"
+                                        styleClass="responsive-table highlight bordered">
+                                    <h:column>
+                                        <h:outputText
+                                                value="#{contact.firstName} #{contact.lastName}"/>
+                                    </h:column>
 
-                    <!-- List of contact in group (by firstname and lastname) -->
-                    <div class="row">
-                    <h:dataTable value="#{beanManager.dataManager.displayContactsOfGroup}" var="contact" rendered="#{viewManager.displayGroup}" styleClass="responsive-table highlight bordered">
-                        <h:column>
-                            <h:outputText value="#{contact.firstName} #{contact.lastName}" />
-                        </h:column>
+                                    <!-- Delete Contact in group -->
+                                    <h:column>
+                                        <h:form>
+                                            <h:commandLink
+                                                    action="#{deleteGroup.deleteContactFromGroup(contact.id, beanManager.dataManager.group.groupId)}"
+                                                    styleClass="btn-floating waves-effect waves-light pink accent-3 keep-scroll-pos">
+                                                <i class="material-icons">remove</i>
+                                            </h:commandLink>
+                                        </h:form>
+                                    </h:column>
 
-                        <!-- Delete Contact in group -->
-                        <h:column>
-                            <h:form>
-                                <h:commandLink action="#{deleteGroup.deleteContactFromGroup(contact.id, beanManager.dataManager.group.groupId)}"
-                                               styleClass="btn-floating waves-effect waves-light pink accent-3">
-                                    <i class="material-icons">remove</i>
-                                </h:commandLink>
-                            </h:form>
-                        </h:column>
+                                </h:dataTable>
+                            </div>
+                            <br/>
 
-                    </h:dataTable>
-                    </div>
-                    <br/>
-
-                    <!-- Add contact to group -->
-                    <div class="row">
-                    <h:form>
-                        #{addContactToGroup.setGroupId(beanManager.dataManager.group.groupId)}
-                        <h:inputHidden value="#{addContactToGroup.groupId}" />
-                        <div class="input-field col s6 offset-s2">
-                        <h:selectOneMenu value="#{addContactToGroup.contactId}">
-                            <f:selectItem itemValue="0" itemDisabled="true" itemLabel="#{msgs['label.select.contact']}" selected="selected" noSelectionOption="true" />
-                            <f:selectItems value="#{beanManager.dataManager.contactsNotInGroup}" var="contact" itemValue="#{contact.id}" itemLabel="#{contact.fullName}"/>
-                        </h:selectOneMenu>
-                            <label>Contact</label>
-                        </div>
-                        <div class="input-field col s2">
-                            <div class="input-field col s12">
-                            <h:commandLink action="#{addContactToGroup.addContactToGroup}" styleClass="btn waves-effect waves-light light-blue darken-4">
-                                <i class="material-icons">person_add</i>
-                            </h:commandLink>
+                            <!-- Add contact to group -->
+                            <div class="row">
+                                <h:form>
+                                    #{addContactToGroup.setGroupId(beanManager.dataManager.group.groupId)}
+                                    <h:inputHidden value="#{addContactToGroup.groupId}"/>
+                                    <div class="input-field col s6 offset-s2">
+                                        <h:selectOneMenu
+                                                value="#{addContactToGroup.contactId}">
+                                            <f:selectItem itemValue="0"
+                                                          itemDisabled="true"
+                                                          itemLabel="#{msgs['label.select.contact']}"
+                                                          selected="selected"
+                                                          noSelectionOption="true"/>
+                                            <f:selectItems
+                                                    value="#{beanManager.dataManager.contactsNotInGroup}"
+                                                    var="contact"
+                                                    itemValue="#{contact.id}"
+                                                    itemLabel="#{contact.fullName}"/>
+                                        </h:selectOneMenu>
+                                        <label>Contact</label>
+                                    </div>
+                                    <div class="input-field col s2">
+                                        <div class="input-field col s12">
+                                            <h:commandLink
+                                                    action="#{addContactToGroup.addContactToGroup}"
+                                                    styleClass="btn waves-effect waves-light light-blue darken-4 keep-scroll-pos">
+                                                <i class="material-icons">person_add</i>
+                                            </h:commandLink>
+                                        </div>
+                                    </div>
+                                </h:form>
                             </div>
                         </div>
-                    </h:form>
-                    </div>
-                    </div>
                     </div>
                 </h:panelGroup>
 
                 <!-- Update contact informations -->
-                <h:panelGroup layout="block" rendered="#{viewManager.displayUpdateContactForm}">
-                    #{updateContact.loadContact(beanManager.dataManager.contact)}
+                <h:panelGroup layout="block"
+                              rendered="#{viewManager.displayUpdateContactForm}">
+                    #{createOrUpdateContact.loadContact(beanManager.dataManager.contact)}
                     <div class="card-panel">
 
                         <div class="row">
                             <div class="col s2">
                                 <h:form>
-                                    <h:commandLink action="#{updateContact.cancel}" styleClass="btn-floating waves-effect waves-light grey">
+                                    <h:commandLink action="#{createOrUpdateContact.cancelUpdateContact}"
+                                                   styleClass="btn-floating waves-effect waves-light grey">
                                         <i class="material-icons">chevron_left</i>
                                     </h:commandLink>
                                 </h:form>
@@ -358,12 +450,14 @@
                                     <div class="row">
                                         <div class="input-field">
                                             <i class="material-icons prefix">account_circle</i>
-                                            <h:inputText id="firstNameEdit" value="#{updateContact.contact.firstName}"
-                                                         required="#{param['formEdit:saveEdit'] != null}"
+                                            <h:inputText id="firstNameEdit"
+                                                         value="#{createOrUpdateContact.contact.firstName}"
+                                                         required="#{param['formEdit:firstNameEdit'] != null}"
                                                          requiredMessage="#{msgs['label.required']}"
                                                          validator="noBlankSpaceValidator">
                                             </h:inputText>
-                                            <h:outputLabel for="firstNameEdit" value="#{msgs['label.firstname']}"/>
+                                            <h:outputLabel for="firstNameEdit"
+                                                           value="#{msgs['label.firstname']}"/>
                                         </div>
                                         <h:message for="firstNameEdit" autoUpdate="true"/>
                                     </div>
@@ -371,12 +465,14 @@
                                     <div class="row">
                                         <div class="input-field">
                                             <i class="material-icons prefix">account_circle</i>
-                                            <h:inputText id="lastNameEdit" value="#{updateContact.contact.lastName}"
-                                                         required="#{param['formEdit:saveEdit'] != null}"
+                                            <h:inputText id="lastNameEdit"
+                                                         value="#{createOrUpdateContact.contact.lastName}"
+                                                         required="#{param['formEdit:lastNameEdit'] != null}"
                                                          requiredMessage="#{msgs['label.required']}"
                                                          validator="noBlankSpaceValidator">
                                             </h:inputText>
-                                            <h:outputLabel for="lastNameEdit" value="#{msgs['label.lastname']}"/>
+                                            <h:outputLabel for="lastNameEdit"
+                                                           value="#{msgs['label.lastname']}"/>
                                         </div>
                                         <h:message for="lastNameEdit" autoUpdate="true"/>
                                     </div>
@@ -384,14 +480,17 @@
                                     <div class="row">
                                         <div class="input-field">
                                             <i class="material-icons prefix">email</i>
-                                            <h:inputText id="emailEdit" value="#{updateContact.contact.email}"
-                                                         required="#{param['formEdit:saveEdit'] != null}"
+                                            <h:inputText id="emailEdit"
+                                                         value="#{createOrUpdateContact.contact.email}"
+                                                         required="#{param['formEdit:emailEdit'] != null}"
                                                          requiredMessage="#{msgs['label.required']}"
                                                          validator="noBlankSpaceValidator"
                                                          validatorMessage="#{msgs['form.create.contact.input.email.validator']}">
-                                                <f:validateRegex pattern="([^.@]+)(\.[^.@]+)*@([^.@]+\.)+([^.@]+)"/>
+                                                <f:validateRegex
+                                                        pattern="([^.@]+)(\.[^.@]+)*@([^.@]+\.)+([^.@]+)"/>
                                             </h:inputText>
-                                            <h:outputLabel for="emailEdit" value="#{msgs['label.email']}"/>
+                                            <h:outputLabel for="emailEdit"
+                                                           value="#{msgs['label.email']}"/>
                                         </div>
                                         <h:message for="emailEdit" autoUpdate="true"/>
                                     </div>
@@ -402,13 +501,15 @@
                                     <div class="row">
                                         <div class="input-field">
                                             <i class="material-icons prefix">location_city</i>
-                                            <h:inputText id="streetEdit" value="#{updateContact.contact.address.street}"
+                                            <h:inputText id="streetEdit"
+                                                         value="#{createOrUpdateContact.contact.address.street}"
                                                          required="#{not empty param['formEdit:cityEdit'] or not empty param['formEdit:zipEdit']
                                                        or not empty param['formEdit:country']}"
                                                          requiredMessage="#{msgs['label.required']}"
                                                          validator="noBlankSpaceValidator">
                                             </h:inputText>
-                                            <h:outputLabel for="streetEdit" value="#{msgs['label.street']}"/>
+                                            <h:outputLabel for="streetEdit"
+                                                           value="#{msgs['label.street']}"/>
                                         </div>
                                         <h:message for="streetEdit" autoUpdate="true"/>
                                     </div>
@@ -416,13 +517,15 @@
                                     <div class="row">
                                         <div class="input-field">
                                             <i class="material-icons prefix">location_city</i>
-                                            <h:inputText id="cityEdit" value="#{updateContact.contact.address.city}"
+                                            <h:inputText id="cityEdit"
+                                                         value="#{createOrUpdateContact.contact.address.city}"
                                                          required="#{not empty param['formEdit:streetEdit'] or not empty param['formEdit:zipEdit']
                                                        or not empty param['formEdit:countryEdit']}"
                                                          requiredMessage="#{msgs['label.required']}"
                                                          validator="noBlankSpaceValidator">
                                             </h:inputText>
-                                            <h:outputLabel for="cityEdit" value="#{msgs['label.city']}"/>
+                                            <h:outputLabel for="cityEdit"
+                                                           value="#{msgs['label.city']}"/>
                                         </div>
                                         <h:message for="cityEdit" autoUpdate="true"/>
                                     </div>
@@ -430,7 +533,8 @@
                                     <div class="row">
                                         <div class="input-field">
                                             <i class="material-icons prefix">location_city</i>
-                                            <h:inputText id="zipEdit" value="#{updateContact.contact.address.zip}"
+                                            <h:inputText id="zipEdit"
+                                                         value="#{createOrUpdateContact.contact.address.zip}"
                                                          required="#{not empty param['formEdit:cityEdit'] or not empty param['formEdit:streetEdit']
                                                        or not empty param['formEdit:countryEdit']}"
                                                          requiredMessage="#{msgs['label.required']}"
@@ -438,7 +542,8 @@
                                                          validatorMessage="Invalid zip code ! Only numbers are allowed !">
                                                 <f:validateRegex pattern="[0-9]*"/>
                                             </h:inputText>
-                                            <h:outputLabel for="zipEdit" value="#{msgs['label.zip']}"/>
+                                            <h:outputLabel for="zipEdit"
+                                                           value="#{msgs['label.zip']}"/>
                                         </div>
                                         <h:message for="zipEdit" autoUpdate="true"/>
                                     </div>
@@ -446,13 +551,15 @@
                                     <div class="row">
                                         <div class="input-field">
                                             <i class="material-icons prefix">location_city</i>
-                                            <h:inputText id="countryEdit" value="#{updateContact.contact.address.country}"
+                                            <h:inputText id="countryEdit"
+                                                         value="#{createOrUpdateContact.contact.address.country}"
                                                          required="#{not empty param['formEdit:cityEdit'] or not empty param['formEdit:zipEdit']
                                                                    or not empty param['formEdit:streetEdit']}"
                                                          requiredMessage="#{msgs['label.required']}"
                                                          validator="noBlankSpaceValidator">
                                             </h:inputText>
-                                            <h:outputLabel for="countryEdit" value="#{msgs['label.country']}"/>
+                                            <h:outputLabel for="countryEdit"
+                                                           value="#{msgs['label.country']}"/>
                                         </div>
                                         <h:message for="countryEdit" autoUpdate="true"/>
                                     </div>
@@ -460,110 +567,354 @@
 
                                 <!-- Update phones numbers -->
                                 <div class="row">
-                                <h:dataTable id="phonesEdit" value="#{updateContact.contact.phones}" var="phone">
-                                    <h:column class="col s7">
-                                        <div class="input-field">
-                                        <i class="material-icons prefix">phone</i>
-                                        <h:inputText id="phoneNumberEdit" value="#{phone.phoneNumber}"
-                                                     required="true"
-                                                     requiredMessage="#{msgs['label.required']}"
-                                                     validator="noBlankSpaceValidator"
-                                                     validatorMessage="#{msgs['form.phonenumber.validator']}">
-                                            <f:validateRegex pattern="[0-9]*"/>
-                                        </h:inputText>
-                                        <h:outputLabel for="phoneNumberEdit" value="#{msgs['label.phonenumber']}"/>
-                                        </div>
-                                    </h:column>
-                                    <h:column class="col s4">
-                                        <div class="input-field">
-                                            <h:inputText id="phoneKindEdit" value="#{phone.phoneKind}"
-                                                         required="true"
-                                                         requiredMessage="#{msgs['label.required']}"
-                                                         validator="noBlankSpaceValidator">
-                                            </h:inputText>
-                                            <h:outputLabel for="phoneKindEdit" value="#{msgs['label.label']}"/>
-                                        </div>
-                                    </h:column>
-                                    <h:column class="col s1">
-                                        <h:commandLink action="#{updateContact.remove(phone)}" styleClass="btn-floating waves-effect waves-light red" immediate="true">
-                                            <i class="material-icons center">remove</i>
-                                        </h:commandLink>
-                                    </h:column>
-                                </h:dataTable>
+                                    <h:dataTable id="phonesEdit"
+                                                 value="#{createOrUpdateContact.contact.phones}"
+                                                 var="phone">
+                                        <h:column class="col s7">
+                                            <div class="input-field">
+                                                <i class="material-icons prefix">phone</i>
+                                                <h:inputText id="phoneNumberEdit"
+                                                             value="#{phone.phoneNumber}"
+                                                             required="true"
+                                                             requiredMessage="#{msgs['label.required']}"
+                                                             validator="noBlankSpaceValidator"
+                                                             validatorMessage="#{msgs['form.phonenumber.validator']}">
+                                                    <f:validateRegex pattern="[0-9]*"/>
+                                                </h:inputText>
+                                                <h:outputLabel for="phoneNumberEdit"
+                                                               value="#{msgs['label.phonenumber']}"/>
+                                            </div>
+                                        </h:column>
+                                        <h:column class="col s4">
+                                            <div class="input-field">
+                                                <h:inputText id="phoneKindEdit"
+                                                             value="#{phone.phoneKind}"
+                                                             required="true"
+                                                             requiredMessage="#{msgs['label.required']}"
+                                                             validator="noBlankSpaceValidator">
+                                                </h:inputText>
+                                                <h:outputLabel for="phoneKindEdit"
+                                                               value="#{msgs['label.label']}"/>
+                                            </div>
+                                        </h:column>
+                                        <h:column class="col s1">
+                                            <h:commandLink
+                                                    action="#{createOrUpdateContact.remove(phone)}"
+                                                    styleClass="btn-floating waves-effect waves-light red keep-scroll-pos"
+                                                    immediate="true">
+                                                <i class="material-icons center">remove</i>
+                                            </h:commandLink>
+                                        </h:column>
+                                    </h:dataTable>
                                 </div>
 
                                 <div class="row">
                                     <div class="col s2 offset-s10">
-                                        <h:commandLink id="addPhoneEdit" action="#{updateContact.addPhone}" styleClass="btn waves-effect waves-light light-blue darken-4">
-                                            <i class="material-icons center">add</i> <i class="material-icons center">phone</i>
+                                        <h:commandLink id="addPhoneEdit"
+                                                       action="#{createOrUpdateContact.addPhone}"
+                                                       styleClass="btn waves-effect waves-light light-blue darken-4 keep-scroll-pos">
+                                            <i class="material-icons center">add</i> <i
+                                                class="material-icons center">phone</i>
                                         </h:commandLink>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col s2 offset-s10">
-                                        <h:commandLink action="#{updateContact.save}" styleClass="btn-large waves-effect waves-light green accent-3">
+                                        <h:commandLink action="#{createOrUpdateContact.updateContact}"
+                                                       styleClass="btn-large waves-effect waves-light green accent-3 keep-scroll-pos">
                                             <i class="material-icons center">send</i>
                                         </h:commandLink>
                                     </div>
                                 </div>
 
-                                <h:commandButton id="saveEdit" value="save" action="#{updateContact.save}" style="display: None;"/>
+                                <h:commandButton id="saveEdit" value="save"
+                                                 action="#{createOrUpdateContact.updateContact}"
+                                                 style="display: None;"/>
+                            </h:form>
+                        </div>
+                    </div>
+                </h:panelGroup>
+
+                <!-- Create contact -->
+                <h:panelGroup layout="block"
+                              rendered="#{viewManager.displayCreateContactForm}">
+                    <div class="card-panel">
+
+                        <div class="row">
+                            <div class="col s2">
+                                <h:form>
+                                    <h:commandLink action="#{createOrUpdateContact.cancelCreateContact}"
+                                                   styleClass="btn-floating waves-effect waves-light grey">
+                                        <i class="material-icons">chevron_left</i>
+                                    </h:commandLink>
+                                </h:form>
+                            </div>
+                        </div>
+
+                        <div class="container">
+                            <h:form id="formCreate">
+
+                                <!-- Create Contact name and email -->
+                                <div class="row">
+                                    <div class="row">
+                                        <div class="input-field">
+                                            <i class="material-icons prefix">account_circle</i>
+                                            <h:inputText id="firstNameCreate"
+                                                         value="#{createOrUpdateContact.contact.firstName}"
+                                                         required="#{param['formCreate:firstNameCreate'] != null}"
+                                                         requiredMessage="#{msgs['label.required']}"
+                                                         validator="noBlankSpaceValidator">
+                                            </h:inputText>
+                                            <h:outputLabel for="firstNameCreate"
+                                                           value="#{msgs['label.firstname']}"/>
+                                        </div>
+                                        <h:message for="firstNameCreate"
+                                                   autoUpdate="true"/>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="input-field">
+                                            <i class="material-icons prefix">account_circle</i>
+                                            <h:inputText id="lastNameCreate"
+                                                         value="#{createOrUpdateContact.contact.lastName}"
+                                                         required="#{param['formCreate:lastNameCreate'] != null}"
+                                                         requiredMessage="#{msgs['label.required']}"
+                                                         validator="noBlankSpaceValidator">
+                                            </h:inputText>
+                                            <h:outputLabel for="lastNameCreate"
+                                                           value="#{msgs['label.lastname']}"/>
+                                        </div>
+                                        <h:message for="lastNameCreate"
+                                                   autoUpdate="true"/>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="input-field">
+                                            <i class="material-icons prefix">email</i>
+                                            <h:inputText id="emailCreate"
+                                                         value="#{createOrUpdateContact.contact.email}"
+                                                         required="#{param['formCreate:emailCreate'] != null}"
+                                                         requiredMessage="#{msgs['label.required']}"
+                                                         validator="noBlankSpaceValidator"
+                                                         validatorMessage="#{msgs['form.create.contact.input.email.validator']}">
+                                                <f:validateRegex
+                                                        pattern="([^.@]+)(\.[^.@]+)*@([^.@]+\.)+([^.@]+)"/>
+                                            </h:inputText>
+                                            <h:outputLabel for="emailCreate"
+                                                           value="#{msgs['label.email']}"/>
+                                        </div>
+                                        <h:message for="emailCreate" autoUpdate="true"/>
+                                    </div>
+                                </div>
+
+                                <!-- Update address -->
+                                <div class="row">
+                                    <div class="row">
+                                        <div class="input-field">
+                                            <i class="material-icons prefix">location_city</i>
+                                            <h:inputText id="streetCreate"
+                                                         value="#{createOrUpdateContact.contact.address.street}"
+                                                         required="#{not empty param['formCreate:streetCreate'] or not empty param['formCreate:cityCreate']
+                                                       or not empty param['formCreate:zipCreate']}"
+                                                         requiredMessage="#{msgs['label.required']}"
+                                                         validator="noBlankSpaceValidator">
+                                            </h:inputText>
+                                            <h:outputLabel for="streetCreate"
+                                                           value="#{msgs['label.street']}"/>
+                                        </div>
+                                        <h:message for="streetCreate" autoUpdate="true"/>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="input-field">
+                                            <i class="material-icons prefix">location_city</i>
+                                            <h:inputText id="cityCreate"
+                                                         value="#{createOrUpdateContact.contact.address.city}"
+                                                         required="#{not empty param['formCreate:cityCreate'] or not empty param['formCreate:streetCreate']
+                                                       or not empty param['formCreate:zipCreate']}"
+                                                         requiredMessage="#{msgs['label.required']}"
+                                                         validator="noBlankSpaceValidator">
+                                            </h:inputText>
+                                            <h:outputLabel for="cityCreate"
+                                                           value="#{msgs['label.city']}"/>
+                                        </div>
+                                        <h:message for="cityCreate" autoUpdate="true"/>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="input-field">
+                                            <i class="material-icons prefix">location_city</i>
+                                            <h:inputText id="zipCreate"
+                                                         value="#{createOrUpdateContact.contact.address.zip}"
+                                                         required="#{not empty param['formCreate:zipCreate'] or not empty param['formCreate:cityCreate']
+                                                       or not empty param['formCreate:streetCreate']}"
+                                                         requiredMessage="#{msgs['label.required']}"
+                                                         validator="noBlankSpaceValidator"
+                                                         validatorMessage="Invalid zip code ! Only numbers are allowed !"> <!-- TODO ADD internationalisation-->
+                                                <f:validateRegex pattern="[0-9]*"/>
+                                            </h:inputText>
+                                            <h:outputLabel for="zipCreate"
+                                                           value="#{msgs['label.zip']}"/>
+                                        </div>
+                                        <h:message for="zipCreate" autoUpdate="true"/>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="input-field">
+                                            <i class="material-icons prefix">location_city</i>
+                                            <h:inputText id="countryCreate"
+                                                         value="#{createOrUpdateContact.contact.address.country}"
+                                                         required="#{not empty param['formCreate:cityCreate'] or not empty param['formCreate:zipCreate']
+                                                                   or not empty param['formCreate:streetCreate']}"
+                                                         requiredMessage="#{msgs['label.required']}"
+                                                         validator="noBlankSpaceValidator">
+                                            </h:inputText>
+                                            <h:outputLabel for="countryCreate"
+                                                           value="#{msgs['label.country']}"/>
+                                        </div>
+                                        <h:message for="countryCreate" autoUpdate="true"/>
+                                    </div>
+                                </div>
+
+                                <!-- Update phones numbers -->
+                                <div class="row">
+                                    <h:dataTable id="phonesCreate"
+                                                 value="#{createOrUpdateContact.contact.phones}"
+                                                 var="phone">
+                                        <h:column class="col s7">
+                                            <div class="input-field">
+                                                <i class="material-icons prefix">phone</i>
+                                                <h:inputText id="phoneNumberCreate"
+                                                             value="#{phone.phoneNumber}"
+                                                             required="true"
+                                                             requiredMessage="#{msgs['label.required']}"
+                                                             validator="noBlankSpaceValidator"
+                                                             validatorMessage="#{msgs['form.phonenumber.validator']}">
+                                                    <f:validateRegex pattern="[0-9]*"/>
+                                                </h:inputText>
+                                                <h:outputLabel for="phoneNumberCreate"
+                                                               value="#{msgs['label.phonenumber']}"/>
+                                            </div>
+                                        </h:column>
+                                        <h:column class="col s4">
+                                            <div class="input-field">
+                                                <h:inputText id="phoneKindCreate"
+                                                             value="#{phone.phoneKind}"
+                                                             required="true"
+                                                             requiredMessage="#{msgs['label.required']}"
+                                                             validator="noBlankSpaceValidator">
+                                                </h:inputText>
+                                                <h:outputLabel for="phoneKindCreate"
+                                                               value="#{msgs['label.label']}"/>
+                                            </div>
+                                        </h:column>
+                                        <h:column class="col s1">
+                                            <h:commandLink
+                                                    action="#{createOrUpdateContact.remove(phone)}"
+                                                    styleClass="btn-floating waves-effect waves-light red keep-scroll-pos keep-scroll-pos"
+                                                    immediate="true">
+                                                <i class="material-icons center">remove</i>
+                                            </h:commandLink>
+                                        </h:column>
+                                    </h:dataTable>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col s2 offset-s10">
+                                        <h:commandLink id="addPhoneCreate"
+                                                       action="#{createOrUpdateContact.addPhone}"
+                                                       styleClass="btn waves-effect waves-light light-blue darken-4 keep-scroll-pos keep-scroll-pos">
+                                            <i class="material-icons center">add</i> <i
+                                                class="material-icons center">phone</i>
+                                        </h:commandLink>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col s2 offset-s10">
+                                        <h:commandLink action="#{createOrUpdateContact.createContact}"
+                                                       styleClass="btn-large waves-effect waves-light green accent-3 keep-scroll-pos">
+                                            <i class="material-icons center">send</i>
+                                        </h:commandLink>
+                                    </div>
+                                </div>
+
+                                <h:commandButton id="saveCreate" styleClass="keep-scroll-pos" value="save"
+                                                 action="#{createOrUpdateContact.createContact}"
+                                                 style="display: None;"/>
                             </h:form>
                         </div>
                     </div>
                 </h:panelGroup>
 
                 <!-- Update group information-->
-                <h:panelGroup layout="block" rendered="#{viewManager.displayUpdateGroupForm}">
+                <h:panelGroup layout="block"
+                              rendered="#{viewManager.displayUpdateGroupForm}">
                     <div class="card-panel">
-                    <div class="container">
-                    <h5 class="center"><h:outputFormat value="#{msgs['label.update']} #{msgs['label.group']}" /></h5>
-                    <h:form id="form-updateGroup">
-                        #{updateGroup.setGroupName(beanManager.dataManager.group.groupName)}
-                        #{updateGroup.setGroupId(beanManager.dataManager.group.groupId)}
-                        <div class="row">
-                        <div class="input-field col s10">
-                            <i class="material-icons prefix">mode_edit</i>
-                            <h:inputText id="updateGroup-groupName" class="validate" value="#{updateGroup.groupName}" validatorMessage="#{msgs['input.groupname.validator.min.max']}">
-                                <f:validateLength minimum="3" maximum="50" />
-                            </h:inputText>
-                            <h:outputLabel for="updateGroup-groupName">#{msgs['label.groupname']}</h:outputLabel>
+                        <div class="container">
+                            <h5 class="center"><h:outputFormat
+                                    value="#{msgs['label.update']} #{msgs['label.group']}"/>
+                            </h5>
+                            <h:form id="form-updateGroup">
+                                #{updateGroup.setGroupName(beanManager.dataManager.group.groupName)}
+                                #{updateGroup.setGroupId(beanManager.dataManager.group.groupId)}
+                                <div class="row">
+                                    <div class="input-field col s10">
+                                        <i class="material-icons prefix">mode_edit</i>
+                                        <h:inputText id="updateGroup-groupName"
+                                                     class="validate"
+                                                     value="#{updateGroup.groupName}"
+                                                     validatorMessage="#{msgs['input.groupname.validator.min.max']}">
+                                            <f:validateLength minimum="3" maximum="50"/>
+                                        </h:inputText>
+                                        <h:outputLabel
+                                                for="updateGroup-groupName">#{msgs['label.groupname']}</h:outputLabel>
+                                    </div>
+                                </div>
+                                <h:inputHidden value="#{updateGroup.groupId}"/>
+                                <h:commandButton action="#{updateGroup.updateGroup}"
+                                                 styleClass="btn waves-effect waves-light postfix"
+                                                 style="display: none;"/>
+                            </h:form>
+                            <h:message for="updateGroup-groupName"
+                                       styleClass="form-input-error"/>
+                            <h:message for="form-updateGroup" styleClasse="form-error"/>
                         </div>
-                        </div>
-                        <h:inputHidden value="#{updateGroup.groupId}" />
-                        <h:commandButton action="#{updateGroup.updateGroup}" styleClass="btn waves-effect waves-light postfix" style="display: none;"/>
-                    </h:form>
-                    <h:message for="updateGroup-groupName" styleClass="form-input-error" />
-                    <h:message for="form-updateGroup" styleClasse="form-error" />
-                    </div>
                     </div>
                 </h:panelGroup>
 
                 <!-- Create new group -->
-                <h:panelGroup layout="block" rendered="#{viewManager.displayCreateGroupForm}" >
+                <h:panelGroup layout="block"
+                              rendered="#{viewManager.displayCreateGroupForm}">
                     <div class="card-panel">
-                    <div class="container">
-                    <h5 class="center">#{msgs['label.add.contactgroup']}</h5>
-                    <h:form id="form-createGroup">
-                        <div class="row">
-                        <div class="input-field col s10">
-                        <h:inputText styleClass="validate" id="createGroup-groupName" value="#{createGroup.groupName}" required="true"
-                                     requiredMessage="#{msgs['label.input.required']}" validatorMessage="#{msgs['input.groupname.validator.min.max']}">
-                            <f:validateLength minimum="3" maximum="50" />
-                        </h:inputText>
-                            <h:outputLabel for="createGroup-groupName">#{msgs['label.groupname']}</h:outputLabel>
+                        <div class="container">
+                            <h5 class="center">#{msgs['label.add.contactgroup']}</h5>
+                            <h:form id="form-createGroup">
+                                <div class="row">
+                                    <div class="input-field col s10">
+                                        <h:inputText styleClass="validate"
+                                                     id="createGroup-groupName"
+                                                     value="#{createGroup.groupName}"
+                                                     required="true"
+                                                     requiredMessage="#{msgs['label.input.required']}"
+                                                     validatorMessage="#{msgs['input.groupname.validator.min.max']}">
+                                            <f:validateLength minimum="3" maximum="50"/>
+                                        </h:inputText>
+                                        <h:outputLabel
+                                                for="createGroup-groupName">#{msgs['label.groupname']}</h:outputLabel>
+                                    </div>
+                                    <div class="input-field col s2">
+                                        <h:commandLink action="#{createGroup.createGroup}"
+                                                       styleClass="btn waves-effect waves-light light-blue darken-4">
+                                            <i class="material-icons center">group_add</i>
+                                        </h:commandLink>
+                                    </div>
+                                </div>
+                            </h:form>
+                            <h:message for="createGroup-groupName" styleClass="error"/>
+                            <h:message for="form-createGroup" styleClasse="form-error"/>
                         </div>
-                        <div class="input-field col s2">
-                        <h:commandLink action="#{createGroup.createGroup}" styleClass="btn waves-effect waves-light light-blue darken-4">
-                            <i class="material-icons center">group_add</i>
-                        </h:commandLink>
-                        </div>
-                        </div>
-                    </h:form>
-                    <h:message for="createGroup-groupName" styleClass="error" />
-                    <h:message for="form-createGroup" styleClasse="form-error" />
-                    </div>
                     </div>
                 </h:panelGroup>
             </div>
@@ -577,7 +928,8 @@
     <footer class="page-footer" style="background-color: #3b5998;">
         <div class="container">
             © 2017 Copyright Valentin Bouquet - Rémy Pocquerusse
-            <a class="grey-text text-lighten-4 right" href="https://github.com/Remypoc/Gestion-de-contact">github source code</a>
+            <a class="grey-text text-lighten-4 right"
+               href="https://github.com/Remypoc/Gestion-de-contact">github source code</a>
         </div>
     </footer>
 

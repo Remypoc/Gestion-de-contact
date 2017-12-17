@@ -5,6 +5,24 @@
          version="3.1">
 
     <display-name>gestion_contact</display-name>
+
+    <!-- Add Support for Spring -->
+    <listener>
+        <listener-class>
+            org.springframework.web.context.ContextLoaderListener
+        </listener-class>
+    </listener>
+    <listener>
+        <listener-class>
+            org.springframework.web.context.request.RequestContextListener
+        </listener-class>
+    </listener>
+
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>/WEB-INF/applicationContext.xml</param-value>
+    </context-param>
+    
     <welcome-file-list>
         <!--<welcome-file>pages/jsf/home.xhtml</welcome-file>-->
         <welcome-file>pages/main.xhtml</welcome-file>
