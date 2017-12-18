@@ -178,14 +178,24 @@
                                 </h:column>
                                 <h:column class="col s4">
                                     <div class="input-field">
-                                        <h:inputText id="phoneKindEdit"
-                                                     value="#{phone.phoneKind}"
-                                                     required="true"
-                                                     requiredMessage="#{msgs['label.required']}"
-                                                     validator="noBlankSpaceValidator">
-                                        </h:inputText>
-                                        <h:outputLabel for="phoneKindEdit"
-                                                       value="#{msgs['label.label']}"/>
+                                        <h:selectOneMenu id="phoneKindCreate"
+                                                         value="#{phone.phoneKind}">
+                                            <c:if test="#{phone.isMobile}">
+                                                <f:selectItem itemValue="mobile"
+                                                              itemLabel="#{msgs['label.phone.mobile']}"
+                                                              selected="selected"/>
+                                                <f:selectItem itemValue="fixe"
+                                                              itemLabel="#{msgs['label.phone.fixe']}"/>
+                                            </c:if>
+                                            <c:if test="#{not phone.isMobile}">
+                                                <f:selectItem itemValue="mobile"
+                                                              itemLabel="#{msgs['label.phone.mobile']}"/>
+                                                <f:selectItem itemValue="fixe"
+                                                              itemLabel="#{msgs['label.phone.fixe']}"
+                                                              selected="selected"/>
+                                            </c:if>
+                                        </h:selectOneMenu>
+                                        <h:outputLabel for="phoneKindCreate" value="#{msgs['label.label']}"/>
                                     </div>
                                 </h:column>
                                 <h:column class="col s1">
