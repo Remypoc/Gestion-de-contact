@@ -61,68 +61,68 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 	</bean>
 
 
-	<!-- JSF BEAN -->
-	<bean id="beanManager" class="mvc.bean.BeanManager">
-		<property name="dataLoader" ref="dataLoader"/>
-		<property name="dataManager" ref="dataManager"/>
+	<!--&lt;!&ndash; JSF BEAN &ndash;&gt;-->
+	<!--<bean id="beanManager" class="mvc.bean.BeanManager" scope="request">-->
+		<!--<property name="dataLoader" ref="dataLoader"/>-->
+		<!--<property name="dataManager" ref="dataManager"/>-->
 
-		<property name="viewManager" ref="viewManager" />
-		<property name="addContactToGroupBean" ref="addContactToGroup"/>
-		<property name="createGroupBean" ref="createGroup"/>
-		<property name="createOrUpdateContactBean" ref="createOrUpdateContact"/>
-		<property name="deleteContactBean" ref="deleteContact"/>
-		<property name="deleteGroupBean" ref="deleteGroup"/>
-		<property name="searchContactBean" ref="searchContact"/>
-		<property name="searchGroupBean" ref="searchGroup"/>
-		<property name="updateGroupBean" ref="updateGroup"/>
-	</bean>
+		<!--<property name="viewManager" ref="viewManager" />-->
+		<!--<property name="addContactToGroupBean" ref="addContactToGroup"/>-->
+		<!--<property name="createGroupBean" ref="createGroup"/>-->
+		<!--<property name="createOrUpdateContactBean" ref="createOrUpdateContact"/>-->
+		<!--<property name="deleteContactBean" ref="deleteContact"/>-->
+		<!--<property name="deleteGroupBean" ref="deleteGroup"/>-->
+		<!--<property name="searchContactBean" ref="searchContact"/>-->
+		<!--<property name="searchGroupBean" ref="searchGroup"/>-->
+		<!--<property name="updateGroupBean" ref="updateGroup"/>-->
+	<!--</bean>-->
 
-	<bean id="dataLoader" class="mvc.bean.DataLoader">
+	<bean id="dataLoader" class="mvc.bean.DataLoader" scope="request">
 		<property name="contactService" ref="contactService"/>
 		<property name="groupService" ref="groupService"/>
  	</bean>
 
-	<bean id="dataManager" class="mvc.bean.DataManager"/>
+	<bean id="dataManager" class="mvc.bean.DataManager" scope="request"/>
 
-	<bean id="viewManager" class="mvc.bean.ViewManager">
-		<!--<property name="beanManager" ref="beanManager" />-->
-	</bean>
+	<!--<bean id="viewManager" class="mvc.bean.ViewManager" scope="request">-->
+		<!--&lt;!&ndash;<property name="beanManager" ref="beanManager" />&ndash;&gt;-->
+	<!--</bean>-->
 
-	<bean id="deleteGroup" class="mvc.bean.group.DeleteGroupBean">
-		<property name="groupService" ref="groupService"/>
-		<!--<property name="beanManager" ref="beanManager" />-->
-	</bean>
+	<!--<bean id="deleteGroup" class="mvc.bean.group.DeleteGroupBean">-->
+		<!--<property name="groupService" ref="groupService"/>-->
+		<!--&lt;!&ndash;<property name="beanManager" ref="beanManager" />&ndash;&gt;-->
+	<!--</bean>-->
 
-	<bean id="addContactToGroup" class="mvc.bean.group.AddContactToGroupBean">
-		<property name="groupService" ref="groupService"/>
-		<!--<property name="beanManager" ref="beanManager" />-->
-	</bean>
+	<!--<bean id="addContactToGroup" class="mvc.bean.group.AddContactToGroupBean">-->
+		<!--<property name="groupService" ref="groupService"/>-->
+		<!--&lt;!&ndash;<property name="beanManager" ref="beanManager" />&ndash;&gt;-->
+	<!--</bean>-->
 
-	<bean id="createGroup" class="mvc.bean.group.CreateGroupBean">
-		<property name="groupService" ref="groupService"/>
-		<!--<property name="beanManager" ref="beanManager" />-->
-	</bean>
+	<!--<bean id="createGroup" class="mvc.bean.group.CreateGroupBean">-->
+		<!--<property name="groupService" ref="groupService"/>-->
+		<!--&lt;!&ndash;<property name="beanManager" ref="beanManager" />&ndash;&gt;-->
+	<!--</bean>-->
 
-	<bean id="updateGroup" class="mvc.bean.group.UpdateGroupBean">
-		<property name="groupService" ref="groupService"/>
-		<!--<property name="beanManager" ref="beanManager" />-->
-	</bean>
+	<!--<bean id="updateGroup" class="mvc.bean.group.UpdateGroupBean">-->
+		<!--<property name="groupService" ref="groupService"/>-->
+		<!--&lt;!&ndash;<property name="beanManager" ref="beanManager" />&ndash;&gt;-->
+	<!--</bean>-->
 
-	<bean id="createOrUpdateContact" class="mvc.bean.contact.CreateOrUpdateContactBean">
-		<property name="contactService" ref="contactService"/>
-		<!--<property name="beanManager" ref="beanManager" />-->
-	</bean>
+	<!--<bean id="createOrUpdateContact" class="mvc.bean.contact.CreateOrUpdateContactBean">-->
+		<!--<property name="contactService" ref="contactService"/>-->
+		<!--&lt;!&ndash;<property name="beanManager" ref="beanManager" />&ndash;&gt;-->
+	<!--</bean>-->
 
-	<bean id="deleteContact" class="mvc.bean.contact.DeleteContactBean">
-		<property name="contactService" ref="contactService"/>
-		<!--<property name="beanManager" ref="beanManager" />-->
-	</bean>
+	<!--<bean id="deleteContact" class="mvc.bean.contact.DeleteContactBean">-->
+		<!--<property name="contactService" ref="contactService"/>-->
+		<!--&lt;!&ndash;<property name="beanManager" ref="beanManager" />&ndash;&gt;-->
+	<!--</bean>-->
 
-	<bean id="searchContact" class="mvc.bean.contact.SearchContactBean">
-		<!--<property name="beanManager" ref="beanManager" />-->
-	</bean>
+	<!--<bean id="searchContact" class="mvc.bean.contact.SearchContactBean">-->
+		<!--&lt;!&ndash;<property name="beanManager" ref="beanManager" />&ndash;&gt;-->
+	<!--</bean>-->
 
-	<bean id="searchGroup" class="mvc.bean.group.SearchGroupBean">
-		<!--<property name="beanManager" ref="beanManager" />-->
-	</bean>
+	<!--<bean id="searchGroup" class="mvc.bean.group.SearchGroupBean">-->
+		<!--&lt;!&ndash;<property name="beanManager" ref="beanManager" />&ndash;&gt;-->
+	<!--</bean>-->
 </beans>

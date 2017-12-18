@@ -6,9 +6,10 @@ import exception.DAOException;
 import service.ContactService;
 import service.GroupService;
 
+import java.io.Serializable;
 import java.util.Set;
 
-public class DataLoader {
+public class DataLoader implements Serializable {
 
     private ContactService contactService;
     private GroupService groupService;

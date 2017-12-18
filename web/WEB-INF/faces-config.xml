@@ -6,9 +6,9 @@
 
     <application>
 
-        <el-resolver>
-            org.springframework.web.jsf.el.SpringBeanFacesELResolver
-        </el-resolver>
+        <!--<el-resolver>-->
+            <!--org.springframework.web.jsf.el.SpringBeanFacesELResolver-->
+        <!--</el-resolver>-->
 
         <resource-bundle>
             <base-name>resources.Resources</base-name>

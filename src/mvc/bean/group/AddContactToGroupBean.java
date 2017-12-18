@@ -3,6 +3,9 @@ package mvc.bean.group;
 import domain.Contact;
 import exception.DAOException;
 import mvc.bean.BeanManager;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import service.GroupService;
 
 import javax.faces.application.FacesMessage;
@@ -15,11 +18,11 @@ import java.io.Serializable;
 import java.util.ResourceBundle;
 
 
-//@ManagedBean(name="addContactToGroup")
-//@ViewScoped
-public class AddContactToGroupBean implements Serializable {
+@ManagedBean(name="addContactToGroup")
+@ViewScoped
+public class AddContactToGroupBean extends SpringBeanAutowiringSupport implements Serializable {
     private BeanManager beanManager;
-//    @ManagedProperty(value = "#{groupService}")
+    @Autowired
     private GroupService groupService;
 
     private long contactId;

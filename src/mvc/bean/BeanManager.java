@@ -6,52 +6,61 @@ import mvc.bean.contact.CreateOrUpdateContactBean;
 import mvc.bean.contact.DeleteContactBean;
 import mvc.bean.contact.SearchContactBean;
 import mvc.bean.group.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.servlet.ServletContext;
 import java.io.Serializable;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-//@ManagedBean(name="beanManager")
-//@ViewScoped
-public class BeanManager implements Serializable {
-//    @ManagedProperty(value = "#{dataManager}")
+@ManagedBean(name="beanManager")
+@ViewScoped
+public class BeanManager extends SpringBeanAutowiringSupport implements Serializable {
     private DataManager dataManager;
-//    @ManagedProperty(value = "#{dataLoader}")
     private DataLoader dataLoader;
-//    @ManagedProperty(value = "#{viewManager}")
+
+    @ManagedProperty(value = "#{viewManager}")
     private ViewManager viewManager;
-    
-//    @ManagedProperty(value = "#{searchGroup}")
+    @ManagedProperty(value = "#{searchGroup}")
     private SearchGroupBean searchGroupBean;
-//    @ManagedProperty(value = "#{deleteGroup}")
+    @ManagedProperty(value = "#{deleteGroup}")
     private DeleteGroupBean deleteGroupBean;
-//    @ManagedProperty(value = "#{createGroup}")
+    @ManagedProperty(value = "#{createGroup}")
     private CreateGroupBean createGroupBean;
-//    @ManagedProperty(value = "#{updateGroup}")
+    @ManagedProperty(value = "#{updateGroup}")
     private UpdateGroupBean updateGroupBean;
-//    @ManagedProperty(value = "#{addContactToGroup}")
+    @ManagedProperty(value = "#{addContactToGroup}")
     private AddContactToGroupBean addContactToGroupBean;
-//    @ManagedProperty(value = "#{deleteContact}")
+    @ManagedProperty(value = "#{deleteContact}")
     private DeleteContactBean deleteContactBean;
-//    @ManagedProperty(value = "#{searchContact}")
+    @ManagedProperty(value = "#{searchContact}")
     private SearchContactBean searchContactBean;
-//    @ManagedProperty(value = "#{createOrUpdateContact}")
+    @ManagedProperty(value = "#{createOrUpdateContact}")
     private CreateOrUpdateContactBean createOrUpdateContactBean;
 
-    private String error;
+    private String error = null;
 
-    public BeanManager() {
-//        ApplicationContext context = new ClassPathXmlApplicationContext("WEB-INF/applicationContext.xml");
-//        this.dataLoader = (DataLoader) context.getBean("dataLoader");
-//        this.dataManager = (DataManager) context.getBean("dataManager");
-//        this.dataLoader = new DataLoader();
-//        this.dataManager = new DataManager();
-        this.error = null;
+    @PostConstruct
+    private void init() {
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        ServletContext servletContext = (ServletContext) externalContext.getContext();
+        WebApplicationContextUtils.getRequiredWebApplicationContext(servletContext).
+                getAutowireCapableBeanFactory().
+                autowireBean(this);
     }
-
+    
     public String getError() {
         return error;
     }
@@ -108,10 +117,12 @@ public class BeanManager implements Serializable {
         return addContactToGroupBean;
     }
 
+    @Autowired
     public void setDataManager(DataManager dataManager) {
         this.dataManager = dataManager;
     }
 
+    @Autowired
     public void setDataLoader(DataLoader dataLoader) {
         this.dataLoader = dataLoader;
     }
