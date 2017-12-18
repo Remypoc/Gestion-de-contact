@@ -4,16 +4,19 @@ import domain.Address;
 import domain.Contact;
 import domain.PhoneNumber;
 import mvc.bean.BeanManager;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import service.ContactService;
 
 import java.io.Serializable;
 import java.util.LinkedHashSet;
 
-//@ManagedBean(name="createOrUpdateContact")
-//@ViewScoped
-public class CreateOrUpdateContactBean implements Serializable {
+@ManagedBean(name="createOrUpdateContact")
+@ViewScoped
+public class CreateOrUpdateContactBean extends SpringBeanAutowiringSupport implements Serializable {
     private BeanManager beanManager;
-//    @ManagedProperty(value = "#{contactService}")
+    @Autowired
     private ContactService contactService;
 
     private Contact contact;

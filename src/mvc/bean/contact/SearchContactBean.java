@@ -1,14 +1,15 @@
 package mvc.bean.contact;
 
 import mvc.bean.BeanManager;
+import org.springframework.stereotype.Component;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import java.io.Serializable;
 
 
-//@ManagedBean(name="searchContact")
-//@ViewScoped
+@ManagedBean(name="searchContact")
+@ViewScoped
 public class SearchContactBean implements Serializable {
     private BeanManager beanManager;
 

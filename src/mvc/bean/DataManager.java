@@ -3,12 +3,13 @@ package mvc.bean;
 import domain.Contact;
 import domain.ContactGroup;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class DataManager {
+public class DataManager implements Serializable {
     private Set<ContactGroup> groups;
     private Set<Contact> contacts;
     private Contact contact;

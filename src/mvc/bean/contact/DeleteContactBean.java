@@ -2,18 +2,22 @@ package mvc.bean.contact;
 
 import domain.Contact;
 import mvc.bean.BeanManager;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import service.ContactService;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import java.io.Serializable;
 
 
-//@ManagedBean(name="deleteContact")
-//@ViewScoped
-public class DeleteContactBean {
+@ManagedBean(name="deleteContact")
+@ViewScoped
+public class DeleteContactBean extends SpringBeanAutowiringSupport implements Serializable {
     private BeanManager beanManager;
-//    @ManagedProperty(value = "#{contactService}")
+    @Autowired
     private ContactService contactService;
 
     private long contactId;

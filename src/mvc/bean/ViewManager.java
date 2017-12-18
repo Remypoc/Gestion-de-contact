@@ -5,8 +5,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import java.io.Serializable;
 
-//@ManagedBean(name="viewManager")
-//@ViewScoped
+@ManagedBean(name="viewManager")
+@ViewScoped
 public class ViewManager implements Serializable {
     private BeanManager beanManager;
 
