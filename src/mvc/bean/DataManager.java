@@ -4,9 +4,7 @@ import domain.Contact;
 import domain.ContactGroup;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class DataManager implements Serializable {
@@ -49,7 +47,10 @@ public class DataManager implements Serializable {
     }
 
     public void setFilterGroups(String filterGroups) {
-        this.filterGroups = filterGroups;
+        if (filterGroups != null)
+            this.filterGroups = filterGroups.replaceAll("\\s+$", "");
+        else
+            this.filterGroups = null;
     }
 
     public String getFilterContacts() {
@@ -57,7 +58,10 @@ public class DataManager implements Serializable {
     }
 
     public void setFilterContacts(String filterContacts) {
-        this.filterContacts = filterContacts;
+        if (filterContacts != null)
+            this.filterContacts = filterContacts.replaceAll("\\s+$", "");
+        else
+            this.filterContacts = null;
     }
 
     public Contact getContact() {
@@ -76,73 +80,82 @@ public class DataManager implements Serializable {
         this.group = group;
     }
 
-    public Set<Contact> getDisplayContacts() {
-        System.out.println("DataManager => getDisplayContacts");
+    public List<Contact> getDisplayContacts() {
+        System.out.println("DataManger => getDisplayContacts");
         if (contacts == null)
             return null;
         if (filterContactsMain == null)
-            return contacts;
+            return getContactsSortByFirstName(contacts);
 
-        Set<Contact> contacts2 = contacts.stream()
-                .filter(c -> c.getFirstName().toLowerCase().contains(filterContactsMain) ||
-                        c.getLastName().toLowerCase().contains(filterContactsMain))
-                .collect(Collectors.toSet());
-        System.out.println(contacts2.size());
-        return contacts2;
+        String [] fToken = filterContactsMain.split(" ");
+        return getContactsSortByFirstName(contacts.stream()
+                .filter(c -> c.getFirstName().toLowerCase().contains(filterContactsMain.toLowerCase()) ||
+                        c.getLastName().toLowerCase().contains(filterContactsMain.toLowerCase()) ||
+                                (fToken.length > 1 && (c.getFirstName().toLowerCase().contains(fToken[0].toLowerCase())
+                                        && c.getLastName().toLowerCase().contains(fToken[1].toLowerCase()))))
+                .collect(Collectors.toSet()));
     }
 
-    // TODO function reload for Group and contacts
+    private List<Contact> getContactsSortByFirstName(Set<Contact> contacts) {
+        return contacts.stream().sorted((c1, c2) -> c1.getFirstName().compareToIgnoreCase(c2.getFirstName()))
+                .collect(Collectors.toList());
+    }
 
-    public Set<ContactGroup> getDisplayGroups() {
+    public List<ContactGroup> getDisplayGroups() {
         System.out.println("DataManager => getDisplayGroups");
-        // TODO if null try to reload Groups
         if (groups == null) {
             return null;
         }
         if (filterGroups == null) {
-            return groups;
+            return getGroupsSortedByName(groups);
         }
-        return groups.stream()
+        return getGroupsSortedByName(groups.stream()
                 .filter(g -> g.getGroupName().toLowerCase()
                         .contains(filterGroups.toLowerCase()))
-                .collect(Collectors.toSet());
+                .collect(Collectors.toSet()));
     }
 
-    public Set<Contact> getDisplayContactsOfGroup() {
-        System.out.println("DataManager => getDisplayContactsOfGroups");
-        // TODO if contacts are not loaded yet because of lazy load, load them
+    private List<ContactGroup> getGroupsSortedByName(Set<ContactGroup> groups) {
+        return groups.stream().sorted((g1, g2) -> g1.getGroupName().compareToIgnoreCase(g2.getGroupName()))
+                .collect(Collectors.toList());
+    }
+
+    public List<Contact> getDisplayContactsOfGroup() {
+        System.out.println("DataManger => getDisplayContacts");
         if (group == null || group.getContacts() == null) {
             return null;
         }
         if (filterContacts == null) {
-            return group.getContacts();
+            return getContactsSortByFirstName(group.getContacts());
         }
-        return group.getContacts().stream()
-                .filter(c -> c.getFirstName().toLowerCase().contains(filterContacts) ||
-                    c.getLastName().toLowerCase().contains(filterContacts))
-                .collect(Collectors.toSet());
+        String [] fToken = filterContacts.split(" ");
+        return getContactsSortByFirstName(group.getContacts().stream()
+                .filter(c -> c.getFirstName().toLowerCase().contains(filterContacts.toLowerCase()) ||
+                        c.getLastName().toLowerCase().contains(filterContacts.toLowerCase()) ||
+                        (fToken.length > 1 && (c.getFirstName().toLowerCase().contains(fToken[0].toLowerCase())
+                                && c.getLastName().toLowerCase().contains(fToken[1].toLowerCase()))))
+                .collect(Collectors.toSet()));
     }
 
-    public Set<Contact> getContactsNotInGroup() {
+    public List<Contact> getContactsNotInGroup() {
         System.out.println("DataManager => getContactsNotInGroup");
-        // TODO if contacts of group are not loaded yet because of lazy load, load them
         if (group == null || contacts == null) {
             return null;
         }
-        return contacts.stream()
+        return getContactsSortByFirstName(contacts.stream()
                 .filter(c -> !group.getContacts().contains(c))
-                .collect(Collectors.toSet());
+                .collect(Collectors.toSet()));
 
     }
 
     public void addContactToGroup(Contact contact) {
-        Optional<Contact> c1 =contacts.stream()
-                .filter(c -> c.getId() == contact.getId()).findFirst();
-        // TODO if contacts of groups are not loaded yet because of lazy load, load them
-        if (c1.isPresent() || group != null || group.getContacts() != null) {
-            group.getContacts().add(c1.get());
+        if (group != null) {
+            Optional<Contact> c1 = contacts.stream()
+                    .filter(c -> c.getId() == contact.getId()).findFirst();
+            if (c1.isPresent() || group != null || group.getContacts() != null) {
+                group.getContacts().add(c1.get());
+            }
         }
-
     }
 
     public void addGroup(ContactGroup group) {
@@ -152,6 +165,9 @@ public class DataManager implements Serializable {
     }
 
     public void setFilterContactsMain(String filterContactsMain) {
-        this.filterContactsMain = filterContactsMain;
+        if (filterContactsMain != null)
+            this.filterContactsMain = filterContactsMain.replaceAll("\\s+$", "");
+        else
+            this.filterContactsMain = null;
     }
 }

@@ -150,8 +150,10 @@ public class ViewManager implements Serializable {
     public void enableDisplayCreateContactForm() {
         displayCreateContactForm = true;
         displayContact = false;
+        displayGroup = false;
         displayUpdateContactForm = false;
         displayCreateGroupForm = false;
+        displayUpdateGroupForm = false;
         this.beanManager.notifyDisplayCreateContactForm();
     }
 

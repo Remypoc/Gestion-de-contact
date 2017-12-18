@@ -179,12 +179,14 @@
                                 </h:column>
                                 <h:column class="col s4">
                                     <div class="input-field">
-                                        <h:inputText id="phoneKindCreate"
-                                                     value="#{phone.phoneKind}"
-                                                     required="true"
-                                                     requiredMessage="#{msgs['label.required']}"
-                                                     validator="noBlankSpaceValidator">
-                                        </h:inputText>
+                                        <h:selectOneMenu id="phoneKindCreate"
+                                                value="#{phone.phoneKind}">
+                                            <f:selectItem itemValue="mobile"
+                                                          itemLabel="#{msgs['label.phone.mobile']}"
+                                                          selected="selected"/>
+                                            <f:selectItem itemValue="fixe"
+                                                          itemLabel="#{msgs['label.phone.fixe']}"/>
+                                        </h:selectOneMenu>
                                         <h:outputLabel for="phoneKindCreate"
                                                        value="#{msgs['label.label']}"/>
                                     </div>
