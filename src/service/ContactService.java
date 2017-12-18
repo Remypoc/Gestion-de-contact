@@ -11,4 +11,5 @@ public interface ContactService {
     Object deleteContact(Long contactId);
     Set<Contact> loadContacts();
     Object loadContact(Long id);
+    void refreshContact(Contact contact);
 }

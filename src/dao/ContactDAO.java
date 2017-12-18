@@ -17,4 +17,5 @@ public interface ContactDAO {
     Set<Contact> loadContacts();
     Object loadContacts(String search);
     Object loadContact(Long id);
+    void refreshContact(Contact contact);
 }

@@ -58,4 +58,8 @@ public class DataLoader implements Serializable {
         System.out.println("DataLoader => load Contact");
         return (Contact) contactService.loadContact(contactId);
     }
+
+    public void refreshContact(Contact contact) {
+        contactService.refreshContact(contact);
+    }
 }

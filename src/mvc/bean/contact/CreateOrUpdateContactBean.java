@@ -15,6 +15,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.ResourceBundle;
 
@@ -96,19 +97,22 @@ public class CreateOrUpdateContactBean extends SpringBeanAutowiringSupport imple
 	}
 
 	public void remove(PhoneNumber phoneNumber) {
-		System.out.println(phoneNumber);
 		contact.removePhoneNumber(phoneNumber);
-		System.out.println(contact.getPhones().size());
 	}
 
 	public void loadContact(Contact contact) {
-		this.contact = new Contact();
-		this.contact.copy(contact);
-		if (this.contact.getAddress() == null) {
+		this.contact = contact;
+		if (this.contact.getAddress() == null)
 			this.contact.setAddress(new Address());
-		}
-		if (this.contact.getPhones() == null) {
-			this.contact.setPhones(new LinkedHashSet<>());
-		}
+		if (this.contact.getPhones() == null)
+			this.contact.setPhones(new LinkedHashSet<PhoneNumber>());
+//		this.contact = new Contact();
+//		this.contact.copy(contact);
+//		if (this.contact.getAddress() == null) {
+//			this.contact.setAddress(new Address());
+//		}
+//		if (this.contact.getPhones() == null) {
+//			this.contact.setPhones(new LinkedHashSet<>());
+//		}
 	}
 }

@@ -124,6 +124,7 @@ public class ViewManager implements Serializable {
     public void enableDisplayCreateGroupForm() {
         displayGroup = false;
         displayCreateGroupForm = true;
+        displayCreateContactForm = false;
         displayUpdateGroupForm = false;
         displayUpdateContactForm = false;
         displayContact = false;
@@ -143,13 +144,15 @@ public class ViewManager implements Serializable {
         displayContacts = false;
         displayCreateContactForm = false;
         displayUpdateContactForm = false;
-        this.beanManager.loadGroups();
+        this.beanManager.refreshGroups();
     }
 
     public void enableDisplayCreateContactForm() {
         displayCreateContactForm = true;
         displayContact = false;
         displayUpdateContactForm = false;
+        displayCreateGroupForm = false;
+        this.beanManager.notifyDisplayCreateContactForm();
     }
 
     public void displayContact() {

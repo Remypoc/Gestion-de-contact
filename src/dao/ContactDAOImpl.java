@@ -11,6 +11,7 @@ import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -21,7 +22,6 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
-@EnableTransactionManagement
 public class ContactDAOImpl implements ContactDAO {
 
 	private SessionFactory sessionFactory;
@@ -47,7 +47,6 @@ public class ContactDAOImpl implements ContactDAO {
 //	}
 
 	@Override
-	@Transactional
 	public String addContact(Contact contact) {
 		Session session = getSessionFactory().openSession();
 
@@ -61,12 +60,12 @@ public class ContactDAOImpl implements ContactDAO {
 	}
 
 	@Override
-	@Transactional
 	public Object updateContact(final Contact contact) throws DAOException {
 
 		if (contact.getAddress() != null && !contact.getAddress().isValid()) {
 			contact.setAddress(null);
 		}
+		System.out.println("ContactDAOImpl => updateContact, version = " + contact.getVersion());
 
 		try {
 
@@ -89,7 +88,6 @@ public class ContactDAOImpl implements ContactDAO {
 	}
 
 	@Override
-	@Transactional
 	public Object deleteContact(final Long id) {
 		Session session = getSessionFactory().openSession();
 		session.beginTransaction();
@@ -105,7 +103,6 @@ public class ContactDAOImpl implements ContactDAO {
 	}
 
 	@Override
-	@Transactional
 	public Object addAddress(final Address address) {
 		Session session = getSessionFactory().openSession();
 
@@ -122,7 +119,6 @@ public class ContactDAOImpl implements ContactDAO {
 	}
 
 	@Override
-	@Transactional
 	public Object addPhoneNumber(final PhoneNumber phoneNumber) {
 		Session session = getSessionFactory().openSession();
 
@@ -139,7 +135,6 @@ public class ContactDAOImpl implements ContactDAO {
 	}
 
 	@Override
-	@Transactional
 	public Set<Contact> loadContacts() {
 		if (sessionFactory != null) {
 			Session session = sessionFactory.openSession();
@@ -155,7 +150,6 @@ public class ContactDAOImpl implements ContactDAO {
 	}
 
 	@Override
-	@Transactional
 	public Object loadContacts(String search) {
 		Session session = getSessionFactory().openSession();
 		session.beginTransaction();
@@ -172,7 +166,6 @@ public class ContactDAOImpl implements ContactDAO {
 	}
 
 	@Override
-	@Transactional
 	public Object loadContact(Long id) {
 //        Session session = HibernateUtil.getSessionFactory().openSession();
 //        session.beginTransaction();
@@ -190,7 +183,7 @@ public class ContactDAOImpl implements ContactDAO {
 		Contact contact = session.get(Contact.class, id);
 		Hibernate.initialize(contact.getAddress());
 		Hibernate.initialize(contact.getPhones());
-
+		session.close();
 		System.out.println(contact);
 
 //		Contact contact = getHibernateTemplate().get(Contact.class, id);
@@ -217,5 +210,20 @@ public class ContactDAOImpl implements ContactDAO {
 //				return null;
 //			}
 //		});
+	}
+
+	@Override
+	public void refreshContact(Contact contact) {
+		if (contact != null) {
+			Session session = sessionFactory.openSession();
+			try {
+				session.refresh(contact);
+			} catch (HibernateException e) {
+				contact = session.get(Contact.class, contact.getId());
+			}
+			Hibernate.initialize(contact.getAddress());
+			Hibernate.initialize(contact.getPhones());
+			session.close();
+		}
 	}
 }

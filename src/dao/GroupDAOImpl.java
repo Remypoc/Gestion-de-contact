@@ -52,7 +52,6 @@ public class GroupDAOImpl implements GroupDAO {
 //    }
 
     @Override
-    @Transactional
     public void addGroup(ContactGroup group) throws DAOException {
         Session session = getSessionFactory().openSession();
         try {
@@ -70,7 +69,6 @@ public class GroupDAOImpl implements GroupDAO {
     }
 
     @Override
-    @Transactional
     public void updateGroup(ContactGroup group) throws DAOException {
         Session session = getSessionFactory().openSession();
         try {
@@ -94,7 +92,6 @@ public class GroupDAOImpl implements GroupDAO {
     }
 
     @Override
-    @Transactional
     public ContactGroup getGroup(long id) throws DAOException {
         Session session = getSessionFactory().openSession();
         try {
@@ -111,7 +108,6 @@ public class GroupDAOImpl implements GroupDAO {
     }
 
     @Override
-    @Transactional
     public ContactGroup getGroupWithContacts(long id) throws DAOException {
         Session session = getSessionFactory().openSession();
         try {
@@ -136,7 +132,6 @@ public class GroupDAOImpl implements GroupDAO {
     }
 
     @Override
-    @Transactional
     public Set<ContactGroup> getAllGroups() throws DAOException {
         Session session = getSessionFactory().openSession();
         try {
@@ -155,7 +150,6 @@ public class GroupDAOImpl implements GroupDAO {
     }
 
     @Override
-    @Transactional
     public void deleteGroup(long id) throws DAOException {
         Session session = getSessionFactory().openSession();
         try {
@@ -173,7 +167,6 @@ public class GroupDAOImpl implements GroupDAO {
     }
 
     @Override
-    @Transactional
     public void deleteContactFromGroup(long contactId, long groupId) throws DAOException {
         Session session = getSessionFactory().openSession();
         try {
@@ -197,7 +190,6 @@ public class GroupDAOImpl implements GroupDAO {
     }
 
     @Override
-    @Transactional
     public Set<ContactGroup> searchGroups(String groupName) throws DAOException{
         Session session = getSessionFactory().openSession();
         try {
@@ -221,7 +213,6 @@ public class GroupDAOImpl implements GroupDAO {
     }
 
     @Override
-    @Transactional
     public ContactGroup searchContactInGroup(final long groupId, final String name) throws DAOException{
 ////        Session session = openSession();
 //        try {
@@ -258,7 +249,6 @@ public class GroupDAOImpl implements GroupDAO {
     }
 
     @Override
-    @Transactional
     public Set<Contact> getContactsNotInSet(Set<Contact> contacts) throws DAOException{
 ////        Session session = openSession();
 //        try {
@@ -283,7 +273,6 @@ public class GroupDAOImpl implements GroupDAO {
     }
 
     @Override
-    @Transactional
     public void addContactToGroup(long contactId, long groupId) throws DAOException {
         Session session = getSessionFactory().openSession();
         try {

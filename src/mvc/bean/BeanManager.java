@@ -272,6 +272,14 @@ public class BeanManager extends SpringBeanAutowiringSupport implements Serializ
 		this.dataManager.setGroups(groups);
 	}
 
+	void refreshContact() {
+		this.dataLoader.refreshContact(this.dataManager.getContact());
+	}
+
+	void refreshGroup() {
+//		this.dataLoader.refreshGroup(this.dataManager.getGroup());
+	}
+
 	public void notifySearchContactMainByName(String s) {
 		this.dataManager.setFilterContactsMain(s);
 	}
@@ -302,12 +310,14 @@ public class BeanManager extends SpringBeanAutowiringSupport implements Serializ
 
 	public void notifyUpdateContact(Contact contact) {
 		System.out.println("BeanManager => notifyUpdateContact");
-		if (contact != null) {
-			dataManager.setContact(contact);
-			Optional<Contact> c1 = dataManager.getContacts().stream()
-					.filter(c -> c.getId() == contact.getId()).findFirst();
-			c1.ifPresent(c -> c.copy(contact));
-		}
+		this.refreshContacts();
+		this.refreshContact();
+//		if (contact != null) {
+//			dataManager.setContact(contact);
+//			Optional<Contact> c1 = dataManager.getContacts().stream()
+//					.filter(c -> c.getId() == contact.getId()).findFirst();
+//			c1.ifPresent(c -> c.copy(contact));
+//		}
 		this.viewManager.hideUpdateContactForm();
 	}
 
@@ -329,5 +339,9 @@ public class BeanManager extends SpringBeanAutowiringSupport implements Serializ
 			dataManager.getContacts().removeIf(contact1 -> contact1.equals(contact));
 			this.viewManager.hideRightPane();
 		}
+	}
+
+	public void notifyDisplayCreateContactForm() {
+		this.createOrUpdateContactBean.reset();
 	}
 }

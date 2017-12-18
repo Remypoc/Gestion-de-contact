@@ -36,4 +36,9 @@ public class ContactServiceImpl implements ContactService {
         return contactDAO.loadContact(id);
     }
 
+	@Override
+	public void refreshContact(Contact contact) {
+		contactDAO.refreshContact(contact);
+	}
+
 }

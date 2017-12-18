@@ -1,7 +1,5 @@
 package domain;
 
-import org.springframework.stereotype.Component;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -49,6 +47,14 @@ public class Contact {
 		if (phones != null)
 			this.phones = phones;
 		this.address = address;
+	}
+
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
 	}
 
 	public String getFullName() {
