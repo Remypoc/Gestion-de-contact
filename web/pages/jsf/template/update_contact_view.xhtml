@@ -18,14 +18,14 @@
 <h:body>
     <ui:composition>
         <h:panelGroup layout="block"
-                      rendered="#{beanManager.viewManager.displayUpdateContactForm}">
-            #{beanManager.createOrUpdateContactBean.loadContact(beanManager.dataManager.contact)}
+                      rendered="#{viewManager.displayUpdateContactForm}">
+            #{createOrUpdateContact.loadContact(beanManager.dataManager.contact)}
             <div class="card-panel">
 
                 <div class="row">
                     <div class="col s2">
                         <h:form>
-                            <h:commandLink action="#{beanManager.createOrUpdateContactBean.cancelUpdateContact}"
+                            <h:commandLink action="#{createOrUpdateContact.cancelUpdateContact}"
                                            styleClass="btn-floating waves-effect waves-light grey">
                                 <i class="material-icons">chevron_left</i>
                             </h:commandLink>
@@ -42,7 +42,7 @@
                                 <div class="input-field">
                                     <i class="material-icons prefix">account_circle</i>
                                     <h:inputText id="firstNameEdit"
-                                                 value="#{beanManager.createOrUpdateContactBean.contact.firstName}"
+                                                 value="#{createOrUpdateContact.contact.firstName}"
                                                  required="#{param['formEdit:firstNameEdit'] != null}"
                                                  requiredMessage="#{msgs['label.required']}"
                                                  validator="noBlankSpaceValidator">
@@ -57,7 +57,7 @@
                                 <div class="input-field">
                                     <i class="material-icons prefix">account_circle</i>
                                     <h:inputText id="lastNameEdit"
-                                                 value="#{beanManager.createOrUpdateContactBean.contact.lastName}"
+                                                 value="#{createOrUpdateContact.contact.lastName}"
                                                  required="#{param['formEdit:lastNameEdit'] != null}"
                                                  requiredMessage="#{msgs['label.required']}"
                                                  validator="noBlankSpaceValidator">
@@ -72,7 +72,7 @@
                                 <div class="input-field">
                                     <i class="material-icons prefix">email</i>
                                     <h:inputText id="emailEdit"
-                                                 value="#{beanManager.createOrUpdateContactBean.contact.email}"
+                                                 value="#{createOrUpdateContact.contact.email}"
                                                  required="#{param['formEdit:emailEdit'] != null}"
                                                  requiredMessage="#{msgs['label.required']}"
                                                  validator="noBlankSpaceValidator"
@@ -93,7 +93,7 @@
                                 <div class="input-field">
                                     <i class="material-icons prefix">location_city</i>
                                     <h:inputText id="streetEdit"
-                                                 value="#{beanManager.createOrUpdateContactBean.contact.address.street}"
+                                                 value="#{createOrUpdateContact.contact.address.street}"
                                                  required="#{not empty param['formEdit:cityEdit'] or not empty param['formEdit:zipEdit']
                                                        or not empty param['formEdit:country']}"
                                                  requiredMessage="#{msgs['label.required']}"
@@ -109,7 +109,7 @@
                                 <div class="input-field">
                                     <i class="material-icons prefix">location_city</i>
                                     <h:inputText id="cityEdit"
-                                                 value="#{beanManager.createOrUpdateContactBean.contact.address.city}"
+                                                 value="#{createOrUpdateContact.contact.address.city}"
                                                  required="#{not empty param['formEdit:streetEdit'] or not empty param['formEdit:zipEdit']
                                                        or not empty param['formEdit:countryEdit']}"
                                                  requiredMessage="#{msgs['label.required']}"
@@ -125,7 +125,7 @@
                                 <div class="input-field">
                                     <i class="material-icons prefix">location_city</i>
                                     <h:inputText id="zipEdit"
-                                                 value="#{beanManager.createOrUpdateContactBean.contact.address.zip}"
+                                                 value="#{createOrUpdateContact.contact.address.zip}"
                                                  required="#{not empty param['formEdit:cityEdit'] or not empty param['formEdit:streetEdit']
                                                        or not empty param['formEdit:countryEdit']}"
                                                  requiredMessage="#{msgs['label.required']}"
@@ -143,7 +143,7 @@
                                 <div class="input-field">
                                     <i class="material-icons prefix">location_city</i>
                                     <h:inputText id="countryEdit"
-                                                 value="#{beanManager.createOrUpdateContactBean.contact.address.country}"
+                                                 value="#{createOrUpdateContact.contact.address.country}"
                                                  required="#{not empty param['formEdit:cityEdit'] or not empty param['formEdit:zipEdit']
                                                                    or not empty param['formEdit:streetEdit']}"
                                                  requiredMessage="#{msgs['label.required']}"
@@ -159,7 +159,7 @@
                         <!-- Update phones numbers -->
                         <div class="row">
                             <h:dataTable id="phonesEdit"
-                                         value="#{beanManager.createOrUpdateContactBean.contact.phones}"
+                                         value="#{createOrUpdateContact.contact.phones}"
                                          var="phone">
                                 <h:column class="col s7">
                                     <div class="input-field">
@@ -190,7 +190,7 @@
                                 </h:column>
                                 <h:column class="col s1">
                                     <h:commandLink
-                                            action="#{beanManager.createOrUpdateContactBean.remove(phone)}"
+                                            action="#{createOrUpdateContact.remove(phone)}"
                                             styleClass="btn-floating waves-effect waves-light red keep-scroll-pos"
                                             immediate="true">
                                         <i class="material-icons center">remove</i>
@@ -202,7 +202,7 @@
                         <div class="row">
                             <div class="col s2 offset-s10">
                                 <h:commandLink id="addPhoneEdit"
-                                               action="#{beanManager.createOrUpdateContactBean.addPhone}"
+                                               action="#{createOrUpdateContact.addPhone}"
                                                styleClass="btn waves-effect waves-light light-blue darken-4 keep-scroll-pos">
                                     <i class="material-icons center">add</i> <i
                                         class="material-icons center">phone</i>
@@ -212,7 +212,7 @@
 
                         <div class="row">
                             <div class="col s2 offset-s10">
-                                <h:commandLink action="#{beanManager.createOrUpdateContactBean.updateContact}"
+                                <h:commandLink action="#{createOrUpdateContact.updateContact}"
                                                styleClass="btn-large waves-effect waves-light green accent-3 keep-scroll-pos">
                                     <i class="material-icons center">send</i>
                                 </h:commandLink>
@@ -220,7 +220,7 @@
                         </div>
 
                         <h:commandButton id="saveEdit" value="save"
-                                         action="#{beanManager.createOrUpdateContactBean.updateContact}"
+                                         action="#{createOrUpdateContact.updateContact}"
                                          style="display: None;"/>
                     </h:form>
                 </div>

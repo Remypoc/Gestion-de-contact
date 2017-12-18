@@ -17,7 +17,7 @@
 
 <h:body>
     <ui:composition>
-        <h:panelGroup layout="block" rendered="#{beanManager.viewManager.displayGroup}">
+        <h:panelGroup layout="block" rendered="#{viewManager.displayGroup}">
             <div class="card-panel">
                 <div class="container">
                     <div class="row">
@@ -30,8 +30,8 @@
                         <div class="col s2">
                             <h:form>
                                 <h:commandLink
-                                        action="#{beanManager.viewManager.enableDisplayUpdateGroupForm}"
-                                        rendered="#{!beanManager.viewManager.displayUpdateGroupForm}"
+                                        action="#{viewManager.enableDisplayUpdateGroupForm}"
+                                        rendered="#{!viewManager.displayUpdateGroupForm}"
                                         styleClass="btn-floating waves-effect waves-light orange">
                                     <i class="material-icons">mode_edit</i>
                                 </h:commandLink>
@@ -46,7 +46,7 @@
                                 <i class="material-icons prefix">search</i>
                                 <h:inputText
                                         id="input-form-searchContactInGroup-name"
-                                        value="#{beanManager.searchGroupBean.filterContacts}"
+                                        value="#{searchGroup.filterContacts}"
                                         validatorMessage="#{msgs['search.contact.validator.size.min.max']}"
                                         styleClass="validate">
                                     <f:validateLength minimum="1" maximum="50"/>
@@ -55,7 +55,7 @@
                                         for="input-form-searchContactInGroup-name">#{msgs['label.search.contact']}</h:outputLabel>
                             </div>
                             <h:commandButton
-                                    action="#{beanManager.searchGroupBean.searchContactByName}"
+                                    action="#{searchGroup.searchContactByName}"
                                     styleClass="btn-floating waves-effect waves-light light-blue darken-4"
                                     style="display: none;"/>
                         </div>
@@ -68,7 +68,7 @@
                         <h:dataTable
                                 value="#{beanManager.dataManager.displayContactsOfGroup}"
                                 var="contact"
-                                rendered="#{beanManager.viewManager.displayGroup}"
+                                rendered="#{viewManager.displayGroup}"
                                 styleClass="responsive-table highlight bordered">
                             <h:column>
                                 <h:outputText
@@ -79,7 +79,7 @@
                             <h:column>
                                 <h:form>
                                     <h:commandLink
-                                            action="#{beanManager.deleteGroupBean.deleteContactFromGroup(contact.id, beanManager.dataManager.group.groupId)}"
+                                            action="#{deleteGroup.deleteContactFromGroup(contact.id, beanManager.dataManager.group.groupId)}"
                                             styleClass="btn-floating waves-effect waves-light pink accent-3 keep-scroll-pos">
                                         <i class="material-icons">remove</i>
                                     </h:commandLink>
@@ -93,11 +93,11 @@
                     <!-- Add contact to group -->
                     <div class="row">
                         <h:form>
-                            #{beanManager.addContactToGroupBean.setGroupId(beanManager.dataManager.group.groupId)}
+                            #{addContactToGroup.setGroupId(beanManager.dataManager.group.groupId)}
                             <h:inputHidden value="#{addContactToGroup.groupId}"/>
                             <div class="input-field col s6 offset-s2">
                                 <h:selectOneMenu
-                                        value="#{beanManager.addContactToGroupBean.contactId}">
+                                        value="#{addContactToGroup.contactId}">
                                     <f:selectItem itemValue="0"
                                                   itemDisabled="true"
                                                   itemLabel="#{msgs['label.select.contact']}"
@@ -114,7 +114,7 @@
                             <div class="input-field col s2">
                                 <div class="input-field col s12">
                                     <h:commandLink
-                                            action="#{beanManager.addContactToGroupBean.addContactToGroup}"
+                                            action="#{addContactToGroup.addContactToGroup}"
                                             styleClass="btn waves-effect waves-light light-blue darken-4 keep-scroll-pos">
                                         <i class="material-icons">person_add</i>
                                     </h:commandLink>

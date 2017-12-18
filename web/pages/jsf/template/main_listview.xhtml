@@ -18,12 +18,12 @@
 <h:body>
     <ui:composition>
         <div class="card-panel">
-            <h:panelGroup rendered="#{beanManager.viewManager.displayContacts}">
+            <h:panelGroup rendered="#{viewManager.displayContacts}">
                 <div style="color: #3b5998;">
                     <i class="material-icons prefix">person</i>
                 </div>
             </h:panelGroup>
-            <h:panelGroup rendered="#{beanManager.viewManager.displayGroups}"
+            <h:panelGroup rendered="#{viewManager.displayGroups}"
                           styleClass="color: #3b5998;">
                 <div style="color: #3b5998;">
                     <i class="material-icons">group</i>
@@ -36,7 +36,7 @@
 
                         <!-- Display list contact block -->
                         <h:panelGroup layout="block" class="list-contact"
-                                      rendered="#{beanManager.viewManager.displayContacts}">
+                                      rendered="#{viewManager.displayContacts}">
                             <!-- Search for contact -->
                             <h:form id="form-searchContact">
                                 <div class="row">
@@ -44,7 +44,7 @@
                                         <i class="material-icons prefix">search</i>
                                         <h:inputText styleClass="validate"
                                                      id="form-searchContact-name"
-                                                     value="#{beanManager.searchContactBean.filterContacts}"
+                                                     value="#{searchContact.filterContacts}"
                                                      validatorMessage="#{msgs['search.contact.validator.size.min.max']}">
                                             <f:validateLength maximum="50"/>
                                         </h:inputText>
@@ -55,7 +55,7 @@
                                 <h:message for="form-searchContact-name"
                                            styleClass="form-input-error"/>
                                 <h:commandButton
-                                        action="#{beanManager.searchContactBean.searchContactByName}"
+                                        action="#{searchContact.searchContactByName}"
                                         styleClass="btn waves-effect waves-light postfix"
                                         style="display: none;"/>
                             </h:form>
@@ -80,7 +80,7 @@
                                     <h:column>
                                         <h:form>
                                             <h:commandLink
-                                                    action="#{beanManager.deleteContactBean.deleteContact(contact.id)}"
+                                                    action="#{deleteContact.deleteContact(contact.id)}"
                                                     styleClass="btn-floating waves-effect waves-light pink accent-3 left-align keep-scroll-pos">
                                                 <i class="material-icons left-align">remove</i>
                                             </h:commandLink>
@@ -92,7 +92,7 @@
 
                         <!-- Display list group block -->
                         <h:panelGroup layout="block" class="list-group"
-                                      rendered="#{beanManager.viewManager.displayGroups}">
+                                      rendered="#{viewManager.displayGroups}">
                             <!-- Search for group -->
                             <h:form id="form-searchGroup">
                                 <div class="row">
@@ -100,7 +100,7 @@
                                         <i class="material-icons prefix">search</i>
                                         <h:inputText styleClass="validate"
                                                      id="groupName"
-                                                     value="#{beanManager.searchGroupBean.filterGroups}"
+                                                     value="#{searchGroup.filterGroups}"
                                                      validatorMessage="#{msgs['search.groupname.validator.size.min.max']}">
                                             <f:validateLength maximum="50"/>
                                         </h:inputText>
@@ -111,7 +111,7 @@
                                 <h:message for="groupName"
                                            styleClass="form-input-error"/>
                                 <h:commandButton
-                                        action="#{beanManager.searchGroupBean.searchGroupByName}"
+                                        action="#{searchGroup.searchGroupByName}"
                                         styleClass="btn waves-effect waves-light postfix"
                                         style="display: none;"/>
                             </h:form>
@@ -134,7 +134,7 @@
                                     <h:column>
                                         <h:form>
                                             <h:commandLink
-                                                    action="#{beanManager.deleteGroupBean.deleteGroup(group.groupId)}"
+                                                    action="#{deleteGroup.deleteGroup(group.groupId)}"
                                                     styleClass="btn-floating waves-effect waves-light pink accent-3 left-align keep-scroll-pos">
                                                 <i class="material-icons left-align">remove</i>
                                             </h:commandLink>

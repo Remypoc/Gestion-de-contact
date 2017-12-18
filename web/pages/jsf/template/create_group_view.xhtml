@@ -18,7 +18,7 @@
 <h:body>
     <ui:composition>
         <h:panelGroup layout="block"
-                      rendered="#{beanManager.viewManager.displayCreateGroupForm}">
+                      rendered="#{viewManager.displayCreateGroupForm}">
             <div class="card-panel">
                 <div class="container">
                     <h5 class="center">#{msgs['label.add.contactgroup']}</h5>
@@ -27,7 +27,7 @@
                             <div class="input-field col s10">
                                 <h:inputText styleClass="validate"
                                              id="createGroup-groupName"
-                                             value="#{beanManager.createGroupBean.groupName}"
+                                             value="#{createGroup.groupName}"
                                              required="true"
                                              requiredMessage="#{msgs['label.input.required']}"
                                              validatorMessage="#{msgs['input.groupname.validator.min.max']}">
@@ -37,7 +37,7 @@
                                         for="createGroup-groupName">#{msgs['label.groupname']}</h:outputLabel>
                             </div>
                             <div class="input-field col s2">
-                                <h:commandLink action="#{beanManager.createGroupBean.createGroup}"
+                                <h:commandLink action="#{createGroup.createGroup}"
                                                styleClass="btn waves-effect waves-light light-blue darken-4">
                                     <i class="material-icons center">group_add</i>
                                 </h:commandLink>

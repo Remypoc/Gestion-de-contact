@@ -17,7 +17,7 @@
 
 <h:body>
     <ui:composition>
-        <h:panelGroup layout="block" rendered="#{beanManager.viewManager.displayContact}">
+        <h:panelGroup layout="block" rendered="#{viewManager.displayContact}">
             <div class="card-panel">
                 <div class="container">
                     <div class="row">
@@ -32,8 +32,8 @@
                         <div class="col s2">
                             <h:form>
                                 <h:commandLink
-                                        action="#{beanManager.viewManager.enableDisplayUpdateContactForm}"
-                                        rendered="#{!beanManager.viewManager.displayUpdateContactForm}"
+                                        action="#{viewManager.enableDisplayUpdateContactForm}"
+                                        rendered="#{!viewManager.displayUpdateContactForm}"
                                         styleClass="btn-floating waves-effect waves-light orange">
                                     <i class="material-icons">mode_edit</i>
                                 </h:commandLink>

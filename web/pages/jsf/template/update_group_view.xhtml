@@ -18,15 +18,15 @@
 <h:body>
     <ui:composition>
         <h:panelGroup layout="block"
-                      rendered="#{beanManager.viewManager.displayUpdateGroupForm}">
+                      rendered="#{viewManager.displayUpdateGroupForm}">
             <div class="card-panel">
                 <div class="container">
                     <h5 class="center"><h:outputFormat
                             value="#{msgs['label.update']} #{msgs['label.group']}"/>
                     </h5>
                     <h:form id="form-updateGroup">
-                        #{beanManager.updateGroupBean.setGroupName(beanManager.dataManager.group.groupName)}
-                        #{beanManager.updateGroupBean.setGroupId(beanManager.dataManager.group.groupId)}
+                        #{updateGroup.setGroupName(beanManager.dataManager.group.groupName)}
+                        #{updateGroup.setGroupId(beanManager.dataManager.group.groupId)}
                         <div class="row">
                             <div class="input-field col s10">
                                 <i class="material-icons prefix">mode_edit</i>
@@ -40,8 +40,8 @@
                                         for="updateGroup-groupName">#{msgs['label.groupname']}</h:outputLabel>
                             </div>
                         </div>
-                        <h:inputHidden value="#{beanManager.updateGroupBean.groupId}"/>
-                        <h:commandButton action="#{beanManager.updateGroupBean.updateGroup}"
+                        <h:inputHidden value="#{updateGroup.groupId}"/>
+                        <h:commandButton action="#{updateGroup.updateGroup}"
                                          styleClass="btn waves-effect waves-light postfix"
                                          style="display: none;"/>
                     </h:form>
