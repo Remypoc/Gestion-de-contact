@@ -129,7 +129,7 @@ public class DataManager implements Serializable {
             return getContactsSortByFirstName(group.getContacts());
         }
         String [] fToken = filterContacts.split(" ");
-        return getContactsSortByFirstName(contacts.stream()
+        return getContactsSortByFirstName(group.getContacts().stream()
                 .filter(c -> c.getFirstName().toLowerCase().contains(filterContacts.toLowerCase()) ||
                         c.getLastName().toLowerCase().contains(filterContacts.toLowerCase()) ||
                         (fToken.length > 1 && (c.getFirstName().toLowerCase().contains(fToken[0].toLowerCase())
