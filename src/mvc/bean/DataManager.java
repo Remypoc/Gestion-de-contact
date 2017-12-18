@@ -47,7 +47,10 @@ public class DataManager implements Serializable {
     }
 
     public void setFilterGroups(String filterGroups) {
-        this.filterGroups = filterGroups;
+        if (filterGroups != null)
+            this.filterGroups = filterGroups.replaceAll("\\s+$", "");
+        else
+            this.filterGroups = null;
     }
 
     public String getFilterContacts() {
@@ -55,7 +58,10 @@ public class DataManager implements Serializable {
     }
 
     public void setFilterContacts(String filterContacts) {
-        this.filterContacts = filterContacts;
+        if (filterContacts != null)
+            this.filterContacts = filterContacts.replaceAll("\\s+$", "");
+        else
+            this.filterContacts = null;
     }
 
     public Contact getContact() {
@@ -81,9 +87,12 @@ public class DataManager implements Serializable {
         if (filterContactsMain == null)
             return getContactsSortByFirstName(contacts);
 
+        String [] fToken = filterContactsMain.split(" ");
         return getContactsSortByFirstName(contacts.stream()
-                .filter(c -> c.getFirstName().toLowerCase().contains(filterContactsMain) ||
-                        c.getLastName().toLowerCase().contains(filterContactsMain))
+                .filter(c -> c.getFirstName().toLowerCase().contains(filterContactsMain.toLowerCase()) ||
+                        c.getLastName().toLowerCase().contains(filterContactsMain.toLowerCase()) ||
+                                (fToken.length > 1 && (c.getFirstName().toLowerCase().contains(fToken[0].toLowerCase())
+                                        && c.getLastName().toLowerCase().contains(fToken[1].toLowerCase()))))
                 .collect(Collectors.toSet()));
     }
 
@@ -119,9 +128,12 @@ public class DataManager implements Serializable {
         if (filterContacts == null) {
             return getContactsSortByFirstName(group.getContacts());
         }
-        return getContactsSortByFirstName(group.getContacts().stream()
-                .filter(c -> c.getFirstName().toLowerCase().contains(filterContacts) ||
-                    c.getLastName().toLowerCase().contains(filterContacts))
+        String [] fToken = filterContacts.split(" ");
+        return getContactsSortByFirstName(contacts.stream()
+                .filter(c -> c.getFirstName().toLowerCase().contains(filterContacts.toLowerCase()) ||
+                        c.getLastName().toLowerCase().contains(filterContacts.toLowerCase()) ||
+                        (fToken.length > 1 && (c.getFirstName().toLowerCase().contains(fToken[0].toLowerCase())
+                                && c.getLastName().toLowerCase().contains(fToken[1].toLowerCase()))))
                 .collect(Collectors.toSet()));
     }
 
@@ -137,12 +149,13 @@ public class DataManager implements Serializable {
     }
 
     public void addContactToGroup(Contact contact) {
-        Optional<Contact> c1 =contacts.stream()
-                .filter(c -> c.getId() == contact.getId()).findFirst();
-        if (c1.isPresent() || group != null || group.getContacts() != null) {
-            group.getContacts().add(c1.get());
+        if (group != null) {
+            Optional<Contact> c1 = contacts.stream()
+                    .filter(c -> c.getId() == contact.getId()).findFirst();
+            if (c1.isPresent() || group != null || group.getContacts() != null) {
+                group.getContacts().add(c1.get());
+            }
         }
-
     }
 
     public void addGroup(ContactGroup group) {
@@ -152,6 +165,9 @@ public class DataManager implements Serializable {
     }
 
     public void setFilterContactsMain(String filterContactsMain) {
-        this.filterContactsMain = filterContactsMain;
+        if (filterContactsMain != null)
+            this.filterContactsMain = filterContactsMain.replaceAll("\\s+$", "");
+        else
+            this.filterContactsMain = null;
     }
 }

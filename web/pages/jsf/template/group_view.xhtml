@@ -71,8 +71,7 @@
                                 rendered="#{viewManager.displayGroup}"
                                 styleClass="responsive-table highlight bordered">
                             <h:column>
-                                <h:outputText
-                                        value="#{contact.firstName} #{contact.lastName}"/>
+                                #{contact.firstName} <b>#{contact.lastName}</b>
                             </h:column>
 
                             <!-- Delete Contact in group -->
