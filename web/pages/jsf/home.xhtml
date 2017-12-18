@@ -26,8 +26,8 @@
 
     <!-- Load contacts on first launch -->
     <f:metadata>
-        <f:viewAction action="#{beanManager.loadContacts}" />
-        <f:viewAction action="#{beanManager.loadGroups}" />
+        <f:viewAction action="#{beanManager.loadContacts}"/>
+        <f:viewAction action="#{beanManager.loadGroups}"/>
         <f:view locale="#{facesContext.externalContext.requestLocale}"/>
     </f:metadata>
 
@@ -37,6 +37,8 @@
     </ui:insert>
 
     <div class="container">
+
+        <h:messages globalOnly="true" errorClass="error"/>
 
         <br/>
         <!-- Menu buttons -->

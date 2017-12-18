@@ -3,6 +3,7 @@ package service;
 import dao.ContactDAO;
 import dao.ContactDAOImpl;
 import domain.*;
+import exception.DAOException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +20,7 @@ public class ContactServiceImpl implements ContactService {
 		return contactDAO.addContact(contact);
 	}
 
-	public Object updateContact(Contact contact) {
+	public Object updateContact(Contact contact) throws DAOException {
 		return contactDAO.updateContact(contact);
 	}
 

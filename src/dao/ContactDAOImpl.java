@@ -3,6 +3,7 @@ package dao;
 import domain.Address;
 import domain.Contact;
 import domain.PhoneNumber;
+import exception.DAOException;
 import org.hibernate.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.HibernateTemplate;
@@ -13,12 +14,16 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import javax.persistence.EntityManager;
+import javax.persistence.OptimisticLockException;
+import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 @EnableTransactionManagement
 public class ContactDAOImpl implements ContactDAO {
+
 	private SessionFactory sessionFactory;
 
 	public SessionFactory getSessionFactory() {
@@ -44,7 +49,7 @@ public class ContactDAOImpl implements ContactDAO {
 	@Override
 	@Transactional
 	public String addContact(Contact contact) {
-        Session session = getSessionFactory().openSession();
+		Session session = getSessionFactory().openSession();
 
 		session.beginTransaction();
 		session.persist(contact);
@@ -52,43 +57,57 @@ public class ContactDAOImpl implements ContactDAO {
 		session.getTransaction().commit();
 		session.close();
 //		getHibernateTemplate().persist(contact);
-        return null;
-    }
+		return null;
+	}
 
 	@Override
 	@Transactional
-    public Object updateContact(final Contact contact) {
-        Session session = getSessionFactory().openSession();
+	public Object updateContact(final Contact contact) throws DAOException {
 
-        session.beginTransaction();
-        session.saveOrUpdate(contact);
+		if (contact.getAddress() != null && !contact.getAddress().isValid()) {
+			contact.setAddress(null);
+		}
 
-        session.getTransaction().commit();
-        session.close();
-//		getHibernateTemplate().saveOrUpdate(contact);
-        return null;
-    }
+		try {
+
+			Session session = getSessionFactory().openSession();
+			session.beginTransaction();
+			session.merge(contact);
+			session.getTransaction().commit();
+			session.close();
+
+		} catch (OptimisticLockException e) {
+			e.printStackTrace();
+			throw new DAOException(
+					String.format("Failed to update contact %s %s: ", contact.getFirstName(), contact.getLastName()), "exception.edit.contact.lock.failed");
+		} catch (HibernateException e) {
+			e.printStackTrace();
+			throw new DAOException(
+					String.format("Failed to update contact %s %s: ", contact.getFirstName(), contact.getLastName()), "exception.connexion.database.failed");
+		}
+		return null;
+	}
 
 	@Override
-    @Transactional
-    public Object deleteContact(final Long id) {
-        Session session = getSessionFactory().openSession();
-        session.beginTransaction();
+	@Transactional
+	public Object deleteContact(final Long id) {
+		Session session = getSessionFactory().openSession();
+		session.beginTransaction();
 
-        Contact contact = session.get(Contact.class, id);
+		Contact contact = session.get(Contact.class, id);
 
-        session.delete(contact);
-        session.getTransaction().commit();
-        session.close();
+		session.delete(contact);
+		session.getTransaction().commit();
+		session.close();
 //        Contact contact  = getHibernateTemplate().get(Contact.class, id);
 //        getHibernateTemplate().delete(contact);
-        return null;
-    }
+		return null;
+	}
 
 	@Override
 	@Transactional
-    public Object addAddress(final Address address) {
-        Session session = getSessionFactory().openSession();
+	public Object addAddress(final Address address) {
+		Session session = getSessionFactory().openSession();
 
 		session.beginTransaction();
 
@@ -99,13 +118,13 @@ public class ContactDAOImpl implements ContactDAO {
 		session.close();
 
 //		getHibernateTemplate().save(address);
-        return null;
-    }
+		return null;
+	}
 
 	@Override
 	@Transactional
-    public Object addPhoneNumber(final PhoneNumber phoneNumber) {
-        Session session = getSessionFactory().openSession();
+	public Object addPhoneNumber(final PhoneNumber phoneNumber) {
+		Session session = getSessionFactory().openSession();
 
 		session.beginTransaction();
 
@@ -137,23 +156,24 @@ public class ContactDAOImpl implements ContactDAO {
 
 	@Override
 	@Transactional
-    public Object loadContacts(String search) {
-        Session session = getSessionFactory().openSession();
-        session.beginTransaction();
-        Object contacts = session.createQuery(
-                "from Contact contact WHERE lastName like :name or firstName like :name or email like :name " +
-                        "ORDER BY lastName")
-                .setParameter("name", String.format("%s%%", search))
-                .list();
-        session.close();
+	public Object loadContacts(String search) {
+		Session session = getSessionFactory().openSession();
+		session.beginTransaction();
+		Object contacts = session.createQuery(
+				"from Contact contact WHERE lastName like :name or firstName like :name or email like :name " +
+						"ORDER BY lastName")
+				.setParameter("name", String.format("%s%%", search))
+				.setCacheable(true)
+				.list();
+		session.close();
 //		List contacts = getHibernateTemplate().find("from Contact contact WHERE lastName like ? or firstName like :name or email like ? ORDER BY lastName",
 //				String.format("%s%%", search), String.format("%s%%", search));
-        return contacts;
-    }
+		return contacts;
+	}
 
 	@Override
 	@Transactional
-    public Object loadContact(Long id) {
+	public Object loadContact(Long id) {
 //        Session session = HibernateUtil.getSessionFactory().openSession();
 //        session.beginTransaction();
 //        CriteriaBuilder builder = session.getCriteriaBuilder();
@@ -170,6 +190,8 @@ public class ContactDAOImpl implements ContactDAO {
 		Contact contact = session.get(Contact.class, id);
 		Hibernate.initialize(contact.getAddress());
 		Hibernate.initialize(contact.getPhones());
+
+		System.out.println(contact);
 
 //		Contact contact = getHibernateTemplate().get(Contact.class, id);
 //		Hibernate.initialize(contact.getAddress());
@@ -195,5 +217,5 @@ public class ContactDAOImpl implements ContactDAO {
 //				return null;
 //			}
 //		});
-    }
+	}
 }
