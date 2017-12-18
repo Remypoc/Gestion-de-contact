@@ -25,7 +25,7 @@
         <property name="lastName" type="string" column="LASTNAME"/>
         <property name="email" type="string" column="EMAIL"/>
 
-        <many-to-one name="address" column="REFADDRESS" not-null="false" cascade="all"/>
+        <many-to-one name="address" column="ADDRESS" cascade="all" unique="true"/>
 
         <set name="phones" cascade="persist all-delete-orphan" lazy="true">
             <cache usage="read-write"/>

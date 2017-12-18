@@ -5,6 +5,7 @@ import domain.Contact;
 import domain.PhoneNumber;
 import exception.DAOException;
 import mvc.bean.BeanManager;
+import mvc.bean.DataLoader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
@@ -69,6 +70,8 @@ public class CreateOrUpdateContactBean extends SpringBeanAutowiringSupport imple
 
 	public void updateContact() {
 		try {
+			System.out.println("CreateOrUpdateContactBean.updateContact");
+			System.out.println(contact.getVersion());
 			final Object lError = contactService.updateContact(contact);
 			beanManager.notifyUpdateContact(contact);
 		} catch (DAOException e) {
@@ -76,7 +79,7 @@ public class CreateOrUpdateContactBean extends SpringBeanAutowiringSupport imple
 			ResourceBundle text = ResourceBundle.getBundle("resources.Resources", context.getViewRoot().getLocale());
 			context.addMessage(null, new FacesMessage(text.getString(e.getMessageBundleName())));
 		}
-		reset();
+		this.reset();
 	}
 
 	public void cancelUpdateContact() {
@@ -101,18 +104,13 @@ public class CreateOrUpdateContactBean extends SpringBeanAutowiringSupport imple
 	}
 
 	public void loadContact(Contact contact) {
-		this.contact = contact;
+		this.contact = beanManager.getDataLoader().loadContact(contact.getId());
+		System.out.println("CreateOrUpdateContactBean.loadContact");
+		System.out.println(this.contact.getVersion() + " " + contact.getVersion());
+
 		if (this.contact.getAddress() == null)
 			this.contact.setAddress(new Address());
 		if (this.contact.getPhones() == null)
-			this.contact.setPhones(new LinkedHashSet<PhoneNumber>());
-//		this.contact = new Contact();
-//		this.contact.copy(contact);
-//		if (this.contact.getAddress() == null) {
-//			this.contact.setAddress(new Address());
-//		}
-//		if (this.contact.getPhones() == null) {
-//			this.contact.setPhones(new LinkedHashSet<>());
-//		}
+			this.contact.setPhones(new LinkedHashSet<>());
 	}
 }

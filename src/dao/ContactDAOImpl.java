@@ -62,12 +62,19 @@ public class ContactDAOImpl implements ContactDAO {
 	@Override
 	public Object updateContact(final Contact contact) throws DAOException {
 
-		if (contact.getAddress() != null && !contact.getAddress().isValid()) {
-			contact.setAddress(null);
-		}
-		System.out.println("ContactDAOImpl => updateContact, version = " + contact.getVersion());
-
 		try {
+
+			Address address = contact.getAddress();
+
+			System.out.println("ContactDAOImpl.updateContact");
+
+			System.out.println(address);
+
+			if (!address.isValid()) {
+				contact.setAddress(null);
+			}
+
+			System.out.println(address);
 
 			Session session = getSessionFactory().openSession();
 			session.beginTransaction();
@@ -75,7 +82,13 @@ public class ContactDAOImpl implements ContactDAO {
 			session.getTransaction().commit();
 			session.close();
 
-		} catch (OptimisticLockException e) {
+			System.out.println(address);
+
+			if (address.getId() != 0) {
+				deleteAddress(address.getId());
+			}
+
+		} catch (StaleObjectStateException e) {
 			e.printStackTrace();
 			throw new DAOException(
 					String.format("Failed to update contact %s %s: ", contact.getFirstName(), contact.getLastName()), "exception.edit.contact.lock.failed");
@@ -99,6 +112,21 @@ public class ContactDAOImpl implements ContactDAO {
 		session.close();
 //        Contact contact  = getHibernateTemplate().get(Contact.class, id);
 //        getHibernateTemplate().delete(contact);
+		return null;
+	}
+
+	public Object deleteAddress(long id) {
+
+		System.out.println("ContactDAOImpl.deleteAddress");
+		System.out.println(id);
+
+		Session session = getSessionFactory().openSession();
+		session.beginTransaction();
+		Address address = session.get(Address.class, id);
+		System.out.println(address);
+		session.delete(address);
+		session.getTransaction().commit();
+		session.close();
 		return null;
 	}
 
@@ -157,7 +185,6 @@ public class ContactDAOImpl implements ContactDAO {
 				"from Contact contact WHERE lastName like :name or firstName like :name or email like :name " +
 						"ORDER BY lastName")
 				.setParameter("name", String.format("%s%%", search))
-				.setCacheable(true)
 				.list();
 		session.close();
 //		List contacts = getHibernateTemplate().find("from Contact contact WHERE lastName like ? or firstName like :name or email like ? ORDER BY lastName",
@@ -184,7 +211,6 @@ public class ContactDAOImpl implements ContactDAO {
 		Hibernate.initialize(contact.getAddress());
 		Hibernate.initialize(contact.getPhones());
 		session.close();
-		System.out.println(contact);
 
 //		Contact contact = getHibernateTemplate().get(Contact.class, id);
 //		Hibernate.initialize(contact.getAddress());

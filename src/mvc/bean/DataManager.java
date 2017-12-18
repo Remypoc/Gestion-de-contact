@@ -77,7 +77,7 @@ public class DataManager implements Serializable {
     }
 
     public Set<Contact> getDisplayContacts() {
-        System.out.println("DataManger => getDisplayContacts");
+        System.out.println("DataManager => getDisplayContacts");
         if (contacts == null)
             return null;
         if (filterContactsMain == null)
@@ -109,7 +109,7 @@ public class DataManager implements Serializable {
     }
 
     public Set<Contact> getDisplayContactsOfGroup() {
-        System.out.println("DataManger => getDisplayContacts");
+        System.out.println("DataManager => getDisplayContactsOfGroups");
         // TODO if contacts are not loaded yet because of lazy load, load them
         if (group == null || group.getContacts() == null) {
             return null;
