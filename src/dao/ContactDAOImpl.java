@@ -5,6 +5,7 @@ import domain.Contact;
 import domain.PhoneNumber;
 import exception.DAOException;
 import org.hibernate.*;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
@@ -33,18 +34,6 @@ public class ContactDAOImpl implements ContactDAO {
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
-
-
-	//	private SessionFactory sessionFactory;
-//
-//	public ContactDAOImpl() {
-//		try {
-//			sessionFactory = HibernateUtil.getSessionFactory();
-//		} catch (NoClassDefFoundError e) {
-//			System.err.println(e.getMessage());
-//			sessionFactory = null;
-//		}
-//	}
 
 	@Override
 	public String addContact(Contact contact) {
@@ -145,40 +134,46 @@ public class ContactDAOImpl implements ContactDAO {
 
 			return new HashSet<>(contacts);
 		}
-//		List contacts = getHibernateTemplate().find("from Contact contact ORDER BY lastName");
+		// Exemple with spring hibernateTemplate
+		// List contacts = getHibernateTemplate().find("from Contact contact ORDER BY lastName");
 		return null;
 	}
 
 	@Override
+	/**
+	 * loadContacts with criteria example !
+	 */
 	public Object loadContacts(String search) {
 		Session session = getSessionFactory().openSession();
 		session.beginTransaction();
+		List contacts = session.createCriteria(Contact.class)
+				.add(Restrictions.or(Restrictions.like("lastName", String.format("%s%%", search)),
+						Restrictions.like("lastName", String.format("%s%%", search))))
+				.setCacheable(true).list();
+		session.close();
+
+		// Exemple with HQL
+		/*
 		Object contacts = session.createQuery(
 				"from Contact contact WHERE lastName like :name or firstName like :name or email like :name " +
 						"ORDER BY lastName")
 				.setParameter("name", String.format("%s%%", search))
 				.setCacheable(true)
 				.list();
-		session.close();
-//		List contacts = getHibernateTemplate().find("from Contact contact WHERE lastName like ? or firstName like :name or email like ? ORDER BY lastName",
-//				String.format("%s%%", search), String.format("%s%%", search));
+		*/
+		// With hibernateTemplate
+		/*
+		List contacts = getHibernateTemplate().find("from Contact contact WHERE lastName like ? or firstName like :name or email like ? ORDER BY lastName",
+				String.format("%s%%", search), String.format("%s%%", search));
+		*/
 		return contacts;
 	}
 
 	@Override
+	/**
+	 * loadContact with spring getHibernateTemplate example
+	 */
 	public Object loadContact(Long id) {
-//        Session session = HibernateUtil.getSessionFactory().openSession();
-//        session.beginTransaction();
-//        CriteriaBuilder builder = session.getCriteriaBuilder();
-//        CriteriaQuery<Contact> criteria = builder.createQuery(Contact.class);
-//        Root<Contact> root = criteria.from(Contact.class);
-//        criteria.select(root).where(builder.equal(root.get("id"), id));
-//        Contact contact = session.createQuery(criteria).getSingleResult();
-//
-//        // Used to force load object
-//        Hibernate.initialize(contact.getAddress());
-//        Hibernate.initialize(contact.getPhones());
-//        session.close();
 		Session session = getSessionFactory().openSession();
 		Contact contact = session.get(Contact.class, id);
 		Hibernate.initialize(contact.getAddress());
@@ -186,30 +181,26 @@ public class ContactDAOImpl implements ContactDAO {
 		session.close();
 		System.out.println(contact);
 
-//		Contact contact = getHibernateTemplate().get(Contact.class, id);
-//		Hibernate.initialize(contact.getAddress());
-//		Hibernate.initialize(contact.getPhones());
-//		getHibernateTemplate().initialize(contact.getAddress());
-//		getHibernateTemplate().initialize(contact.getPhones());
 		return contact;
 
-		//TODO update criteria
-//		return getHibernateTemplate().execute(new HibernateCallback<Object>() {
-//			@Override
-//			public Object doInHibernate(Session session) throws HibernateException {
-//				CriteriaBuilder builder = session.getCri();
-//        		CriteriaQuery<Contact> criteria = builder.createQuery(Contact.class);
-//        		Root<Contact> root = criteria.from(Contact.class);
-//        		criteria.select(root).where(builder.equal(root.get("id"), id));
-//        		Contact contact = session.createQuery(criteria).getSingleResult();
-//
-//        		// Used to force load object
-//        		Hibernate.initialize(contact.getAddress());
-//        		Hibernate.initialize(contact.getPhones());
-//				return contact;
-//				return null;
-//			}
-//		});
+		/* Exemple with Spring getHibernateTemplate
+		return getHibernateTemplate().execute(new HibernateCallback<Object>() {
+			@Override
+			public Object doInHibernate(Session session) throws HibernateException {
+				CriteriaBuilder builder = session.getCri();
+        		CriteriaQuery<Contact> criteria = builder.createQuery(Contact.class);
+        		Root<Contact> root = criteria.from(Contact.class);
+        		criteria.select(root).where(builder.equal(root.get("id"), id));
+        		Contact contact = session.createQuery(criteria).getSingleResult();
+
+        		// Used to force load object
+        		Hibernate.initialize(contact.getAddress());
+        		Hibernate.initialize(contact.getPhones());
+				return contact;
+				return null;
+			}
+		});
+		*/
 	}
 
 	@Override
