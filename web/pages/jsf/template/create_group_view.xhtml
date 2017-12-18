@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Created by IntelliJ IDEA.
+  User: valen
+  Date: 18/12/2017
+  Time: 13:21
+-->
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+<h:body>
+    <ui:composition>
+        <h:panelGroup layout="block"
+                      rendered="#{beanManager.viewManager.displayCreateGroupForm}">
+            <div class="card-panel">
+                <div class="container">
+                    <h5 class="center">#{msgs['label.add.contactgroup']}</h5>
+                    <h:form id="form-createGroup">
+                        <div class="row">
+                            <div class="input-field col s10">
+                                <h:inputText styleClass="validate"
+                                             id="createGroup-groupName"
+                                             value="#{beanManager.createGroupBean.groupName}"
+                                             required="true"
+                                             requiredMessage="#{msgs['label.input.required']}"
+                                             validatorMessage="#{msgs['input.groupname.validator.min.max']}">
+                                    <f:validateLength minimum="3" maximum="50"/>
+                                </h:inputText>
+                                <h:outputLabel
+                                        for="createGroup-groupName">#{msgs['label.groupname']}</h:outputLabel>
+                            </div>
+                            <div class="input-field col s2">
+                                <h:commandLink action="#{beanManager.createGroupBean.createGroup}"
+                                               styleClass="btn waves-effect waves-light light-blue darken-4">
+                                    <i class="material-icons center">group_add</i>
+                                </h:commandLink>
+                            </div>
+                        </div>
+                    </h:form>
+                    <h:message for="createGroup-groupName" styleClass="error"/>
+                    <h:message for="form-createGroup" styleClasse="form-error"/>
+                </div>
+            </div>
+        </h:panelGroup>
+    </ui:composition>
+</h:body>
+
+</html>

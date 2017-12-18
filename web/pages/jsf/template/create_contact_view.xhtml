@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Created by IntelliJ IDEA.
+  User: valen
+  Date: 18/12/2017
+  Time: 13:19
+-->
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+<h:body>
+    <ui:composition>
+        <h:panelGroup layout="block"
+                      rendered="#{beanManager.viewManager.displayCreateContactForm}">
+            <div class="card-panel">
+
+                <div class="row">
+                    <div class="col s2">
+                        <h:form>
+                            <h:commandLink action="#{beanManager.createOrUpdateContactBean.cancelCreateContact}"
+                                           styleClass="btn-floating waves-effect waves-light grey">
+                                #{msgs['label.cancel']}
+                            </h:commandLink>
+                        </h:form>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <h:form id="formCreate">
+
+                        <!-- Create Contact name and email -->
+                        <div class="row">
+                            <div class="row">
+                                <div class="input-field">
+                                    <i class="material-icons prefix">account_circle</i>
+                                    <h:inputText id="firstNameCreate"
+                                                 value="#{beanManager.createOrUpdateContactBean.contact.firstName}"
+                                                 required="#{param['formCreate:firstNameCreate'] != null}"
+                                                 requiredMessage="#{msgs['label.required']}"
+                                                 validator="noBlankSpaceValidator">
+                                    </h:inputText>
+                                    <h:outputLabel for="firstNameCreate"
+                                                   value="#{msgs['label.firstname']}"/>
+                                </div>
+                                <h:message for="firstNameCreate"
+                                           autoUpdate="true"/>
+                            </div>
+
+                            <div class="row">
+                                <div class="input-field">
+                                    <i class="material-icons prefix">account_circle</i>
+                                    <h:inputText id="lastNameCreate"
+                                                 value="#{beanManager.createOrUpdateContactBean.contact.lastName}"
+                                                 required="#{param['formCreate:lastNameCreate'] != null}"
+                                                 requiredMessage="#{msgs['label.required']}"
+                                                 validator="noBlankSpaceValidator">
+                                    </h:inputText>
+                                    <h:outputLabel for="lastNameCreate"
+                                                   value="#{msgs['label.lastname']}"/>
+                                </div>
+                                <h:message for="lastNameCreate"
+                                           autoUpdate="true"/>
+                            </div>
+
+                            <div class="row">
+                                <div class="input-field">
+                                    <i class="material-icons prefix">email</i>
+                                    <h:inputText id="emailCreate"
+                                                 value="#{beanManager.createOrUpdateContactBean.contact.email}"
+                                                 required="#{param['formCreate:emailCreate'] != null}"
+                                                 requiredMessage="#{msgs['label.required']}"
+                                                 validator="noBlankSpaceValidator"
+                                                 validatorMessage="#{msgs['form.create.contact.input.email.validator']}">
+                                        <f:validateRegex
+                                                pattern="([^.@]+)(\.[^.@]+)*@([^.@]+\.)+([^.@]+)"/>
+                                    </h:inputText>
+                                    <h:outputLabel for="emailCreate"
+                                                   value="#{msgs['label.email']}"/>
+                                </div>
+                                <h:message for="emailCreate" autoUpdate="true"/>
+                            </div>
+                        </div>
+
+                        <!-- Update address -->
+                        <div class="row">
+                            <div class="row">
+                                <div class="input-field">
+                                    <i class="material-icons prefix">location_city</i>
+                                    <h:inputText id="streetCreate"
+                                                 value="#{beanManager.createOrUpdateContactBean.contact.address.street}"
+                                                 required="#{not empty param['formCreate:streetCreate'] or not empty param['formCreate:cityCreate']
+                                                       or not empty param['formCreate:zipCreate']}"
+                                                 requiredMessage="#{msgs['label.required']}"
+                                                 validator="noBlankSpaceValidator">
+                                    </h:inputText>
+                                    <h:outputLabel for="streetCreate"
+                                                   value="#{msgs['label.street']}"/>
+                                </div>
+                                <h:message for="streetCreate" autoUpdate="true"/>
+                            </div>
+
+                            <div class="row">
+                                <div class="input-field">
+                                    <i class="material-icons prefix">location_city</i>
+                                    <h:inputText id="cityCreate"
+                                                 value="#{beanManager.createOrUpdateContactBean.contact.address.city}"
+                                                 required="#{not empty param['formCreate:cityCreate'] or not empty param['formCreate:streetCreate']
+                                                       or not empty param['formCreate:zipCreate']}"
+                                                 requiredMessage="#{msgs['label.required']}"
+                                                 validator="noBlankSpaceValidator">
+                                    </h:inputText>
+                                    <h:outputLabel for="cityCreate"
+                                                   value="#{msgs['label.city']}"/>
+                                </div>
+                                <h:message for="cityCreate" autoUpdate="true"/>
+                            </div>
+
+                            <div class="row">
+                                <div class="input-field">
+                                    <i class="material-icons prefix">location_city</i>
+                                    <h:inputText id="zipCreate"
+                                                 value="#{beanManager.createOrUpdateContactBean.contact.address.zip}"
+                                                 required="#{not empty param['formCreate:zipCreate'] or not empty param['formCreate:cityCreate']
+                                                       or not empty param['formCreate:streetCreate']}"
+                                                 requiredMessage="#{msgs['label.required']}"
+                                                 validator="noBlankSpaceValidator"
+                                                 validatorMessage="Invalid zip code ! Only numbers are allowed !"> <!-- TODO ADD internationalisation-->
+                                        <f:validateRegex pattern="[0-9]*"/>
+                                    </h:inputText>
+                                    <h:outputLabel for="zipCreate"
+                                                   value="#{msgs['label.zip']}"/>
+                                </div>
+                                <h:message for="zipCreate" autoUpdate="true"/>
+                            </div>
+
+                            <div class="row">
+                                <div class="input-field">
+                                    <i class="material-icons prefix">location_city</i>
+                                    <h:inputText id="countryCreate"
+                                                 value="#{beanManager.createOrUpdateContactBean.contact.address.country}"
+                                                 required="#{not empty param['formCreate:cityCreate'] or not empty param['formCreate:zipCreate']
+                                                                   or not empty param['formCreate:streetCreate']}"
+                                                 requiredMessage="#{msgs['label.required']}"
+                                                 validator="noBlankSpaceValidator">
+                                    </h:inputText>
+                                    <h:outputLabel for="countryCreate"
+                                                   value="#{msgs['label.country']}"/>
+                                </div>
+                                <h:message for="countryCreate" autoUpdate="true"/>
+                            </div>
+                        </div>
+
+                        <!-- Update phones numbers -->
+                        <div class="row">
+                            <h:dataTable id="phonesCreate"
+                                         value="#{beanManager.createOrUpdateContactBean.contact.phones}"
+                                         var="phone">
+                                <h:column class="col s7">
+                                    <div class="input-field">
+                                        <i class="material-icons prefix">phone</i>
+                                        <h:inputText id="phoneNumberCreate"
+                                                     value="#{phone.phoneNumber}"
+                                                     required="true"
+                                                     requiredMessage="#{msgs['label.required']}"
+                                                     validator="noBlankSpaceValidator"
+                                                     validatorMessage="#{msgs['form.phonenumber.validator']}">
+                                            <f:validateRegex pattern="[0-9]*"/>
+                                        </h:inputText>
+                                        <h:outputLabel for="phoneNumberCreate"
+                                                       value="#{msgs['label.phonenumber']}"/>
+                                    </div>
+                                </h:column>
+                                <h:column class="col s4">
+                                    <div class="input-field">
+                                        <h:inputText id="phoneKindCreate"
+                                                     value="#{phone.phoneKind}"
+                                                     required="true"
+                                                     requiredMessage="#{msgs['label.required']}"
+                                                     validator="noBlankSpaceValidator">
+                                        </h:inputText>
+                                        <h:outputLabel for="phoneKindCreate"
+                                                       value="#{msgs['label.label']}"/>
+                                    </div>
+                                </h:column>
+                                <h:column class="col s1">
+                                    <h:commandLink
+                                            action="#{beanManager.createOrUpdateContactBean.remove(phone)}"
+                                            styleClass="btn-floating waves-effect waves-light red keep-scroll-pos keep-scroll-pos"
+                                            immediate="true">
+                                        <i class="material-icons center">remove</i>
+                                    </h:commandLink>
+                                </h:column>
+                            </h:dataTable>
+                        </div>
+
+                        <div class="row">
+                            <div class="col s2 offset-s10">
+                                <h:commandLink id="addPhoneCreate"
+                                               action="#{beanManager.createOrUpdateContactBean.addPhone}"
+                                               styleClass="btn waves-effect waves-light light-blue darken-4 keep-scroll-pos keep-scroll-pos">
+                                    <i class="material-icons center">add</i> <i
+                                        class="material-icons center">phone</i>
+                                </h:commandLink>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col s2 offset-s10">
+                                <h:commandLink action="#{beanManager.createOrUpdateContactBean.createContact}"
+                                               styleClass="btn-large waves-effect waves-light green accent-3 keep-scroll-pos">
+                                    <i class="material-icons center">send</i>
+                                </h:commandLink>
+                            </div>
+                        </div>
+
+                        <h:commandButton id="saveCreate" styleClass="keep-scroll-pos" value="save"
+                                         action="#{beanManager.createOrUpdateContactBean.createContact}"
+                                         style="display: None;"/>
+                    </h:form>
+                </div>
+            </div>
+        </h:panelGroup>
+    </ui:composition>
+</h:body>
+
+</html>

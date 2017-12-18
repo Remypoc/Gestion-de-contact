@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Created by IntelliJ IDEA.
+  User: valen
+  Date: 18/12/2017
+  Time: 13:18
+-->
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+<h:body>
+    <ui:composition>
+        <h:panelGroup layout="block"
+                      rendered="#{beanManager.viewManager.displayUpdateContactForm}">
+            #{beanManager.createOrUpdateContactBean.loadContact(beanManager.dataManager.contact)}
+            <div class="card-panel">
+
+                <div class="row">
+                    <div class="col s2">
+                        <h:form>
+                            <h:commandLink action="#{beanManager.createOrUpdateContactBean.cancelUpdateContact}"
+                                           styleClass="btn-floating waves-effect waves-light grey">
+                                <i class="material-icons">chevron_left</i>
+                            </h:commandLink>
+                        </h:form>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <h:form id="formEdit">
+
+                        <!-- Update Contact name and email -->
+                        <div class="row">
+                            <div class="row">
+                                <div class="input-field">
+                                    <i class="material-icons prefix">account_circle</i>
+                                    <h:inputText id="firstNameEdit"
+                                                 value="#{beanManager.createOrUpdateContactBean.contact.firstName}"
+                                                 required="#{param['formEdit:firstNameEdit'] != null}"
+                                                 requiredMessage="#{msgs['label.required']}"
+                                                 validator="noBlankSpaceValidator">
+                                    </h:inputText>
+                                    <h:outputLabel for="firstNameEdit"
+                                                   value="#{msgs['label.firstname']}"/>
+                                </div>
+                                <h:message for="firstNameEdit" autoUpdate="true"/>
+                            </div>
+
+                            <div class="row">
+                                <div class="input-field">
+                                    <i class="material-icons prefix">account_circle</i>
+                                    <h:inputText id="lastNameEdit"
+                                                 value="#{beanManager.createOrUpdateContactBean.contact.lastName}"
+                                                 required="#{param['formEdit:lastNameEdit'] != null}"
+                                                 requiredMessage="#{msgs['label.required']}"
+                                                 validator="noBlankSpaceValidator">
+                                    </h:inputText>
+                                    <h:outputLabel for="lastNameEdit"
+                                                   value="#{msgs['label.lastname']}"/>
+                                </div>
+                                <h:message for="lastNameEdit" autoUpdate="true"/>
+                            </div>
+
+                            <div class="row">
+                                <div class="input-field">
+                                    <i class="material-icons prefix">email</i>
+                                    <h:inputText id="emailEdit"
+                                                 value="#{beanManager.createOrUpdateContactBean.contact.email}"
+                                                 required="#{param['formEdit:emailEdit'] != null}"
+                                                 requiredMessage="#{msgs['label.required']}"
+                                                 validator="noBlankSpaceValidator"
+                                                 validatorMessage="#{msgs['form.create.contact.input.email.validator']}">
+                                        <f:validateRegex
+                                                pattern="([^.@]+)(\.[^.@]+)*@([^.@]+\.)+([^.@]+)"/>
+                                    </h:inputText>
+                                    <h:outputLabel for="emailEdit"
+                                                   value="#{msgs['label.email']}"/>
+                                </div>
+                                <h:message for="emailEdit" autoUpdate="true"/>
+                            </div>
+                        </div>
+
+                        <!-- Update address -->
+                        <div class="row">
+                            <div class="row">
+                                <div class="input-field">
+                                    <i class="material-icons prefix">location_city</i>
+                                    <h:inputText id="streetEdit"
+                                                 value="#{beanManager.createOrUpdateContactBean.contact.address.street}"
+                                                 required="#{not empty param['formEdit:cityEdit'] or not empty param['formEdit:zipEdit']
+                                                       or not empty param['formEdit:country']}"
+                                                 requiredMessage="#{msgs['label.required']}"
+                                                 validator="noBlankSpaceValidator">
+                                    </h:inputText>
+                                    <h:outputLabel for="streetEdit"
+                                                   value="#{msgs['label.street']}"/>
+                                </div>
+                                <h:message for="streetEdit" autoUpdate="true"/>
+                            </div>
+
+                            <div class="row">
+                                <div class="input-field">
+                                    <i class="material-icons prefix">location_city</i>
+                                    <h:inputText id="cityEdit"
+                                                 value="#{beanManager.createOrUpdateContactBean.contact.address.city}"
+                                                 required="#{not empty param['formEdit:streetEdit'] or not empty param['formEdit:zipEdit']
+                                                       or not empty param['formEdit:countryEdit']}"
+                                                 requiredMessage="#{msgs['label.required']}"
+                                                 validator="noBlankSpaceValidator">
+                                    </h:inputText>
+                                    <h:outputLabel for="cityEdit"
+                                                   value="#{msgs['label.city']}"/>
+                                </div>
+                                <h:message for="cityEdit" autoUpdate="true"/>
+                            </div>
+
+                            <div class="row">
+                                <div class="input-field">
+                                    <i class="material-icons prefix">location_city</i>
+                                    <h:inputText id="zipEdit"
+                                                 value="#{beanManager.createOrUpdateContactBean.contact.address.zip}"
+                                                 required="#{not empty param['formEdit:cityEdit'] or not empty param['formEdit:streetEdit']
+                                                       or not empty param['formEdit:countryEdit']}"
+                                                 requiredMessage="#{msgs['label.required']}"
+                                                 validator="noBlankSpaceValidator"
+                                                 validatorMessage="Invalid zip code ! Only numbers are allowed !">
+                                        <f:validateRegex pattern="[0-9]*"/>
+                                    </h:inputText>
+                                    <h:outputLabel for="zipEdit"
+                                                   value="#{msgs['label.zip']}"/>
+                                </div>
+                                <h:message for="zipEdit" autoUpdate="true"/>
+                            </div>
+
+                            <div class="row">
+                                <div class="input-field">
+                                    <i class="material-icons prefix">location_city</i>
+                                    <h:inputText id="countryEdit"
+                                                 value="#{beanManager.createOrUpdateContactBean.contact.address.country}"
+                                                 required="#{not empty param['formEdit:cityEdit'] or not empty param['formEdit:zipEdit']
+                                                                   or not empty param['formEdit:streetEdit']}"
+                                                 requiredMessage="#{msgs['label.required']}"
+                                                 validator="noBlankSpaceValidator">
+                                    </h:inputText>
+                                    <h:outputLabel for="countryEdit"
+                                                   value="#{msgs['label.country']}"/>
+                                </div>
+                                <h:message for="countryEdit" autoUpdate="true"/>
+                            </div>
+                        </div>
+
+                        <!-- Update phones numbers -->
+                        <div class="row">
+                            <h:dataTable id="phonesEdit"
+                                         value="#{beanManager.createOrUpdateContactBean.contact.phones}"
+                                         var="phone">
+                                <h:column class="col s7">
+                                    <div class="input-field">
+                                        <i class="material-icons prefix">phone</i>
+                                        <h:inputText id="phoneNumberEdit"
+                                                     value="#{phone.phoneNumber}"
+                                                     required="true"
+                                                     requiredMessage="#{msgs['label.required']}"
+                                                     validator="noBlankSpaceValidator"
+                                                     validatorMessage="#{msgs['form.phonenumber.validator']}">
+                                            <f:validateRegex pattern="[0-9]*"/>
+                                        </h:inputText>
+                                        <h:outputLabel for="phoneNumberEdit"
+                                                       value="#{msgs['label.phonenumber']}"/>
+                                    </div>
+                                </h:column>
+                                <h:column class="col s4">
+                                    <div class="input-field">
+                                        <h:inputText id="phoneKindEdit"
+                                                     value="#{phone.phoneKind}"
+                                                     required="true"
+                                                     requiredMessage="#{msgs['label.required']}"
+                                                     validator="noBlankSpaceValidator">
+                                        </h:inputText>
+                                        <h:outputLabel for="phoneKindEdit"
+                                                       value="#{msgs['label.label']}"/>
+                                    </div>
+                                </h:column>
+                                <h:column class="col s1">
+                                    <h:commandLink
+                                            action="#{beanManager.createOrUpdateContactBean.remove(phone)}"
+                                            styleClass="btn-floating waves-effect waves-light red keep-scroll-pos"
+                                            immediate="true">
+                                        <i class="material-icons center">remove</i>
+                                    </h:commandLink>
+                                </h:column>
+                            </h:dataTable>
+                        </div>
+
+                        <div class="row">
+                            <div class="col s2 offset-s10">
+                                <h:commandLink id="addPhoneEdit"
+                                               action="#{beanManager.createOrUpdateContactBean.addPhone}"
+                                               styleClass="btn waves-effect waves-light light-blue darken-4 keep-scroll-pos">
+                                    <i class="material-icons center">add</i> <i
+                                        class="material-icons center">phone</i>
+                                </h:commandLink>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col s2 offset-s10">
+                                <h:commandLink action="#{beanManager.createOrUpdateContactBean.updateContact}"
+                                               styleClass="btn-large waves-effect waves-light green accent-3 keep-scroll-pos">
+                                    <i class="material-icons center">send</i>
+                                </h:commandLink>
+                            </div>
+                        </div>
+
+                        <h:commandButton id="saveEdit" value="save"
+                                         action="#{beanManager.createOrUpdateContactBean.updateContact}"
+                                         style="display: None;"/>
+                    </h:form>
+                </div>
+            </div>
+        </h:panelGroup>
+    </ui:composition>
+</h:body>
+
+</html>

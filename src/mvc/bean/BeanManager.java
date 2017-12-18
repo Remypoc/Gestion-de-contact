@@ -60,7 +60,7 @@ public class BeanManager extends SpringBeanAutowiringSupport implements Serializ
                 getAutowireCapableBeanFactory().
                 autowireBean(this);
     }
-    
+
     public String getError() {
         return error;
     }
