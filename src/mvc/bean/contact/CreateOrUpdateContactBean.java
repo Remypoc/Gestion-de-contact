@@ -70,8 +70,6 @@ public class CreateOrUpdateContactBean extends SpringBeanAutowiringSupport imple
 
 	public void updateContact() {
 		try {
-			System.out.println("CreateOrUpdateContactBean.updateContact");
-			System.out.println(contact.getVersion());
 			final Object lError = contactService.updateContact(contact);
 			beanManager.notifyUpdateContact(contact);
 		} catch (DAOException e) {
