@@ -53,7 +53,7 @@ public class CreateGroupBean extends SpringBeanAutowiringSupport implements Seri
     }
 
     public void createGroup() {
-        System.out.println(String.format("CreateGroupBean => createGroup: %s", groupName));
+//        System.out.println(String.format("CreateGroupBean => createGroup: %s", groupName));
         ContactGroup group = new ContactGroup(Word.capitalize(groupName));
         try {
             groupService.addGroup(group);

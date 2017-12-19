@@ -48,7 +48,7 @@ public class DeleteGroupBean extends SpringBeanAutowiringSupport implements Seri
 	}
 
 	public void deleteGroup(long groupId) {
-		System.out.println(String.format("DeleteGroupBean => deleteGroup %d", groupId));
+//		System.out.println(String.format("DeleteGroupBean => deleteGroup %d", groupId));
 		try {
 			groupService.deleteGroup(groupId);
 			this.beanManager.notifyDeletedGroup(groupId);
@@ -59,7 +59,7 @@ public class DeleteGroupBean extends SpringBeanAutowiringSupport implements Seri
 	}
 
 	public void deleteContactFromGroup(long contactId, long groupId) {
-		System.out.println(String.format("DeleteGroupBean => deleteContactFromGroup %d - %d", contactId, groupId));
+//		System.out.println(String.format("DeleteGroupBean => deleteContactFromGroup %d - %d", contactId, groupId));
 		try {
 			groupService.deleteContactFromGroup(contactId, groupId);
 			this.beanManager.notifyDeleteContactFromGroup(contactId);

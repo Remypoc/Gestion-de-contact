@@ -51,10 +51,8 @@ public class GroupDAOImpl implements GroupDAO {
         try {
             session.beginTransaction();
             ContactGroup groupToUpdate = session.get(ContactGroup.class, group.getGroupId());
-            System.out.println("updateGroup, before => " + groupToUpdate.getGroupName());
             groupToUpdate.setGroupName(group.getGroupName());
             session.update(groupToUpdate);
-            System.out.println("updateGroup, after => " + groupToUpdate.getGroupName());
             session.getTransaction().commit();
             session.close();
         } catch(HibernateException e) {

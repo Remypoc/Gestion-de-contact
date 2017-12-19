@@ -60,7 +60,7 @@ public class UpdateGroupBean extends SpringBeanAutowiringSupport implements Seri
 	}
 
 	public void updateGroup() {
-		System.out.println(String.format("UpdateGroupBean => updateGroup: %d %s", groupId, groupName));
+//		System.out.println(String.format("UpdateGroupBean => updateGroup: %d %s", groupId, groupName));
 		ContactGroup group = new ContactGroup(groupId, Word.capitalize(groupName));
 		try {
 			groupService.updateGroup(group);

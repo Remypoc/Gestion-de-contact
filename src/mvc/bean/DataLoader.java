@@ -26,7 +26,7 @@ public class DataLoader implements Serializable {
 	}
 
 	public Set<ContactGroup> loadGroups() {
-		System.out.println("DataLoader => load Groups");
+//		System.out.println("DataLoader => load Groups");
 		Set<ContactGroup> groups;
 		try {
 			groups = groupService.getAllGroups();
@@ -40,7 +40,7 @@ public class DataLoader implements Serializable {
 	}
 
 	public Set<Contact> loadContacts() {
-		System.out.println("DataLoader => load Contacts");
+//		System.out.println("DataLoader => load Contacts");
 		try {
 			Set<Contact> contacts = contactService.loadContacts();
 			return contacts;
@@ -53,7 +53,7 @@ public class DataLoader implements Serializable {
 	}
 
 	public ContactGroup loadGroup(long groupId) {
-		System.out.println("DataLoader => load Group");
+//		System.out.println("DataLoader => load Group");
 		ContactGroup group = null;
 		try {
 			group = groupService.getGroupWithContacts(groupId);
@@ -67,7 +67,7 @@ public class DataLoader implements Serializable {
 	}
 
 	public Contact loadContact(long contactId) {
-		System.out.println("DataLoader => load Contact");
+//		System.out.println("DataLoader => load Contact");
 		try {
 			return (Contact) contactService.loadContact(contactId);
 		} catch (DAOException e) {

@@ -81,7 +81,7 @@ public class DataManager implements Serializable {
     }
 
     public List<Contact> getDisplayContacts() {
-        System.out.println("DataManger => getDisplayContacts");
+//        System.out.println("DataManger => getDisplayContacts");
         if (contacts == null)
             return null;
         if (filterContactsMain == null)
@@ -102,7 +102,7 @@ public class DataManager implements Serializable {
     }
 
     public List<ContactGroup> getDisplayGroups() {
-        System.out.println("DataManager => getDisplayGroups");
+//        System.out.println("DataManager => getDisplayGroups");
         if (groups == null) {
             return null;
         }
@@ -121,7 +121,7 @@ public class DataManager implements Serializable {
     }
 
     public List<Contact> getDisplayContactsOfGroup() {
-        System.out.println("DataManger => getDisplayContacts");
+//        System.out.println("DataManger => getDisplayContacts");
         if (group == null || group.getContacts() == null) {
             return null;
         }
@@ -138,7 +138,7 @@ public class DataManager implements Serializable {
     }
 
     public List<Contact> getContactsNotInGroup() {
-        System.out.println("DataManager => getContactsNotInGroup");
+//        System.out.println("DataManager => getContactsNotInGroup");
         if (group == null || contacts == null) {
             return null;
         }

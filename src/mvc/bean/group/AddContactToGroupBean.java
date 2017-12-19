@@ -63,7 +63,7 @@ public class AddContactToGroupBean extends SpringBeanAutowiringSupport implement
 	}
 
 	public void addContactToGroup() {
-		System.out.println(String.format("AddContactToGroupBean => addContactToGroup: %d, %d", contactId, groupId));
+//		System.out.println(String.format("AddContactToGroupBean => addContactToGroup: %d, %d", contactId, groupId));
 		if (validate()) {
 			try {
 				groupService.addContactToGroup(contactId, groupId);

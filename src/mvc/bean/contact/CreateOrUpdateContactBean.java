@@ -53,7 +53,7 @@ public class CreateOrUpdateContactBean extends SpringBeanAutowiringSupport imple
 	}
 
 	public void createContact() {
-		System.out.println("createOrUpdateContactBean => createContact");
+//		System.out.println("createOrUpdateContactBean => createContact");
 		if (contact == null)
 			System.out.println("Contact is null");
 		if (contact.getAddress() != null && !contact.getAddress().isValid()) {
@@ -98,7 +98,6 @@ public class CreateOrUpdateContactBean extends SpringBeanAutowiringSupport imple
 		if (contact.getPhones().size() < 5) {
 			contact.addPhoneNumber(new PhoneNumber(this.contact));
 		}
-		System.out.println(String.format("Number of phones: %d", contact.getPhones().size()));
 	}
 
 	public void remove(PhoneNumber phoneNumber) {

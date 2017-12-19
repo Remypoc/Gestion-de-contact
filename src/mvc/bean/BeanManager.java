@@ -57,7 +57,7 @@ public class BeanManager extends SpringBeanAutowiringSupport implements Serializ
 		WebApplicationContextUtils.getRequiredWebApplicationContext(servletContext).
 				getAutowireCapableBeanFactory().
 				autowireBean(this);
-		System.out.println("BeanManager.init");
+//		System.out.println("BeanManager.init");
 	}
 
 	public Set<String> getErrors() {
@@ -312,10 +312,6 @@ public class BeanManager extends SpringBeanAutowiringSupport implements Serializ
 		} else {
 			this.dataManager.setContact(contact);
 			this.viewManager.displayContact();
-			if (this.viewManager.isDisplayContact())
-				System.out.println("DEBUG => displayContact TRUE");
-			else
-				System.out.println("DEBUG => dipslayContact FALSE");
 		}
 	}
 
@@ -327,8 +323,8 @@ public class BeanManager extends SpringBeanAutowiringSupport implements Serializ
 	}
 
 	public void notifyCreateContact(Contact contact) {
+//		System.out.println("BeanManager => notifyCreateContact");
 		clearErrors();
-		System.out.println("BeanManager => notifyCreateContact");
 		if (contact != null) {
 			dataManager.getContacts().add(contact);
 			dataManager.setContact(contact);
@@ -337,8 +333,8 @@ public class BeanManager extends SpringBeanAutowiringSupport implements Serializ
 	}
 
 	public void notifyDeleteContact(Contact contact) {
+//		System.out.println("BeanManager => notifyDeleteContact");
 		clearErrors();
-		System.out.println("BeanManager => notifyDeleteContact");
 		if (contact != null) {
 			if (dataManager.getContact() != null && dataManager.getContact().equals(contact)) {
 				dataManager.setContact(null);
