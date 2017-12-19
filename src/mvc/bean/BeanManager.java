@@ -309,15 +309,8 @@ public class BeanManager extends SpringBeanAutowiringSupport implements Serializ
 	}
 
 	public void notifyUpdateContact(Contact contact) {
-		System.out.println("BeanManager => notifyUpdateContact");
 		this.refreshContacts();
 		this.refreshContact();
-//		if (contact != null) {
-//			dataManager.setContact(contact);
-//			Optional<Contact> c1 = dataManager.getContacts().stream()
-//					.filter(c -> c.getId() == contact.getId()).findFirst();
-//			c1.ifPresent(c -> c.copy(contact));
-//		}
 		this.viewManager.hideUpdateContactForm();
 	}
 

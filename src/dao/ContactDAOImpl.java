@@ -219,7 +219,10 @@ public class ContactDAOImpl implements ContactDAO {
 			try {
 				session.refresh(contact);
 			} catch (HibernateException e) {
-				contact = session.get(Contact.class, contact.getId());
+				System.out.println(e.getMessage());
+				contact.setAddress(null);
+				contact.getPhones().clear();
+				session.refresh(contact);
 			}
 			Hibernate.initialize(contact.getAddress());
 			Hibernate.initialize(contact.getPhones());
