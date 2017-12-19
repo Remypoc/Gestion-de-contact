@@ -82,8 +82,10 @@ public class ViewManager implements Serializable {
     public void displayGroup() {
         this.displayGroup = true;
         this.displayContact = false;
+        this.displayCreateContactForm = false;
         this.displayCreateGroupForm = false;
         this.displayUpdateGroupForm = false;
+        displayUpdateContactForm = false;
     }
 
     public boolean isDisplayCreateGroupForm() {

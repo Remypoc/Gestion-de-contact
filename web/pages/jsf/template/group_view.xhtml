@@ -19,6 +19,14 @@
     <ui:composition>
         <h:panelGroup layout="block" rendered="#{viewManager.displayGroup}">
             <div class="card-panel">
+
+                <h:panelGroup styleClass="color: #3b5998;">
+                    <div style="color: #3b5998;">
+                        <i class="small material-icons">group</i>
+                        <i class="small material-icons">book</i>
+                    </div>
+                </h:panelGroup>
+
                 <div class="container">
                     <div class="row">
                         <div class="col s10 center">
@@ -71,7 +79,13 @@
                                 rendered="#{viewManager.displayGroup}"
                                 styleClass="responsive-table highlight bordered">
                             <h:column>
-                                #{contact.firstName} <b>#{contact.lastName}</b>
+                                <h:form>
+                                    <h:commandLink
+                                            action="#{beanManager.loadContact(contact.id)}"
+                                            style="color: black;">
+                                        #{contact.firstName} <b>#{contact.lastName}</b>
+                                    </h:commandLink>
+                                </h:form>
                             </h:column>
 
                             <!-- Delete Contact in group -->
