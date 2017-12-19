@@ -36,15 +36,20 @@ public class ContactDAOImpl implements ContactDAO {
 	}
 
 	@Override
-	public String addContact(Contact contact) {
-		Session session = getSessionFactory().openSession();
+	public String addContact(Contact contact) throws DAOException {
+		try {
+			Session session = getSessionFactory().openSession();
 
-		session.beginTransaction();
-		session.persist(contact);
+			session.beginTransaction();
+			session.persist(contact);
 
-		session.getTransaction().commit();
-		session.close();
-//		getHibernateTemplate().persist(contact);
+			session.getTransaction().commit();
+			session.close();
+		} catch (HibernateException e) {
+			e.printStackTrace();
+			throw new DAOException(
+					String.format("Failed to create contact %s %s: ", contact.getFirstName(), contact.getLastName()), "exception.add.contact.failed");
+		}
 		return null;
 	}
 
@@ -82,53 +87,44 @@ public class ContactDAOImpl implements ContactDAO {
 	}
 
 	@Override
-	public Object deleteContact(final Long id) {
-		Session session = getSessionFactory().openSession();
-		session.beginTransaction();
+	public Object deleteContact(final Long id) throws DAOException {
+		try {
 
-		Contact contact = session.get(Contact.class, id);
+			Session session = getSessionFactory().openSession();
+			session.beginTransaction();
 
-		session.delete(contact);
-		session.getTransaction().commit();
-		session.close();
-//        Contact contact  = getHibernateTemplate().get(Contact.class, id);
-//        getHibernateTemplate().delete(contact);
+			Contact contact = session.get(Contact.class, id);
+
+			session.delete(contact);
+			session.getTransaction().commit();
+			session.close();
+		} catch (HibernateException e) {
+			e.printStackTrace();
+			throw new DAOException(
+					String.format("Failed to delete contact %d : ", id), "exception.delete.contact.failed");
+		}
 		return null;
 	}
 
-	public Object deleteAddress(long id) {
+	public Object deleteAddress(long id) throws DAOException {
+		try {
 
-		System.out.println("ContactDAOImpl.deleteAddress");
-		System.out.println(id);
-
-		Session session = getSessionFactory().openSession();
-		session.beginTransaction();
-		Address address = session.get(Address.class, id);
-		System.out.println(address);
-		session.delete(address);
-		session.getTransaction().commit();
-		session.close();
-		return null;
-	}
-
-	@Override
-	public Object addAddress(final Address address) {
-		Session session = getSessionFactory().openSession();
-
-		session.beginTransaction();
-
-		long id = (long) session.save(address);
-		address.setId(id);
-
-		session.getTransaction().commit();
-		session.close();
-
-//		getHibernateTemplate().save(address);
+			Session session = getSessionFactory().openSession();
+			session.beginTransaction();
+			Address address = session.get(Address.class, id);
+			session.delete(address);
+			session.getTransaction().commit();
+			session.close();
+		} catch (HibernateException e) {
+			e.printStackTrace();
+			throw new DAOException(
+					String.format("Failed to delete contact %d : ", id), "exception.delete.address.failed");
+		}
 		return null;
 	}
 
 	@Override
-	public Object addPhoneNumber(final PhoneNumber phoneNumber) {
+	public Object addPhoneNumber(final PhoneNumber phoneNumber) throws DAOException {
 		Session session = getSessionFactory().openSession();
 
 		session.beginTransaction();
@@ -138,13 +134,11 @@ public class ContactDAOImpl implements ContactDAO {
 
 		session.getTransaction().commit();
 		session.close();
-//		getHibernateTemplate().save(phoneNumber);
-
 		return null;
 	}
 
 	@Override
-	public Set<Contact> loadContacts() {
+	public Set<Contact> loadContacts() throws DAOException {
 		if (sessionFactory != null) {
 			Session session = sessionFactory.openSession();
 			session.beginTransaction();
@@ -163,7 +157,7 @@ public class ContactDAOImpl implements ContactDAO {
 	/**
 	 * loadContacts with criteria example !
 	 */
-	public Object loadContacts(String search) {
+	public Object loadContacts(String search) throws DAOException {
 		Session session = getSessionFactory().openSession();
 		session.beginTransaction();
 		List contacts = session.createCriteria(Contact.class)
@@ -189,10 +183,7 @@ public class ContactDAOImpl implements ContactDAO {
 	}
 
 	@Override
-	/**
-	 * loadContact with spring getHibernateTemplate example
-	 */
-	public Object loadContact(Long id) {
+	public Object loadContact(Long id) throws DAOException {
 		Session session = getSessionFactory().openSession();
 		Contact contact = session.get(Contact.class, id);
 		Hibernate.initialize(contact.getAddress());

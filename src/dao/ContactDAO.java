@@ -1,21 +1,18 @@
 package dao;
 
-import domain.Address;
 import domain.Contact;
 import domain.PhoneNumber;
 import exception.DAOException;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Set;
 
 public interface ContactDAO {
-    String addContact(Contact contact);
+    String addContact(Contact contact) throws DAOException;
     Object updateContact(final Contact contact) throws DAOException;
-    Object deleteContact(final Long id);
-    Object addAddress(final Address address);
-    Object addPhoneNumber(final PhoneNumber phoneNumber);
-    Set<Contact> loadContacts();
-    Object loadContacts(String search);
-    Object loadContact(Long id);
+    Object deleteContact(final Long id) throws DAOException;
+    Object addPhoneNumber(final PhoneNumber phoneNumber) throws DAOException;
+    Set<Contact> loadContacts() throws DAOException;
+    Object loadContacts(String search) throws DAOException;
+    Object loadContact(Long id) throws DAOException;
     void refreshContact(Contact contact);
 }
