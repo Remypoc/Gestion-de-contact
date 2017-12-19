@@ -25,7 +25,7 @@
     
     <welcome-file-list>
         <!--<welcome-file>pages/jsf/home.xhtml</welcome-file>-->
-        <welcome-file>pages/main.xhtml</welcome-file>
+        <welcome-file>pages/jsf/home.xhtml</welcome-file>
     </welcome-file-list>
 
     <resource-ref>
