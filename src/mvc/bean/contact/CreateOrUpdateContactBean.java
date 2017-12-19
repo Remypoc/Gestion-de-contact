@@ -79,7 +79,7 @@ public class CreateOrUpdateContactBean extends SpringBeanAutowiringSupport imple
 			ResourceBundle text = ResourceBundle.getBundle("resources.Resources", context.getViewRoot().getLocale());
 			context.addMessage(null, new FacesMessage(text.getString(e.getMessageBundleName())));
 		}
-		this.reset();
+		reset();
 	}
 
 	public void cancelUpdateContact() {
@@ -104,9 +104,9 @@ public class CreateOrUpdateContactBean extends SpringBeanAutowiringSupport imple
 	}
 
 	public void loadContact(Contact contact) {
-		this.contact = beanManager.getDataLoader().loadContact(contact.getId());
+		this.contact = contact;
 		System.out.println("CreateOrUpdateContactBean.loadContact");
-		System.out.println(this.contact.getVersion() + " " + contact.getVersion());
+		System.out.println(this.contact + " " + contact);
 
 		if (this.contact.getAddress() == null)
 			this.contact.setAddress(new Address());
