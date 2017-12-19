@@ -21,6 +21,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -50,7 +51,7 @@ public class BeanManager extends SpringBeanAutowiringSupport implements Serializ
 	@ManagedProperty(value = "#{createOrUpdateContact}")
 	private CreateOrUpdateContactBean createOrUpdateContactBean;
 
-	private String error = null;
+	private Set<String> errors = new HashSet<>();
 
 	@PostConstruct
 	private void init() {
@@ -59,14 +60,15 @@ public class BeanManager extends SpringBeanAutowiringSupport implements Serializ
 		WebApplicationContextUtils.getRequiredWebApplicationContext(servletContext).
 				getAutowireCapableBeanFactory().
 				autowireBean(this);
+		System.out.println("BeanManager.init");
 	}
 
-	public String getError() {
-		return error;
+	public Set<String> getErrors() {
+		return errors;
 	}
 
-	public void setError(String error) {
-		this.error = error;
+	public void setErrors(Set<String> errors) {
+		this.errors = errors;
 	}
 
 	public SearchGroupBean getSearchGroupBean() {
@@ -173,17 +175,20 @@ public class BeanManager extends SpringBeanAutowiringSupport implements Serializ
 	}
 
 	public void notifyDeletedGroup(long groupId) {
+		clearErrors();
 		this.dataManager.getGroups().removeIf(group -> group.getGroupId() == groupId);
 		if (this.dataManager.getGroup() != null && this.dataManager.getGroup().getGroupId() == groupId)
 			this.viewManager.hideGroup();
 	}
 
 	public void notifyCreateGroup(ContactGroup group) {
+		clearErrors();
 		this.dataManager.addGroup(group);
 		this.viewManager.hideCreateGroupForm();
 	}
 
 	public void notifyUpdateGroup(ContactGroup group) {
+		clearErrors();
 		dataManager.getGroup().setGroupName(group.getGroupName());
 		Optional<ContactGroup> c1 = dataManager.getGroups().stream()
 				.filter(c -> c.getGroupId() == group.getGroupId()).findFirst();
@@ -192,24 +197,29 @@ public class BeanManager extends SpringBeanAutowiringSupport implements Serializ
 	}
 
 	public void notifySearchGroupByName(String filterGroups) {
+		clearErrors();
 		this.dataManager.setFilterGroups(filterGroups);
 	}
 
 	public void notifyDeleteContactFromGroup(long contactId) {
+		clearErrors();
 		this.dataManager.getGroup().removeContact(contactId);
 	}
 
 	public void notifyAddContactToGroup(Contact contact) {
+		clearErrors();
 		this.dataManager.addContactToGroup(contact);
 	}
 
 	public void loadGroups() {
+		clearErrors();
 		Set<ContactGroup> groups = this.dataLoader.loadGroups();
+
 		if (groups == null) {
 			FacesContext context = FacesContext.getCurrentInstance();
 			ResourceBundle text = ResourceBundle.getBundle("resources.Resources", context.getViewRoot().getLocale());
-			context.addMessage(null, new FacesMessage(text.getString("exception.load.groups.failed")));
-			// TODO form-creategroup ??
+//			context.addMessage(null, new FacesMessage(text.getString("exception.load.groups.failed")));
+			addError(text.getString("exception.load.groups.failed"));
 		} else {
 			this.searchGroupBean.resetGroupSearch();
 			this.dataManager.setFilterGroups(null);
@@ -218,12 +228,14 @@ public class BeanManager extends SpringBeanAutowiringSupport implements Serializ
 	}
 
 	public void loadContacts() {
+		clearErrors();
 		Set<Contact> contacts = this.dataLoader.loadContacts();
+
 		if (contacts == null) {
 			FacesContext context = FacesContext.getCurrentInstance();
 			ResourceBundle text = ResourceBundle.getBundle("resources.Resources", context.getViewRoot().getLocale());
-			context.addMessage(null, new FacesMessage(text.getString("exception.load.contacts.failed")));
-			// TODO form-creategroup ??
+//			context.addMessage(null, new FacesMessage(text.getString("exception.load.contacts.failed")));
+			addError(text.getString("exception.load.contacts.failed"));
 		} else {
 			this.searchGroupBean.resetContactSearch();
 			this.dataManager.setFilterContactsMain(null);
@@ -232,12 +244,13 @@ public class BeanManager extends SpringBeanAutowiringSupport implements Serializ
 	}
 
 	public void loadGroup(long groupId) {
+		clearErrors();
 		ContactGroup group = this.dataLoader.loadGroup(groupId);
 		if (group == null) {
 			FacesContext context = FacesContext.getCurrentInstance();
 			ResourceBundle text = ResourceBundle.getBundle("resources.Resources", context.getViewRoot().getLocale());
-			context.addMessage(null, new FacesMessage(text.getString("exception.load.group.failed")));
-			// TODO form-creategroup ??
+//			context.addMessage(null, new FacesMessage(text.getString("exception.load.group.failed")));
+			addError(text.getString("exception.load.group.failed"));
 		} else {
 			this.dataManager.setFilterContacts(null);
 			this.searchGroupBean.resetContactSearch();
@@ -258,21 +271,20 @@ public class BeanManager extends SpringBeanAutowiringSupport implements Serializ
 		this.dataManager.setFilterContacts(null);
 	}
 
-	public void notifyError(String error) {
-		this.error = error;
-	}
-
 	void refreshContacts() {
+		clearErrors();
 		Set<Contact> contacts = this.dataLoader.loadContacts();
 		this.dataManager.setContacts(contacts);
 	}
 
 	void refreshGroups() {
+		clearErrors();
 		Set<ContactGroup> groups = this.dataLoader.loadGroups();
 		this.dataManager.setGroups(groups);
 	}
 
 	void refreshContact() {
+		clearErrors();
 		this.dataLoader.refreshContact(this.dataManager.getContact());
 	}
 
@@ -285,19 +297,21 @@ public class BeanManager extends SpringBeanAutowiringSupport implements Serializ
 	}
 
 	public void notifyResetFilterContactsMain() {
+
 		this.dataManager.setFilterContactsMain(null);
 	}
 
 	public void loadContact(long contactId) {
+		clearErrors();
 		Contact contact = this.dataLoader.loadContact(contactId);
 		if (contact == null) {
 			FacesContext context = FacesContext.getCurrentInstance();
 			ResourceBundle text = ResourceBundle.getBundle("resources.Resources",
 					context.getViewRoot().getLocale());
-			context.addMessage("form-createGroup", new FacesMessage(
+			/*context.addMessage(null, new FacesMessage(
 					text.getString("exception.load.contact.failed"),
-					"BeanManager, loadContact failed: contact is null"));
-			// TODO form-creategroup ??
+					"BeanManager, loadContact failed: contact is null"));*/
+			addError(text.getString("exception.load.contact.failed"));
 		} else {
 			this.dataManager.setContact(contact);
 			this.viewManager.displayContact();
@@ -309,12 +323,14 @@ public class BeanManager extends SpringBeanAutowiringSupport implements Serializ
 	}
 
 	public void notifyUpdateContact(Contact contact) {
+		clearErrors();
 		this.refreshContacts();
 		this.refreshContact();
 		this.viewManager.hideUpdateContactForm();
 	}
 
 	public void notifyCreateContact(Contact contact) {
+		clearErrors();
 		System.out.println("BeanManager => notifyCreateContact");
 		if (contact != null) {
 			dataManager.getContacts().add(contact);
@@ -324,6 +340,7 @@ public class BeanManager extends SpringBeanAutowiringSupport implements Serializ
 	}
 
 	public void notifyDeleteContact(Contact contact) {
+		clearErrors();
 		System.out.println("BeanManager => notifyDeleteContact");
 		if (contact != null) {
 			if (dataManager.getContact() != null && dataManager.getContact().equals(contact)) {
@@ -335,6 +352,15 @@ public class BeanManager extends SpringBeanAutowiringSupport implements Serializ
 	}
 
 	public void notifyDisplayCreateContactForm() {
+		clearErrors();
 		this.createOrUpdateContactBean.reset();
+	}
+
+	public void  addError(String error) {
+		errors.add(error);
+	}
+
+	public void clearErrors() {
+		errors.clear();
 	}
 }

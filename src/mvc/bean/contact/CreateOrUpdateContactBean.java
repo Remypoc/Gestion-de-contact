@@ -63,8 +63,15 @@ public class CreateOrUpdateContactBean extends SpringBeanAutowiringSupport imple
 		if (contact.getAddress() != null && !contact.getAddress().isValid()) {
 			contact.setAddress(null);
 		}
-		final Object lError = contactService.addContact(contact);
-		beanManager.notifyCreateContact(contact);
+		try {
+			final Object lError = contactService.addContact(contact);
+			beanManager.notifyCreateContact(contact);
+		} catch (DAOException e) {
+			FacesContext context = FacesContext.getCurrentInstance();
+			ResourceBundle text = ResourceBundle.getBundle("resources.Resources", context.getViewRoot().getLocale());
+//			context.addMessage(null, new FacesMessage(text.getString(e.getMessageBundleName())));
+			beanManager.addError(text.getString(e.getMessageBundleName()));
+		}
 		reset();
 	}
 
@@ -75,7 +82,8 @@ public class CreateOrUpdateContactBean extends SpringBeanAutowiringSupport imple
 		} catch (DAOException e) {
 			FacesContext context = FacesContext.getCurrentInstance();
 			ResourceBundle text = ResourceBundle.getBundle("resources.Resources", context.getViewRoot().getLocale());
-			context.addMessage(null, new FacesMessage(text.getString(e.getMessageBundleName())));
+//			context.addMessage(null, new FacesMessage(text.getString(e.getMessageBundleName())));
+			beanManager.addError(text.getString(e.getMessageBundleName()));
 		}
 		reset();
 	}
@@ -103,9 +111,6 @@ public class CreateOrUpdateContactBean extends SpringBeanAutowiringSupport imple
 
 	public void loadContact(Contact contact) {
 		this.contact = contact;
-		System.out.println("CreateOrUpdateContactBean.loadContact");
-		System.out.println(this.contact + " " + contact);
-
 		if (this.contact.getAddress() == null)
 			this.contact.setAddress(new Address());
 		if (this.contact.getPhones() == null)

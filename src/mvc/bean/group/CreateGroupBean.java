@@ -65,7 +65,8 @@ public class CreateGroupBean extends SpringBeanAutowiringSupport implements Seri
         } catch (DAOException e) {
             FacesContext context = FacesContext.getCurrentInstance();
             ResourceBundle text = ResourceBundle.getBundle("resources.Resources", context.getViewRoot().getLocale());
-            context.addMessage("form-createGroup", new FacesMessage(text.getString(e.getMessageBundleName())));
+//            context.addMessage(null, new FacesMessage(text.getString(e.getMessageBundleName())));
+            beanManager.addError(text.getString(e.getMessageBundleName()));
         }
     }
 }

@@ -39,10 +39,8 @@ public class ContactDAOImpl implements ContactDAO {
 	public String addContact(Contact contact) throws DAOException {
 		try {
 			Session session = getSessionFactory().openSession();
-
 			session.beginTransaction();
 			session.persist(contact);
-
 			session.getTransaction().commit();
 			session.close();
 		} catch (HibernateException e) {
@@ -92,9 +90,7 @@ public class ContactDAOImpl implements ContactDAO {
 
 			Session session = getSessionFactory().openSession();
 			session.beginTransaction();
-
 			Contact contact = session.get(Contact.class, id);
-
 			session.delete(contact);
 			session.getTransaction().commit();
 			session.close();
@@ -125,28 +121,36 @@ public class ContactDAOImpl implements ContactDAO {
 
 	@Override
 	public Object addPhoneNumber(final PhoneNumber phoneNumber) throws DAOException {
-		Session session = getSessionFactory().openSession();
 
-		session.beginTransaction();
-
-		long id = (long) session.save(phoneNumber);
-		phoneNumber.setId(id);
-
-		session.getTransaction().commit();
-		session.close();
+		try {
+			Session session = getSessionFactory().openSession();
+			session.beginTransaction();
+			long id = (long) session.save(phoneNumber);
+			phoneNumber.setId(id);
+			session.getTransaction().commit();
+			session.close();
+		} catch (HibernateException e) {
+			e.printStackTrace();
+			throw new DAOException(
+					String.format("Failed to delete contact %s : ", phoneNumber.getPhoneNumber()), "exception.add.phone.failed");
+		}
 		return null;
 	}
 
 	@Override
 	public Set<Contact> loadContacts() throws DAOException {
 		if (sessionFactory != null) {
-			Session session = sessionFactory.openSession();
-			session.beginTransaction();
-			List contacts = session.createQuery(
-					"from Contact contact ORDER BY lastName").list();
-			session.close();
-
-			return new HashSet<>(contacts);
+			try {
+				Session session = sessionFactory.openSession();
+				session.beginTransaction();
+				List contacts = session.createQuery(
+						"from Contact contact ORDER BY lastName").list();
+				session.close();
+				return new HashSet<>(contacts);
+			} catch (HibernateException e) {
+				e.printStackTrace();
+				throw new DAOException("Failed to load contacts : ", "exception.load.contacts.failed");
+			}
 		}
 		// Exemple with spring hibernateTemplate
 		// List contacts = getHibernateTemplate().find("from Contact contact ORDER BY lastName");
@@ -158,14 +162,20 @@ public class ContactDAOImpl implements ContactDAO {
 	 * loadContacts with criteria example !
 	 */
 	public Object loadContacts(String search) throws DAOException {
-		Session session = getSessionFactory().openSession();
-		session.beginTransaction();
-		List contacts = session.createCriteria(Contact.class)
-				.add(Restrictions.or(Restrictions.like("lastName", String.format("%s%%", search)),
-						Restrictions.like("lastName", String.format("%s%%", search))))
-				.setCacheable(true).list();
-		session.close();
 
+		try {
+			Session session = getSessionFactory().openSession();
+			session.beginTransaction();
+			List contacts = session.createCriteria(Contact.class)
+					.add(Restrictions.or(Restrictions.like("lastName", String.format("%s%%", search)),
+							Restrictions.like("lastName", String.format("%s%%", search))))
+					.setCacheable(true).list();
+			session.close();
+			return contacts;
+		} catch (HibernateException e) {
+			e.printStackTrace();
+			throw new DAOException("Failed to load contacts : ", "exception.load.contacts.failed");
+		}
 		// Exemple with HQL
 		/*
 		Object contacts = session.createQuery(
@@ -179,18 +189,21 @@ public class ContactDAOImpl implements ContactDAO {
 		List contacts = getHibernateTemplate().find("from Contact contact WHERE lastName like ? or firstName like :name or email like ? ORDER BY lastName",
 				String.format("%s%%", search), String.format("%s%%", search));
 		*/
-		return contacts;
 	}
 
 	@Override
 	public Object loadContact(Long id) throws DAOException {
-		Session session = getSessionFactory().openSession();
-		Contact contact = session.get(Contact.class, id);
-		Hibernate.initialize(contact.getAddress());
-		Hibernate.initialize(contact.getPhones());
-		session.close();
-
-		return contact;
+		try {
+			Session session = getSessionFactory().openSession();
+			Contact contact = session.get(Contact.class, id);
+			Hibernate.initialize(contact.getAddress());
+			Hibernate.initialize(contact.getPhones());
+			session.close();
+			return contact;
+		} catch (HibernateException e) {
+			e.printStackTrace();
+			throw new DAOException("Failed to load contacts : ", "exception.load.contact.failed");
+		}
 
 		/* Exemple with Spring getHibernateTemplate
 		return getHibernateTemplate().execute(new HibernateCallback<Object>() {

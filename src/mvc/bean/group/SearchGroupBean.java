@@ -7,60 +7,62 @@ import javax.faces.bean.ViewScoped;
 import java.io.Serializable;
 
 
-@ManagedBean(name="searchGroup")
+@ManagedBean(name = "searchGroup")
 @ViewScoped
-public class SearchGroupBean implements Serializable{
-    private BeanManager beanManager;
+public class SearchGroupBean implements Serializable {
+	private BeanManager beanManager;
 
-    private String filterGroups;
-    private String filterContacts;
+	private String filterGroups;
+	private String filterContacts;
 
-    public SearchGroupBean() {
-        this.filterGroups = null;
-        this.filterContacts = null;
-    }
+	public SearchGroupBean() {
+		this.filterGroups = null;
+		this.filterContacts = null;
+	}
 
-    public void setBeanManager(BeanManager beanManager) {
-        this.beanManager = beanManager;
-    }
+	public void setBeanManager(BeanManager beanManager) {
+		this.beanManager = beanManager;
+	}
 
-    public String getFilterGroups() {
-        return filterGroups;
-    }
+	public String getFilterGroups() {
+		return filterGroups;
+	}
 
-    public void setFilterGroups(String filterGroup) {
-        this.filterGroups = filterGroup;
-    }
+	public void setFilterGroups(String filterGroup) {
+		this.filterGroups = filterGroup;
+	}
 
-    public String getFilterContacts() {
-        return filterContacts;
-    }
+	public String getFilterContacts() {
+		return filterContacts;
+	}
 
-    public void setFilterContacts(String filterContact) {
-        this.filterContacts = filterContact;
-    }
+	public void setFilterContacts(String filterContact) {
+		this.filterContacts = filterContact;
+	}
 
-    public void resetGroupSearch() {
-        this.filterGroups = null;
-        this.beanManager.notifyResetFilterGroups();
-    }
+	public void resetGroupSearch() {
+		this.filterGroups = null;
+		this.beanManager.notifyResetFilterGroups();
+	}
 
-    public void resetContactSearch() {
-        this.filterContacts = null;
-        this.beanManager.notifyResetFilterContacts();
-    }
+	public void resetContactSearch() {
+		this.filterContacts = null;
+		this.beanManager.notifyResetFilterContacts();
+	}
 
-    public void searchGroupByName() {
-        if (filterGroups != null)
-            this.beanManager.notifySearchGroupByName(filterGroups.toLowerCase());
-        else
-            this.beanManager.notifySearchGroupByName(filterGroups);
-    }
+	public void searchGroupByName() {
+		beanManager.clearErrors();
+		if (filterGroups != null)
+			this.beanManager.notifySearchGroupByName(filterGroups.toLowerCase());
+		else
+			this.beanManager.notifySearchGroupByName(filterGroups);
+	}
 
-    public void searchContactByName() {
-        if (filterContacts != null)
-            this.beanManager.notifySearchContactByName(filterContacts.toLowerCase());
-        else
-            this.beanManager.notifySearchContactByName(filterContacts);
-    }
+	public void searchContactByName() {
+		beanManager.clearErrors();
+		if (filterContacts != null)
+			this.beanManager.notifySearchContactByName(filterContacts.toLowerCase());
+		else
+			this.beanManager.notifySearchContactByName(filterContacts);
+	}
 }

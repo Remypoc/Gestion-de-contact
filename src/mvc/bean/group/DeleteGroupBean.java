@@ -14,59 +14,60 @@ import java.io.Serializable;
 import java.util.ResourceBundle;
 
 
-@ManagedBean(name="deleteGroup")
+@ManagedBean(name = "deleteGroup")
 @ViewScoped
 public class DeleteGroupBean extends SpringBeanAutowiringSupport implements Serializable {
-    private BeanManager beanManager;
-    @Autowired
-    private GroupService groupService;
+	private BeanManager beanManager;
+	@Autowired
+	private GroupService groupService;
 
-    private long groupId;
+	private long groupId;
 
-    public DeleteGroupBean() {
-        this.groupId = 0;
-    }
+	public DeleteGroupBean() {
+		this.groupId = 0;
+	}
 
-    public void setBeanManager(BeanManager beanManager) {
-        this.beanManager = beanManager;
-    }
+	public void setBeanManager(BeanManager beanManager) {
+		this.beanManager = beanManager;
+	}
 
-    public void setGroupService(GroupService groupService) {
-        this.groupService = groupService;
-    }
+	public void setGroupService(GroupService groupService) {
+		this.groupService = groupService;
+	}
 
-    public long getGroupId() {
-        return groupId;
-    }
+	public long getGroupId() {
+		return groupId;
+	}
 
-    public void setGroupId(long groupId) {
-        this.groupId = groupId;
-    }
+	public void setGroupId(long groupId) {
+		this.groupId = groupId;
+	}
 
-    public void reset() {
-        this.groupId = 0;
-    }
+	public void reset() {
+		this.groupId = 0;
+	}
 
-    public void deleteGroup(long groupId) {
-        System.out.println(String.format("DeleteGroupBean => deleteGroup %d", groupId));
-        try {
-            groupService.deleteGroup(groupId);
-            this.beanManager.notifyDeletedGroup(groupId);
-        } catch (DAOException e) {
-            FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, new FacesMessage(e.getMessage()));
-        }
-    }
+	public void deleteGroup(long groupId) {
+		System.out.println(String.format("DeleteGroupBean => deleteGroup %d", groupId));
+		try {
+			groupService.deleteGroup(groupId);
+			this.beanManager.notifyDeletedGroup(groupId);
+		} catch (DAOException e) {
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(null, new FacesMessage(e.getMessage()));
+		}
+	}
 
-    public void deleteContactFromGroup(long contactId, long groupId) {
-        System.out.println(String.format("DeleteGroupBean => deleteContactFromGroup %d - %d", contactId, groupId));
-        try {
-            groupService.deleteContactFromGroup(contactId, groupId);
-            this.beanManager.notifyDeleteContactFromGroup(contactId);
-        } catch (DAOException e) {
-            FacesContext context = FacesContext.getCurrentInstance();
-            ResourceBundle text = ResourceBundle.getBundle("resources.Resources", context.getViewRoot().getLocale());
-            context.addMessage(null, new FacesMessage(text.getString(e.getMessageBundleName())));
-        }
-    }
+	public void deleteContactFromGroup(long contactId, long groupId) {
+		System.out.println(String.format("DeleteGroupBean => deleteContactFromGroup %d - %d", contactId, groupId));
+		try {
+			groupService.deleteContactFromGroup(contactId, groupId);
+			this.beanManager.notifyDeleteContactFromGroup(contactId);
+		} catch (DAOException e) {
+			FacesContext context = FacesContext.getCurrentInstance();
+			ResourceBundle text = ResourceBundle.getBundle("resources.Resources", context.getViewRoot().getLocale());
+//            context.addMessage(null, new FacesMessage(text.getString(e.getMessageBundleName())));
+			beanManager.addError(text.getString(e.getMessageBundleName()));
+		}
+	}
 }
