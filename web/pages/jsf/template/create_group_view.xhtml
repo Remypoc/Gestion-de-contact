@@ -43,9 +43,14 @@
                                 </h:commandLink>
                             </div>
                         </div>
+
+                        <h:commandButton styleClass="keep-scroll-pos" value="save"
+                                         action="#{createGroup.createGroup}"
+                                         style="display: None;"/>
                     </h:form>
                     <h:message for="createGroup-groupName" styleClass="error"/>
                     <h:message for="form-createGroup" styleClasse="form-error error"/>
+
                 </div>
             </div>
         </h:panelGroup>

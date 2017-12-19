@@ -135,7 +135,7 @@
                                                        or not empty param['formCreate:streetCreate']}"
                                                  requiredMessage="#{msgs['label.required']}"
                                                  validator="noBlankSpaceValidator"
-                                                 validatorMessage="Invalid zip code ! Only numbers are allowed !"> <!-- TODO ADD internationalisation-->
+                                                 validatorMessage="#{msgs['form.zipcode.validator']}">
                                         <f:validateRegex pattern="[0-9]*"/>
                                     </h:inputText>
                                     <h:outputLabel for="zipCreate"

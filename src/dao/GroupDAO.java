@@ -1,6 +1,5 @@
 package dao;
 
-import domain.Contact;
 import domain.ContactGroup;
 import exception.DAOException;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +17,5 @@ public interface GroupDAO {
     void deleteContactFromGroup(long contactId, long groupId) throws DAOException;
     Set<ContactGroup> searchGroups(String groupName) throws DAOException;
     ContactGroup searchContactInGroup(final long groupId, final String name) throws DAOException;
-    Set<Contact> getContactsNotInSet(Set<Contact> contacts) throws DAOException;
     void addContactToGroup(long contactId, long groupId) throws DAOException;
 }

@@ -6,7 +6,6 @@
 
     <display-name>gestion_contact</display-name>
 
-    <!-- Add Support for Spring -->
     <listener>
         <listener-class>
             org.springframework.web.context.ContextLoaderListener
@@ -24,7 +23,6 @@
     </context-param>
     
     <welcome-file-list>
-        <!--<welcome-file>pages/jsf/home.xhtml</welcome-file>-->
         <welcome-file>pages/jsf/home.xhtml</welcome-file>
     </welcome-file-list>
 

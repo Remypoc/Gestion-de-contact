@@ -1,7 +1,6 @@
 package mvc.bean.contact;
 
 import mvc.bean.BeanManager;
-import org.springframework.stereotype.Component;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;

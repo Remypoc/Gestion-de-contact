@@ -2,26 +2,15 @@ package dao;
 
 import domain.Address;
 import domain.Contact;
+import domain.ContactGroup;
 import domain.PhoneNumber;
 import exception.DAOException;
 import org.hibernate.*;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate5.HibernateTemplate;
-import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import javax.persistence.EntityManager;
-import javax.persistence.OptimisticLockException;
-import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 
 public class ContactDAOImpl implements ContactDAO {
 
@@ -53,11 +42,8 @@ public class ContactDAOImpl implements ContactDAO {
 
 	@Override
 	public Object updateContact(final Contact contact) throws DAOException {
-
 		try {
-
 			Address address = contact.getAddress();
-
 			if (!address.isValid()) {
 				contact.setAddress(null);
 			}
@@ -71,7 +57,6 @@ public class ContactDAOImpl implements ContactDAO {
 			if (!address.isValid() && address.getId() != 0) {
 				deleteAddress(address.getId());
 			}
-
 		} catch (StaleObjectStateException e) {
 			e.printStackTrace();
 			throw new DAOException(
@@ -91,6 +76,10 @@ public class ContactDAOImpl implements ContactDAO {
 			Session session = getSessionFactory().openSession();
 			session.beginTransaction();
 			Contact contact = session.get(Contact.class, id);
+			for (ContactGroup group : contact.getBooks()) {
+				group.removeContact(id);
+				session.update(group);
+			}
 			session.delete(contact);
 			session.getTransaction().commit();
 			session.close();

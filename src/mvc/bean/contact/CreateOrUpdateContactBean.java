@@ -5,18 +5,14 @@ import domain.Contact;
 import domain.PhoneNumber;
 import exception.DAOException;
 import mvc.bean.BeanManager;
-import mvc.bean.DataLoader;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import service.ContactService;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.ResourceBundle;
 

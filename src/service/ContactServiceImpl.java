@@ -1,12 +1,9 @@
 package service;
 
 import dao.ContactDAO;
-import dao.ContactDAOImpl;
 import domain.*;
 import exception.DAOException;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 public class ContactServiceImpl implements ContactService {

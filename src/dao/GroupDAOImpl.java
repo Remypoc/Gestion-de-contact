@@ -7,8 +7,6 @@ import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
@@ -26,43 +24,17 @@ public class GroupDAOImpl implements GroupDAO {
         this.sessionFactory = sessionFactory;
     }
 
-
-//    private SessionFactory sessionFactory;
-//
-//    public GroupDAOImpl() {
-//        try {
-//            sessionFactory = HibernateUtil.getSessionFactory();
-//        } catch (NoClassDefFoundError e) {
-//            System.err.println(e.getMessage());
-//            sessionFactory = null;
-//        }
-//    }
-//
-//    private Session openSession() throws DAOException{
-//        if (sessionFactory == null) {
-//            System.err.println("getSessionFactory failed");
-//            throw new DAOException("Connexion to database failed", "exception.connexion.database.failed");
-//        }
-//        try {
-//            return sessionFactory.openSession();
-//        } catch (HibernateException e) {
-//            System.err.println(e.getMessage());
-//            throw new DAOException("Connexion to database failed.", "exception.connexion.database.failed");
-//        }
-//    }
-
     @Override
     public void addGroup(ContactGroup group) throws DAOException {
+        // getHibernateTemplate().save(group);
         Session session = getSessionFactory().openSession();
         try {
-//            getHibernateTemplate().save(group);
             session.beginTransaction();
             session.save(group);
             session.getTransaction().commit();
             session.close();
         } catch(HibernateException e) {
             System.err.println(e.getMessage());
-//            session.close();
             throw new DAOException(
                     String.format("Failed to save contact %s", group.getGroupName()), "exception.add.group.failed");
         }
@@ -70,22 +42,20 @@ public class GroupDAOImpl implements GroupDAO {
 
     @Override
     public void updateGroup(ContactGroup group) throws DAOException {
+        // getHibernateTemplate().bulkUpdate("update ContactGroup set groupName = ? where groupId = ?",
+        //         group.getGroupName(), group.getGroupId());
+        //     .setParameter("groupName", group.getGroupName())
+        //     .setParameter("groupId", group.getGroupId())
+        //     .executeUpdate();
         Session session = getSessionFactory().openSession();
         try {
             session.beginTransaction();
             ContactGroup groupToUpdate = session.get(ContactGroup.class, group.getGroupId());
             groupToUpdate.setGroupName(group.getGroupName());
             session.update(groupToUpdate);
-//            getHibernateTemplate().bulkUpdate("update ContactGroup set groupName = ? where groupId = ?",
-//                    group.getGroupName(), group.getGroupId());
-//                .setParameter("groupName", group.getGroupName())
-//                .setParameter("groupId", group.getGroupId())
-//                .executeUpdate();
-//            session.getTransaction().commit();
-//            session.close();
+            session.close();
         } catch(HibernateException e) {
             System.err.println(e.getMessage());
-            session.close();
             throw new DAOException(
                     String.format("Failed to update group %s", group.getGroupName()), "exception.update.group.failed");
         }
@@ -93,64 +63,56 @@ public class GroupDAOImpl implements GroupDAO {
 
     @Override
     public ContactGroup getGroup(long id) throws DAOException {
+        // ContactGroup group = getHibernateTemplate().get(ContactGroup.class, id);
         Session session = getSessionFactory().openSession();
         try {
             session.beginTransaction();
             ContactGroup group = session.get(ContactGroup.class, id);
-//            ContactGroup group = getHibernateTemplate().get(ContactGroup.class, id);
             session.close();
             return group;
         } catch(HibernateException e) {
             System.err.println(e.getMessage());
-            session.close();
             throw new DAOException(String.format("Failed to load group"), "exception.get.group.failed");
         }
     }
 
     @Override
     public ContactGroup getGroupWithContacts(long id) throws DAOException {
+        // ContactGroup group = getHibernateTemplate().get(ContactGroup.class, id);
+        // getHibernateTemplate().initialize(group.getContacts());
         Session session = getSessionFactory().openSession();
         try {
             session.beginTransaction();
             ContactGroup group = session.get(ContactGroup.class, id);
             Hibernate.initialize(group.getContacts());
-//            ContactGroup group = session
-//                    .createQuery("SELECT contactGroup FROM ContactGroup contactGroup " +
-//                            "LEFT JOIN FETCH contactGroup.contacts contact " +
-//                            "WHERE contactGroup.groupId=:id", ContactGroup.class)
-//                    .setParameter("id", id)
-//                    .getSingleResult();
             session.close();
-//            ContactGroup group = getHibernateTemplate().get(ContactGroup.class, id);
-//            getHibernateTemplate().initialize(group.getContacts());
             return group;
         } catch(HibernateException e) {
             System.err.println(e.getMessage());
-            session.close();
             throw new DAOException(String.format("Failed to load group"), "exception.get.group.failed");
         }
     }
 
     @Override
     public Set<ContactGroup> getAllGroups() throws DAOException {
+        // List groups = getHibernateTemplate().find("from ContactGroup contactGroup ORDER BY groupName");
         Session session = getSessionFactory().openSession();
         try {
             session.beginTransaction();
             List groups =
                     session.createQuery(
                             "from ContactGroup contactGroup ORDER BY groupName").list();
-//            session.close();
-//            List groups = getHibernateTemplate().find("from ContactGroup contactGroup ORDER BY groupName");
+            session.close();
             return new HashSet<>(groups);
         } catch(HibernateException e) {
             System.err.println(e.getMessage());
-            session.close();
             throw new DAOException(String.format("Failed to load groups"), "exception.get.groups.failed");
         }
     }
 
     @Override
     public void deleteGroup(long id) throws DAOException {
+        // getHibernateTemplate().delete(new ContactGroup(id));
         Session session = getSessionFactory().openSession();
         try {
             session.beginTransaction();
@@ -158,16 +120,17 @@ public class GroupDAOImpl implements GroupDAO {
             session.delete(group);
             session.getTransaction().commit();
             session.close();
-//            getHibernateTemplate().delete(new ContactGroup(id));
         } catch(HibernateException e) {
             System.err.println(e.getMessage());
-            session.close();
             throw new DAOException(String.format("Failed to delete group"), "exception.delete.group.failed");
         }
     }
 
     @Override
     public void deleteContactFromGroup(long contactId, long groupId) throws DAOException {
+        // ContactGroup group = getHibernateTemplate().get(ContactGroup.class, groupId);
+        // group.getContacts().remove(new Contact(contactId));
+        // getHibernateTemplate().update(group);
         Session session = getSessionFactory().openSession();
         try {
             session.beginTransaction();
@@ -178,9 +141,6 @@ public class GroupDAOImpl implements GroupDAO {
 
             session.getTransaction().commit();
             session.close();
-//            ContactGroup group = getHibernateTemplate().get(ContactGroup.class, groupId);
-//            group.getContacts().remove(new Contact(contactId));
-//            getHibernateTemplate().update(group);
 
         } catch(HibernateException e) {
             System.err.println(e.getMessage());
@@ -191,6 +151,9 @@ public class GroupDAOImpl implements GroupDAO {
 
     @Override
     public Set<ContactGroup> searchGroups(String groupName) throws DAOException{
+//        List groups = getHibernateTemplate()
+//                .find("from ContactGroup contactGroup " +
+//                                "WHERE groupName like lower(?) ORDER BY groupName", String.format("%s%%", groupName));
         Session session = getSessionFactory().openSession();
         try {
             session.beginTransaction();
@@ -200,10 +163,7 @@ public class GroupDAOImpl implements GroupDAO {
                                             "WHERE groupName like lower(:name) ORDER BY groupName")
                             .setParameter("name", String.format("%s%%", groupName))
                             .list();
-//            session.close();
-//            List groups = getHibernateTemplate()
-//                            .find("from ContactGroup contactGroup " +
-//                                            "WHERE groupName like lower(?) ORDER BY groupName", String.format("%s%%", groupName));
+            session.close();
             return new HashSet<>(groups);
         } catch(HibernateException e) {
             System.err.println(e.getMessage());
@@ -214,78 +174,51 @@ public class GroupDAOImpl implements GroupDAO {
 
     @Override
     public ContactGroup searchContactInGroup(final long groupId, final String name) throws DAOException{
-////        Session session = openSession();
-//        try {
-////            session.beginTransaction();
-////            ContactGroup group = session.load(ContactGroup.class, groupId);
-//            ContactGroup group = getHibernateTemplate().load(ContactGroup.class, groupId);
-//            String[] token = name.split(" ");
-//            List contacts;
-//            if (token.length < 2) {
-////                contacts = session
-////                        .createFilter(group.getContacts(),
-////                                "WHERE firstName LIKE :name OR lastName LIKE :name")
-////                        .setParameter("name", String.format("%s%%", name))
-////                        .list();
-//                contacts = getHibernateTemplate().fin
-//            } else {
-//                contacts = session
-//                        .createFilter(group.getContacts(),
-//                                "WHERE firstName LIKE :token1 AND lastName LIKE :token2 " +
-//                                        "OR firstName LIKE :token2 AND lastName LIKE :token1")
-//                        .setParameter("token1", String.format("%s%%", token[0]))
-//                        .setParameter("token2", String.format("%s%%", token[1]))
-//                        .list();
-//            }
-//            session.close();
-//            group.setContacts(new HashSet<Contact>(contacts));
-//            return group;
-//        } catch(HibernateException e) {
-//            System.err.println(e.getMessage());
-//            session.close();
-//            throw new DAOException(String.format("Failed to search for contact: %s in group", name), "exception.search.contact.in.group.failed");
-//        }
-        return null;
-    }
-
-    @Override
-    public Set<Contact> getContactsNotInSet(Set<Contact> contacts) throws DAOException{
-////        Session session = openSession();
-//        try {
-////            session.beginTransaction();
-//            List<Long> contactsId = contacts.stream().map(Contact::getId)
-//                    .collect(Collectors.toList());
-//            contactsId.add(0L); // Add dummy value to not crash hibernate (LOL)
-//
-//            List<Contact> contactsNotInSet = session
-//                    .createQuery("select contact from Contact contact " +
-//                            "where contact.id not in :contacts", Contact.class)
-//                    .setParameter("contacts", contactsId)
-//                    .list();
-//            session.close();
-//            return new HashSet<>(contactsNotInSet);
-//        } catch(HibernateException e) {
-//            System.err.println(e.getMessage());
-//            session.close();
-//            throw new DAOException(String.format("Failed to load contacts not in current group"), "exception.load.contacts.in.group.failed");
-//        }
-        return null;
+        Session session = sessionFactory.openSession();
+        try {
+            session.beginTransaction();
+            String[] token = name.split(" ");
+            List contacts;
+            ContactGroup group = session.get(ContactGroup.class, groupId);
+            if (token.length < 2) {
+                contacts = session
+                        .createFilter(group.getContacts(),
+                                "WHERE firstName LIKE :name OR lastName LIKE :name")
+                        .setParameter("name", String.format("%s%%", name))
+                        .list();
+            } else {
+                contacts = session
+                        .createFilter(group.getContacts(),
+                                "WHERE firstName LIKE :token1 AND lastName LIKE :token2 " +
+                                        "OR firstName LIKE :token2 AND lastName LIKE :token1")
+                        .setParameter("token1", String.format("%s%%", token[0]))
+                        .setParameter("token2", String.format("%s%%", token[1]))
+                        .list();
+            }
+            session.close();
+            group.setContacts(new HashSet<Contact>(contacts));
+            return group;
+        } catch(HibernateException e) {
+            System.err.println(e.getMessage());
+            session.close();
+            throw new DAOException(String.format("Failed to search for contact: %s in group", name), "exception.search.contact.in.group.failed");
+        }
     }
 
     @Override
     public void addContactToGroup(long contactId, long groupId) throws DAOException {
+//        ContactGroup group = getHibernateTemplate().get(ContactGroup.class, groupId);
+//        getHibernateTemplate().update(group);
         Session session = getSessionFactory().openSession();
         try {
             session.beginTransaction();
             ContactGroup group = session.get(ContactGroup.class, groupId);
-//            ContactGroup group = getHibernateTemplate().get(ContactGroup.class, groupId);
 
             if (group != null) {
                 group.getContacts().add(new Contact(contactId));
                 session.update(group);
-//                getHibernateTemplate().update(group);
             } else {
-//                session.close();
+                session.close();
                 throw new DAOException(String.format("Failed to add contact to group, group no longer exists"), "exception.add.contact.to.group.failed");
             }
             session.getTransaction().commit();

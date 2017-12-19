@@ -130,7 +130,7 @@
                                                        or not empty param['formEdit:countryEdit']}"
                                                  requiredMessage="#{msgs['label.required']}"
                                                  validator="noBlankSpaceValidator"
-                                                 validatorMessage="Invalid zip code ! Only numbers are allowed !">
+                                                 validatorMessage="#{msgs['form.zipcode.validator']}">
                                         <f:validateRegex pattern="[0-9]*"/>
                                     </h:inputText>
                                     <h:outputLabel for="zipEdit"
