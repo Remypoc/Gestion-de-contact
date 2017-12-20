@@ -23,7 +23,11 @@
 		<discriminator column="type" type="string"/>
 
 		<version name="version" access="field" column="version"/>
+
+		<property name="lastName" type="string" column="LASTNAME"/>
+		<property name="firstName" type="string" column="FIRSTNAME"/>
 		<property name="email" type="string" column="EMAIL"/>
+
 		<many-to-one name="address" column="ADDRESS" cascade="all" unique="true"/>
 
 		<set name="phones" cascade="persist all-delete-orphan" lazy="true">
@@ -42,13 +46,8 @@
 			<many-to-many class="ContactGroup" column="ID_GROUP"/>
 		</set>
 
-		<subclass name="Company" discriminator-value="contact_company">
-			<property name="lastName" type="string" column="LASTNAME"/>
-			<property name="firstName" type="string" column="FIRSTNAME"/>
-		</subclass>
-
-		<subclass name="Person" discriminator-value="contact_person">
-			<property name="name" type="string" column="NAME"/>
+		<subclass name="Company" discriminator-value="company">
+			<property name="siret" type="string" column="SIRET"/>
 		</subclass>
 	</class>
 </hibernate-mapping>
