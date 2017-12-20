@@ -5,13 +5,13 @@ public class PhoneNumber {
     private long id;
     private String phoneKind;
     private String phoneNumber;
-    private Contact contact;
+    private ContactI contact;
     private boolean isMobile;
 
     public PhoneNumber() {
     }
 
-    public PhoneNumber(Contact contact) {
+    public PhoneNumber(ContactI contact) {
         phoneKind = null;
         phoneNumber = null;
         this.contact = contact;
@@ -24,7 +24,7 @@ public class PhoneNumber {
         this.contact = null;
     }
 
-    public PhoneNumber(long id, String phoneNumber, String phoneKind, Contact contact) {
+    public PhoneNumber(long id, String phoneNumber, String phoneKind, ContactI contact) {
         this.id = id;
         this.phoneKind = phoneKind;
         this.phoneNumber = phoneNumber;
@@ -55,11 +55,11 @@ public class PhoneNumber {
         this.phoneNumber = phoneNumber;
     }
 
-    public Contact getContact() {
+    public ContactI getContact() {
         return contact;
     }
 
-    public void setContact(Contact contact) {
+    public void setContact(ContactI contact) {
         if (contact != null) {
             this.contact = contact;
         }

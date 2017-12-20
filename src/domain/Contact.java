@@ -3,7 +3,7 @@ package domain;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Contact {
+public class Contact implements ContactI {
 
 	private long id;
 	private String firstName;
@@ -23,30 +23,40 @@ public class Contact {
 		this.id = id;
 	}
 
-	public Contact(long id, String firstName, String lastName, String email) {
+	public Contact(long id, String email) {
 		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
 		this.email = email;
 	}
 
-	public Contact(long id, String firstName, String lastName, String email, Address address) {
+	public Contact(long id, String email, Address address) {
 		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
 		this.email = email;
 		this.address = address;
 	}
 
-	public Contact(long id, String firstName, String lastName, String email,
+	public Contact(long id, String email,
 				   Set<PhoneNumber> phones, Address address) {
 		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
 		this.email = email;
 		if (phones != null)
 			this.phones = phones;
 		this.address = address;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public int getVersion() {
@@ -57,32 +67,17 @@ public class Contact {
 		this.version = version;
 	}
 
+	@Override
 	public String getFullName() {
-		return String.format("%s %s", getFirstName(), getLastName());
+		return String.format("%s %s", firstName, lastName);
 	}
 
 	public String getEmail() {
 		return email;
 	}
 
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
 	public void setEmail(String string) {
 		email = string;
-	}
-
-	public void setFirstName(String string) {
-		firstName = string;
-	}
-
-	public void setLastName(String string) {
-		lastName = string;
 	}
 
 	public long getId() {

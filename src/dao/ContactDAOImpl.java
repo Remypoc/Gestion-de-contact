@@ -1,9 +1,6 @@
 package dao;
 
-import domain.Address;
-import domain.Contact;
-import domain.ContactGroup;
-import domain.PhoneNumber;
+import domain.*;
 import exception.DAOException;
 import org.hibernate.*;
 import org.hibernate.criterion.Restrictions;
@@ -27,6 +24,10 @@ public class ContactDAOImpl implements ContactDAO {
 	@Override
 	public String addContact(Contact contact) throws DAOException {
 		try {
+			contact = new Company();
+			contact.setFirstName("Total");
+			contact.setLastName("");
+			contact.setEmail("totalenterprise@total.fr");
 			Session session = getSessionFactory().openSession();
 			session.beginTransaction();
 			session.persist(contact);
