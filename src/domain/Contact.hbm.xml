@@ -12,7 +12,7 @@
 
 <hibernate-mapping package="domain">
 
-	<class name="Contact" table="contact" discriminator-value="con">
+	<class name="Contact" table="contact" discriminator-value="contact">
 
 		<cache usage="read-write"/>
 
@@ -21,9 +21,8 @@
 		</id>
 		<version name="version" access="field" column="version"/>
 
-
-		<discriminator column="type" type="string"/>
 		<property name="lastName" type="string" column="LASTNAME"/>
+		<property name="firstName" type="string" column="FIRSTNAME"/>
 		<property name="email" type="string" column="EMAIL"/>
 
 		<many-to-one name="address" column="ADDRESS" cascade="all" unique="true"/>
@@ -43,13 +42,5 @@
 			<key column="ID_CONTACT"/>
 			<many-to-many class="ContactGroup" column="ID_GROUP"/>
 		</set>
-
-		<subclass name="Person" discriminator-value="per">
-			<property name="firstName" type="string" column="FIRSTNAME"/>
-		</subclass>
-
-		<subclass name="Company" discriminator-value="com">
-			<property name="siret" column="SIRET"/>
-		</subclass>
 	</class>
 </hibernate-mapping>
