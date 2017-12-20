@@ -15,71 +15,110 @@
                       rendered="#{viewManager.displayCreateContactForm}">
             <div class="card-panel">
 
-                <div class="row">
-                    <div class="col s2">
-                        <h:form>
-                            <h:commandLink action="#{createOrUpdateContact.cancelCreateContact}"
-                                           styleClass="btn-floating waves-effect waves-light grey">
-                                #{msgs['label.cancel']}
-                            </h:commandLink>
-                        </h:form>
-                    </div>
-                </div>
-
                 <div class="container">
                     <h:form id="formCreate">
 
                         <div class="row">
-                            <div class="input-field offset-s1">
-                                <h:selectOneRadio id="selectCompany" value="#{createOrUpdateContact.company}">
-                                    <f:selectItem itemValue="false" itemLabel="#{msgs['label.contact']}"/>
-                                    <f:selectItem itemValue="true" itemLabel="#{msgs['label.company']}"/>
-                                </h:selectOneRadio>
+                            <div class="row">
+                                <div class="center">
+                                    <h:commandLink id="changeToCompanyForm"
+                                                   rendered="#{not createOrUpdateContact.companyForm}"
+                                                   action="#{createOrUpdateContact.switchToCompanyForm}"
+                                                   immediate="true"
+                                                   styleClass="btn waves-effect waves-light orange">
+                                        <i class="fa fa-refresh" aria-hidden="true"></i>
+                                        <i class="fa fa-building-o" aria-hidden="true"></i>
+                                    </h:commandLink>
+                                    <h:commandLink id="changeToContactForm"
+                                                   rendered="#{createOrUpdateContact.companyForm}"
+                                                   action="#{createOrUpdateContact.switchToContactForm}"
+                                                   immediate="true"
+                                                   styleClass="btn waves-effect waves-light orange">
+                                        <i class="fa fa-refresh" aria-hidden="true"></i>
+                                        <i class="fa fa-user-circle" aria-hidden="true"></i>
+                                    </h:commandLink>
+                                </div>
                             </div>
                         </div>
 
                         <!-- Create Contact name and email -->
                         <div class="row">
 
-                            <div class="row">
-                                <div class="input-field">
-                                    <i class="material-icons prefix">account_circle</i>
-                                    <h:inputText id="firstNameCreate"
-                                                 value="#{createOrUpdateContact.contact.firstName}"
-                                                 required="#{param['formCreate:firstNameCreate'] != null}"
-                                                 requiredMessage="#{msgs['label.required']}"
-                                                 validator="noBlankSpaceValidator">
-                                    </h:inputText>
-                                    <h:outputLabel for="firstNameCreate"
-                                                   value="#{msgs['label.firstname']}"/>
+                            <h:panelGroup rendered="#{createOrUpdateContact.companyForm}">
+                                <div class="row">
+                                    <div class="input-field">
+                                        <i class="material-icons prefix">info_outline</i>
+                                        <h:inputText id="companyNameCreate"
+                                                     value="#{createOrUpdateContact.companyName}"
+                                                     required="#{param['formCreate:companyNameCreate'] != null}"
+                                                     requiredMessage="#{msgs['label.required']}"
+                                                     validator="noBlankSpaceValidator">
+                                        </h:inputText>
+                                        <h:outputLabel for="companyNameCreate"
+                                                       value="#{msgs['label.company.name']}"/>
+                                    </div>
+                                    <h:message for="companyNameCreate"
+                                               autoUpdate="true"
+                                               styleClass="error"
+                                    />
                                 </div>
-                                <h:message for="firstNameCreate"
-                                           autoUpdate="true"
-                                           styleClass="error"
-                                />
-                            </div>
-
-                            <h:panelGroup rendered="#{createOrUpdateContact.company}">
-                                NUM SIRET BATARD !!!
+                                <div class="row">
+                                    <div class="input-field">
+                                        <i class="material-icons prefix">info_outline</i>
+                                        <h:inputText id="numSiretCreate"
+                                                     value="#{createOrUpdateContact.numSiret}"
+                                                     required="#{param['formCreate:numSiretCreate'] != null}"
+                                                     requiredMessage="#{msgs['label.required']}"
+                                                     validator="noBlankSpaceValidator">
+                                            <f:validateRegex pattern="[0-9]*"/>
+                                        </h:inputText>
+                                        <h:outputLabel for="numSiretCreate"
+                                                       value="#{msgs['label.company.num_siret']}"/>
+                                    </div>
+                                    <h:message for="numSiretCreate"
+                                               autoUpdate="true"
+                                               styleClass="error"
+                                    />
+                                </div>
                             </h:panelGroup>
 
-                            <div class="row">
-                                <div class="input-field">
-                                    <i class="material-icons prefix">account_circle</i>
-                                    <h:inputText id="lastNameCreate"
-                                                 value="#{createOrUpdateContact.contact.lastName}"
-                                                 required="#{param['formCreate:lastNameCreate'] != null}"
-                                                 requiredMessage="#{msgs['label.required']}"
-                                                 validator="noBlankSpaceValidator">
-                                    </h:inputText>
-                                    <h:outputLabel for="lastNameCreate"
-                                                   value="#{msgs['label.lastname']}"/>
+                            <h:panelGroup rendered="#{not createOrUpdateContact.companyForm}">
+                                <div class="row">
+                                    <div class="input-field">
+                                        <i class="material-icons prefix">account_circle</i>
+                                        <h:inputText id="firstNameCreate"
+                                                     value="#{createOrUpdateContact.contact.firstName}"
+                                                     required="#{param['formCreate:firstNameCreate'] != null}"
+                                                     requiredMessage="#{msgs['label.required']}"
+                                                     validator="noBlankSpaceValidator">
+                                        </h:inputText>
+                                        <h:outputLabel for="firstNameCreate"
+                                                       value="#{msgs['label.firstname']}"/>
+                                    </div>
+                                    <h:message for="firstNameCreate"
+                                               autoUpdate="true"
+                                               styleClass="error"
+                                    />
                                 </div>
-                                <h:message for="lastNameCreate"
-                                           autoUpdate="true"
-                                           styleClass="error"
-                                />
-                            </div>
+
+                                <div class="row">
+                                    <div class="input-field">
+                                        <i class="material-icons prefix">account_circle</i>
+                                        <h:inputText id="lastNameCreate"
+                                                     value="#{createOrUpdateContact.contact.lastName}"
+                                                     required="#{param['formCreate:lastNameCreate'] != null}"
+                                                     requiredMessage="#{msgs['label.required']}"
+                                                     validator="noBlankSpaceValidator">
+                                        </h:inputText>
+                                        <h:outputLabel for="lastNameCreate"
+                                                       value="#{msgs['label.lastname']}"/>
+                                    </div>
+                                    <h:message for="lastNameCreate"
+                                               autoUpdate="true"
+                                               styleClass="error"
+                                    />
+                                </div>
+                            </h:panelGroup>
 
                             <div class="row">
                                 <div class="input-field">
@@ -96,7 +135,8 @@
                                     <h:outputLabel for="emailCreate"
                                                    value="#{msgs['label.email']}"/>
                                 </div>
-                                <h:message for="emailCreate" autoUpdate="true" styleClass="error"/>
+                                <h:message for="emailCreate" autoUpdate="true"
+                                           styleClass="error"/>
                             </div>
                         </div>
 
@@ -115,7 +155,8 @@
                                     <h:outputLabel for="streetCreate"
                                                    value="#{msgs['label.street']}"/>
                                 </div>
-                                <h:message for="streetCreate" autoUpdate="true" styleClass="error"/>
+                                <h:message for="streetCreate" autoUpdate="true"
+                                           styleClass="error"/>
                             </div>
 
                             <div class="row">
@@ -131,7 +172,8 @@
                                     <h:outputLabel for="cityCreate"
                                                    value="#{msgs['label.city']}"/>
                                 </div>
-                                <h:message for="cityCreate" autoUpdate="true" styleClass="error"/>
+                                <h:message for="cityCreate" autoUpdate="true"
+                                           styleClass="error"/>
                             </div>
 
                             <div class="row">
@@ -149,7 +191,8 @@
                                     <h:outputLabel for="zipCreate"
                                                    value="#{msgs['label.zip']}"/>
                                 </div>
-                                <h:message for="zipCreate" autoUpdate="true" styleClass="error"/>
+                                <h:message for="zipCreate" autoUpdate="true"
+                                           styleClass="error"/>
                             </div>
 
                             <div class="row">
@@ -192,7 +235,7 @@
                                 <h:column class="col s4">
                                     <div class="input-field">
                                         <h:selectOneMenu id="phoneKindCreate"
-                                                value="#{phone.phoneKind}">
+                                                         value="#{phone.phoneKind}">
                                             <f:selectItem itemValue="mobile"
                                                           itemLabel="#{msgs['label.phone.mobile']}"
                                                           selected="selected"/>
@@ -221,29 +264,28 @@
                         </div>
 
                         <div class="row">
-                            <div class="btn-flat col s1 offset-s9">
-                                <i class='material-icons center'>phone</i>
-                            </div>
-                            <div class="col s2">
+                            <div class="center">
                                 <h:commandLink id="addPhoneCreate"
                                                action="#{createOrUpdateContact.addPhone}"
                                                styleClass="btn waves-effect waves-light light-blue darken-4 keep-scroll-pos keep-scroll-pos">
-                                    <i class="material-icons center">add</i> <i
-                                        class="material-icons center">phone</i>
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                    <i class="fa fa-phone" aria-hidden="true"></i>
                                 </h:commandLink>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col s2 offset-s10">
-                                <h:commandLink action="#{createOrUpdateContact.createContact}"
-                                               styleClass="btn-large waves-effect waves-light green accent-3 keep-scroll-pos">
+                                <h:commandLink
+                                        action="#{createOrUpdateContact.createContact}"
+                                        styleClass="btn-large waves-effect waves-light green accent-3 keep-scroll-pos">
                                     <i class="material-icons center">send</i>
                                 </h:commandLink>
                             </div>
                         </div>
 
-                        <h:commandButton id="saveCreate" styleClass="keep-scroll-pos" value="save"
+                        <h:commandButton id="saveCreate" styleClass="keep-scroll-pos"
+                                         value="save"
                                          action="#{createOrUpdateContact.createContact}"
                                          style="display: None;"/>
                     </h:form>

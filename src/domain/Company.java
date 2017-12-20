@@ -8,6 +8,17 @@ public class Company extends Contact {
     public Company() {
     }
 
+    public Company(Contact contact, String lastName, long numSiret) {
+        setId(contact.getId());
+        setFirstName("Entreprise");
+        setLastName(lastName);
+        setEmail(contact.getEmail());
+        setAddress(contact.getAddress());
+        setPhones(contact.getPhones());
+        setVersion(contact.getVersion());
+        this.numSiret = numSiret;
+    }
+
     public Company(long id, long numSiret) {
         super(id);
         this.numSiret = numSiret;
@@ -34,6 +45,11 @@ public class Company extends Contact {
 
     public void setNumSiret(long numSiret) {
         this.numSiret = numSiret;
+    }
+
+    @Override
+    public String getFullName() {
+        return String.format("Entreprise <b>%s</b>", getLastName());
     }
 
     @Override

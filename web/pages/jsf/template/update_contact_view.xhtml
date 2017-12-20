@@ -19,8 +19,9 @@
                 <div class="row">
                     <div class="col s2">
                         <h:form>
-                            <h:commandLink action="#{createOrUpdateContact.cancelUpdateContact}"
-                                           styleClass="btn-floating waves-effect waves-light grey">
+                            <h:commandLink
+                                    action="#{createOrUpdateContact.cancelUpdateContact}"
+                                    styleClass="btn-floating waves-effect waves-light grey">
                                 <i class="material-icons">chevron_left</i>
                             </h:commandLink>
                         </h:form>
@@ -32,35 +33,78 @@
 
                         <!-- Update Contact name and email -->
                         <div class="row">
-                            <div class="row">
-                                <div class="input-field">
-                                    <i class="material-icons prefix">account_circle</i>
-                                    <h:inputText id="firstNameEdit"
-                                                 value="#{createOrUpdateContact.contact.firstName}"
-                                                 required="#{param['formEdit:firstNameEdit'] != null}"
-                                                 requiredMessage="#{msgs['label.required']}"
-                                                 validator="noBlankSpaceValidator">
-                                    </h:inputText>
-                                    <h:outputLabel for="firstNameEdit"
-                                                   value="#{msgs['label.firstname']}"/>
-                                </div>
-                                <h:message for="firstNameEdit" autoUpdate="true" styleClass="error"/>
-                            </div>
 
-                            <div class="row">
-                                <div class="input-field">
-                                    <i class="material-icons prefix">account_circle</i>
-                                    <h:inputText id="lastNameEdit"
-                                                 value="#{createOrUpdateContact.contact.lastName}"
-                                                 required="#{param['formEdit:lastNameEdit'] != null}"
-                                                 requiredMessage="#{msgs['label.required']}"
-                                                 validator="noBlankSpaceValidator">
-                                    </h:inputText>
-                                    <h:outputLabel for="lastNameEdit"
-                                                   value="#{msgs['label.lastname']}"/>
+                            <h:panelGroup rendered="#{createOrUpdateContact.companyForm}">
+                                <div class="row">
+                                    <div class="input-field">
+                                        <i class="material-icons prefix">info_outline</i>
+                                        <h:inputText id="companyNameUpdate"
+                                                     value="#{createOrUpdateContact.companyName}"
+                                                     required="#{param['formCreate:companyNameUpdate'] != null}"
+                                                     requiredMessage="#{msgs['label.required']}"
+                                                     validator="noBlankSpaceValidator">
+                                        </h:inputText>
+                                        <h:outputLabel for="companyNameUpdate"
+                                                       value="#{msgs['label.company.name']}"/>
+                                    </div>
+                                    <h:message for="companyNameUpdate"
+                                               autoUpdate="true"
+                                               styleClass="error"
+                                    />
                                 </div>
-                                <h:message for="lastNameEdit" autoUpdate="true" styleClass="error"/>
-                            </div>
+                                <div class="row">
+                                    <div class="input-field">
+                                        <i class="material-icons prefix">info_outline</i>
+                                        <h:inputText id="numSiretUpdate"
+                                                     value="#{createOrUpdateContact.numSiret}"
+                                                     required="#{param['formCreate:numSiretUpdate'] != null}"
+                                                     requiredMessage="#{msgs['label.required']}"
+                                                     validator="noBlankSpaceValidator">
+                                            <f:validateRegex pattern="[0-9]*"/>
+                                        </h:inputText>
+                                        <h:outputLabel for="numSiretUpdate"
+                                                       value="#{msgs['label.company.num_siret']}"/>
+                                    </div>
+                                    <h:message for="numSiretUpdate"
+                                               autoUpdate="true"
+                                               styleClass="error"
+                                    />
+                                </div>
+                            </h:panelGroup>
+
+                            <h:panelGroup rendered="#{not createOrUpdateContact.companyForm}">
+                                <div class="row">
+                                    <div class="input-field">
+                                        <i class="material-icons prefix">account_circle</i>
+                                        <h:inputText id="firstNameEdit"
+                                                     value="#{createOrUpdateContact.contact.firstName}"
+                                                     required="#{param['formEdit:firstNameEdit'] != null}"
+                                                     requiredMessage="#{msgs['label.required']}"
+                                                     validator="noBlankSpaceValidator">
+                                        </h:inputText>
+                                        <h:outputLabel for="firstNameEdit"
+                                                       value="#{msgs['label.firstname']}"/>
+                                    </div>
+                                    <h:message for="firstNameEdit" autoUpdate="true"
+                                               styleClass="error"/>
+                                </div>
+
+                                <div class="row">
+                                    <div class="input-field">
+                                        <i class="material-icons prefix">account_circle</i>
+                                        <h:inputText id="lastNameEdit"
+                                                     value="#{createOrUpdateContact.contact.lastName}"
+                                                     required="#{param['formEdit:lastNameEdit'] != null}"
+                                                     requiredMessage="#{msgs['label.required']}"
+                                                     validator="noBlankSpaceValidator">
+                                        </h:inputText>
+                                        <h:outputLabel for="lastNameEdit"
+                                                       value="#{msgs['label.lastname']}"/>
+                                    </div>
+                                    <h:message for="lastNameEdit" autoUpdate="true"
+                                               styleClass="error"/>
+                                </div>
+                            </h:panelGroup>
 
                             <div class="row">
                                 <div class="input-field">
@@ -77,7 +121,8 @@
                                     <h:outputLabel for="emailEdit"
                                                    value="#{msgs['label.email']}"/>
                                 </div>
-                                <h:message for="emailEdit" autoUpdate="true" styleClass="error"/>
+                                <h:message for="emailEdit" autoUpdate="true"
+                                           styleClass="error"/>
                             </div>
                         </div>
 
@@ -96,7 +141,8 @@
                                     <h:outputLabel for="streetEdit"
                                                    value="#{msgs['label.street']}"/>
                                 </div>
-                                <h:message for="streetEdit" autoUpdate="true" styleClass="error"/>
+                                <h:message for="streetEdit" autoUpdate="true"
+                                           styleClass="error"/>
                             </div>
 
                             <div class="row">
@@ -112,7 +158,8 @@
                                     <h:outputLabel for="cityEdit"
                                                    value="#{msgs['label.city']}"/>
                                 </div>
-                                <h:message for="cityEdit" autoUpdate="true" styleClass="error"/>
+                                <h:message for="cityEdit" autoUpdate="true"
+                                           styleClass="error"/>
                             </div>
 
                             <div class="row">
@@ -130,7 +177,8 @@
                                     <h:outputLabel for="zipEdit"
                                                    value="#{msgs['label.zip']}"/>
                                 </div>
-                                <h:message for="zipEdit" autoUpdate="true" styleClass="error"/>
+                                <h:message for="zipEdit" autoUpdate="true"
+                                           styleClass="error"/>
                             </div>
 
                             <div class="row">
@@ -146,7 +194,8 @@
                                     <h:outputLabel for="countryEdit"
                                                    value="#{msgs['label.country']}"/>
                                 </div>
-                                <h:message for="countryEdit" autoUpdate="true" styleClass="error"/>
+                                <h:message for="countryEdit" autoUpdate="true"
+                                           styleClass="error"/>
                             </div>
                         </div>
 
@@ -189,7 +238,8 @@
                                                               selected="selected"/>
                                             </c:if>
                                         </h:selectOneMenu>
-                                        <h:outputLabel for="phoneKindCreate" value="#{msgs['label.label']}"/>
+                                        <h:outputLabel for="phoneKindCreate"
+                                                       value="#{msgs['label.label']}"/>
                                     </div>
                                 </h:column>
                                 <h:column class="col s1">
@@ -210,22 +260,21 @@
                         </div>
 
                         <div class="row">
-                            <div class="btn-flat col s1 offset-s9">
-                                <i class='material-icons center'>phone</i>
-                            </div>
-                            <div class="col s2">
+                            <div class="center">
                                 <h:commandLink id="addPhoneEdit"
                                                action="#{createOrUpdateContact.addPhone}"
                                                styleClass="btn waves-effect waves-light light-blue darken-4 keep-scroll-pos">
-                                    <i class='material-icons center'>add</i>
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                    <i class="fa fa-phone" aria-hidden="true"></i>
                                 </h:commandLink>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col s2 offset-s10">
-                                <h:commandLink action="#{createOrUpdateContact.updateContact}"
-                                               styleClass="btn-large waves-effect waves-light green accent-3 keep-scroll-pos">
+                                <h:commandLink
+                                        action="#{createOrUpdateContact.updateContact}"
+                                        styleClass="btn-large waves-effect waves-light green accent-3 keep-scroll-pos">
                                     <i class="material-icons center">send</i>
                                 </h:commandLink>
                             </div>

@@ -1,6 +1,7 @@
 package mvc.bean.contact;
 
 import domain.Address;
+import domain.Company;
 import domain.Contact;
 import domain.PhoneNumber;
 import exception.DAOException;
@@ -24,11 +25,25 @@ public class CreateOrUpdateContactBean extends SpringBeanAutowiringSupport imple
 	private ContactService contactService;
 
 	private Contact contact;
+	private boolean companyForm;
+	private String numSiret;
+	private String companyName;
 
 	public CreateOrUpdateContactBean() {
+		companyForm = false;
+		numSiret = null;
+		companyName = null;
 		this.beanManager = beanManager;
 		this.contact = new Contact();
 		this.contact.setAddress(new Address());
+	}
+
+	public boolean isCompanyForm() {
+		return companyForm;
+	}
+
+	public void setCompanyForm(boolean companyForm) {
+		this.companyForm = companyForm;
 	}
 
 	public void setContactService(ContactService contactService) {
@@ -47,18 +62,51 @@ public class CreateOrUpdateContactBean extends SpringBeanAutowiringSupport imple
 		this.contact = contact;
 	}
 
+	public String getNumSiret() {
+		return numSiret;
+	}
+
+	public void setNumSiret(String numSiret) {
+		this.numSiret = numSiret;
+	}
+
+	public String getCompanyName() {
+		return companyName;
+	}
+
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
+
 	public void reset() {
 		this.contact = new Contact();
 		this.contact.setAddress(new Address());
+		this.companyName = null;
+		this.numSiret = null;
+		this.companyForm = false;
+	}
+
+	public void createCompany() {
+		Company company = new Company(contact, companyName, Long.parseLong(numSiret));
+		saveContact(company);
+		reset();
 	}
 
 	public void createContact() {
 //		System.out.println("createOrUpdateContactBean => createContact");
-		if (contact == null)
-			System.out.println("Contact is null");
+
 		if (contact.getAddress() != null && !contact.getAddress().isValid()) {
 			contact.setAddress(null);
 		}
+		if (companyForm) {
+			createCompany();
+		}
+		else {
+			saveContact(contact);
+		}
+	}
+
+	public void saveContact(Contact contact) {
 		try {
 			final Object lError = contactService.addContact(contact);
 			beanManager.notifyCreateContact(contact);
@@ -72,6 +120,15 @@ public class CreateOrUpdateContactBean extends SpringBeanAutowiringSupport imple
 	}
 
 	public void updateContact() {
+		if (companyForm) {
+			Company company = new Company(contact, companyName, Long.parseLong(numSiret));
+			saveUpdateContact(company);
+		} else {
+			saveUpdateContact(contact);
+		}
+	}
+
+	public void saveUpdateContact(Contact contact) {
 		try {
 			final Object lError = contactService.updateContact(contact);
 			beanManager.notifyUpdateContact(contact);
@@ -110,5 +167,18 @@ public class CreateOrUpdateContactBean extends SpringBeanAutowiringSupport imple
 			this.contact.setAddress(new Address());
 		if (this.contact.getPhones() == null)
 			this.contact.setPhones(new LinkedHashSet<>());
+		if (this.contact instanceof Company) {
+			this.companyForm = true;
+			this.companyName = contact.getLastName();
+			this.numSiret = String.valueOf(((Company) contact).getNumSiret());
+		}
+	}
+
+	public void switchToCompanyForm() {
+		companyForm = true;
+	}
+
+	public void switchToContactForm() {
+		companyForm = false;
 	}
 }

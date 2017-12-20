@@ -69,7 +69,7 @@ public class Contact implements ContactI {
 
 	@Override
 	public String getFullName() {
-		return String.format("%s %s", firstName, lastName);
+		return String.format("%s <b>%s</b>", getFirstName(), getLastName());
 	}
 
 	public String getEmail() {

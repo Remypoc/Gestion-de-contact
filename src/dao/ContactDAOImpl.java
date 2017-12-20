@@ -44,6 +44,7 @@ public class ContactDAOImpl implements ContactDAO {
 			if (!address.isValid()) {
 				contact.setAddress(null);
 			}
+			System.out.println("updateContact");
 
 			Session session = getSessionFactory().openSession();
 			session.beginTransaction();
