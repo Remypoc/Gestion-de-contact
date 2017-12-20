@@ -1,5 +1,6 @@
 package dao;
 
+import domain.Company;
 import domain.Contact;
 import domain.PhoneNumber;
 import exception.DAOException;

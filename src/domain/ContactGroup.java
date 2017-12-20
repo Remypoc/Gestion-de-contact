@@ -7,7 +7,7 @@ public class ContactGroup {
 
     private long groupId;
     private String groupName;
-    private Set<ContactI> contacts = new HashSet<>();
+    private Set<Contact> contacts = new HashSet<>();
 
     public ContactGroup() {
     }
@@ -24,7 +24,7 @@ public class ContactGroup {
     	this.groupName = groupName;
 	}
 
-    public ContactGroup(long groupId, String groupName, Set<ContactI> contacts) {
+    public ContactGroup(long groupId, String groupName, Set<Contact> contacts) {
         this.groupId = groupId;
         this.groupName = groupName;
         this.contacts = contacts;
@@ -46,21 +46,21 @@ public class ContactGroup {
         this.groupName = groupName;
     }
 
-    public Set<ContactI> getContacts() {
+    public Set<Contact> getContacts() {
     	return this.contacts;
     }
 
-	public void setContacts(Set<ContactI> contacts) {
+	public void setContacts(Set<Contact> contacts) {
 		this.contacts = contacts;
 	}
 
-	public void addContact(ContactI contact) {
+	public void addContact(Contact contact) {
 		contacts.add(contact);
 		if (!contact.isMemberOfGroup(this))
 			contact.addBook(this);
 	}
 
-	public void removeContact(ContactI contact) {
+	public void removeContact(Contact contact) {
 		contacts.remove(contact);
 		if (!contact.isMemberOfGroup(this))
 			contact.removeBook(this);
@@ -70,7 +70,7 @@ public class ContactGroup {
 		this.contacts.removeIf(contact -> contact.getId() == contactId);
 	}
 
-	public Boolean hasContact(ContactI contact) {
+	public Boolean hasContact(Contact contact) {
 		return contacts.contains(contact);
 	}
 
@@ -96,7 +96,7 @@ public class ContactGroup {
 		sb.append("ContactGroup {\n").append("id=").append(groupId);
 		sb.append("groupName=").append(groupName).append("\n");
 		sb.append("contacts = [\n");
-		for (ContactI c : contacts) {
+		for (Contact c : contacts) {
 			sb.append("id: ").append(c.getId()).append(", ")
 				.append(c.getFullName()).append(",\n");
 		}

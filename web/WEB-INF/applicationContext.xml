@@ -23,7 +23,7 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.spri
 				<prop key="hibernate.format_sql">true</prop>
 				<prop key="connection.pool_size">2</prop>
 				<prop key="current_session_context_class">thread</prop>
-				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.hbm2ddl.auto">create</prop>
 
                 <!--Second level cache-->
                 <prop key="cache.use_second_level_cache">true</prop>

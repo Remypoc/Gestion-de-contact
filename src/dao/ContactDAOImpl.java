@@ -24,10 +24,6 @@ public class ContactDAOImpl implements ContactDAO {
 	@Override
 	public String addContact(Contact contact) throws DAOException {
 		try {
-			contact = new Company();
-			contact.setFirstName("Total");
-			contact.setLastName("");
-			contact.setEmail("totalenterprise@total.fr");
 			Session session = getSessionFactory().openSession();
 			session.beginTransaction();
 			session.persist(contact);
@@ -36,7 +32,7 @@ public class ContactDAOImpl implements ContactDAO {
 		} catch (HibernateException e) {
 			e.printStackTrace();
 			throw new DAOException(
-					String.format("Failed to create contact %s %s: ", contact.getFirstName(), contact.getLastName()), "exception.add.contact.failed");
+					String.format("Failed to create contact or company %s: ", contact.getFullName()), "exception.add.contact.failed");
 		}
 		return null;
 	}
@@ -61,11 +57,11 @@ public class ContactDAOImpl implements ContactDAO {
 		} catch (StaleObjectStateException e) {
 			e.printStackTrace();
 			throw new DAOException(
-					String.format("Failed to update contact %s %s: ", contact.getFirstName(), contact.getLastName()), "exception.edit.contact.lock.failed");
+					String.format("Failed to update contact or company %s: ", contact.getFullName()), "exception.edit.contact.lock.failed");
 		} catch (HibernateException e) {
 			e.printStackTrace();
 			throw new DAOException(
-					String.format("Failed to update contact %s %s: ", contact.getFirstName(), contact.getLastName()), "exception.connexion.database.failed");
+					String.format("Failed to update contact or company %s: ", contact.getFullName()), "exception.connexion.database.failed");
 		}
 		return null;
 	}
@@ -87,7 +83,7 @@ public class ContactDAOImpl implements ContactDAO {
 		} catch (HibernateException e) {
 			e.printStackTrace();
 			throw new DAOException(
-					String.format("Failed to delete contact %d : ", id), "exception.delete.contact.failed");
+					String.format("Failed to delete contact or company %d : ", id), "exception.delete.contact.failed");
 		}
 		return null;
 	}
@@ -104,7 +100,7 @@ public class ContactDAOImpl implements ContactDAO {
 		} catch (HibernateException e) {
 			e.printStackTrace();
 			throw new DAOException(
-					String.format("Failed to delete contact %d : ", id), "exception.delete.address.failed");
+					String.format("Failed to delete contact or company %d : ", id), "exception.delete.address.failed");
 		}
 		return null;
 	}
@@ -122,7 +118,7 @@ public class ContactDAOImpl implements ContactDAO {
 		} catch (HibernateException e) {
 			e.printStackTrace();
 			throw new DAOException(
-					String.format("Failed to delete contact %s : ", phoneNumber.getPhoneNumber()), "exception.add.phone.failed");
+					String.format("Failed to delete contact or company %s : ", phoneNumber.getPhoneNumber()), "exception.add.phone.failed");
 		}
 		return null;
 	}
@@ -139,7 +135,7 @@ public class ContactDAOImpl implements ContactDAO {
 				return new HashSet<>(contacts);
 			} catch (HibernateException e) {
 				e.printStackTrace();
-				throw new DAOException("Failed to load contacts : ", "exception.load.contacts.failed");
+				throw new DAOException("Failed to load contacts and companies : ", "exception.load.contacts.failed");
 			}
 		}
 		// Exemple with spring hibernateTemplate
@@ -164,7 +160,7 @@ public class ContactDAOImpl implements ContactDAO {
 			return contacts;
 		} catch (HibernateException e) {
 			e.printStackTrace();
-			throw new DAOException("Failed to load contacts : ", "exception.load.contacts.failed");
+			throw new DAOException("Failed to load contacts and companies : ", "exception.load.contacts.failed");
 		}
 		// Exemple with HQL
 		/*
