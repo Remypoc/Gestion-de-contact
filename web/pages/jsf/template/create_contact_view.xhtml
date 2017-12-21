@@ -147,7 +147,7 @@
                                     <i class="material-icons prefix">location_city</i>
                                     <h:inputText id="streetCreate"
                                                  value="#{createOrUpdateContact.contact.address.street}"
-                                                 required="#{not empty param['formCreate:streetCreate'] or not empty param['formCreate:cityCreate']
+                                                 required="#{not empty param['formCreate:countryCreate'] or not empty param['formCreate:cityCreate']
                                                        or not empty param['formCreate:zipCreate']}"
                                                  requiredMessage="#{msgs['label.required']}"
                                                  validator="noBlankSpaceValidator">
@@ -164,7 +164,7 @@
                                     <i class="material-icons prefix">location_city</i>
                                     <h:inputText id="cityCreate"
                                                  value="#{createOrUpdateContact.contact.address.city}"
-                                                 required="#{not empty param['formCreate:cityCreate'] or not empty param['formCreate:streetCreate']
+                                                 required="#{not empty param['formCreate:countryCreate'] or not empty param['formCreate:streetCreate']
                                                        or not empty param['formCreate:zipCreate']}"
                                                  requiredMessage="#{msgs['label.required']}"
                                                  validator="noBlankSpaceValidator">
@@ -181,7 +181,7 @@
                                     <i class="material-icons prefix">location_city</i>
                                     <h:inputText id="zipCreate"
                                                  value="#{createOrUpdateContact.contact.address.zip}"
-                                                 required="#{not empty param['formCreate:zipCreate'] or not empty param['formCreate:cityCreate']
+                                                 required="#{not empty param['formCreate:countryCreate'] or not empty param['formCreate:cityCreate']
                                                        or not empty param['formCreate:streetCreate']}"
                                                  requiredMessage="#{msgs['label.required']}"
                                                  validator="noBlankSpaceValidator"
