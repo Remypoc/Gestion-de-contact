@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+<h:body>
+    <ui:composition>
+        <div class="card-panel">
+            <h:panelGroup rendered="#{viewManager.displayContacts}">
+                <div style="color: #3b5998;">
+                    <i class="medium material-icons prefix">person</i>
+                </div>
+            </h:panelGroup>
+            <h:panelGroup rendered="#{viewManager.displayGroups}"
+                          styleClass="color: #3b5998;">
+                <div style="color: #3b5998;">
+                    <i class="medium material-icons">group</i>
+                    <i class="medium material-icons">book</i>
+                </div>
+            </h:panelGroup>
+            <div class="container">
+                <div class="row">
+                    <div class="col s12">
+
+
+                        <!-- Display list contact block -->
+                        <h:panelGroup layout="block" class="list-contact"
+                                      rendered="#{viewManager.displayContacts}">
+                            <!-- Search for contact -->
+                            <h:form id="form-searchContact">
+                                <div class="row">
+                                    <div class="input-field col s10">
+                                        <i class="material-icons prefix">search</i>
+                                        <h:inputText styleClass="validate"
+                                                     id="form-searchContact-name"
+                                                     value="#{searchContact.filterContacts}"
+                                                     validatorMessage="#{msgs['search.contact.validator.size.min.max']}">
+                                            <f:validateLength maximum="50"/>
+                                        </h:inputText>
+                                        <h:outputLabel
+                                                for="form-searchContact-name">#{msgs['label.search.contact']}</h:outputLabel>
+                                    </div>
+                                </div>
+                                <h:message for="form-searchContact-name"
+                                           styleClass="form-input-error error"/>
+                                <h:commandButton
+                                        action="#{searchContact.searchContactByName}"
+                                        styleClass="btn waves-effect waves-light postfix"
+                                        style="display: none;"/>
+                            </h:form>
+
+                            <!-- List of group-->
+                            <div class="row">
+                                <h:dataTable
+                                        value="#{beanManager.dataManager.displayContacts}"
+                                        var="contact"
+                                        styleClass="responsive-table highlight bordered">
+                                    <h:column>
+                                        <h:form>
+                                            <h:commandLink
+                                                    action="#{beanManager.loadContact(contact.id)}"
+                                                    style="color: black;">
+                                                <h:outputText
+                                                        value="#{contact.firstName}"/>
+                                                <b><h:outputText
+                                                        value="#{contact.lastName}"/></b></h:commandLink>
+                                        </h:form>
+                                    </h:column>
+                                    <h:column>
+                                        <h:form>
+                                            <h:commandLink
+                                                    action="#{deleteContact.deleteContact(contact.id)}"
+                                                    styleClass="btn-floating waves-effect waves-light pink accent-3 left-align keep-scroll-pos">
+                                                <i class="material-icons left-align">remove</i>
+                                            </h:commandLink>
+                                        </h:form>
+                                    </h:column>
+                                </h:dataTable>
+                            </div>
+                        </h:panelGroup>
+
+                        <!-- Display list group block -->
+                        <h:panelGroup layout="block" class="list-group"
+                                      rendered="#{viewManager.displayGroups}">
+                            <!-- Search for group -->
+                            <h:form id="form-searchGroup">
+                                <div class="row">
+                                    <div class="input-field col s10">
+                                        <i class="material-icons prefix">search</i>
+                                        <h:inputText styleClass="validate"
+                                                     id="groupName"
+                                                     value="#{searchGroup.filterGroups}"
+                                                     validatorMessage="#{msgs['search.groupname.validator.size.min.max']}">
+                                            <f:validateLength maximum="50"/>
+                                        </h:inputText>
+                                        <h:outputLabel
+                                                for="groupName">#{msgs['label.search.group']}</h:outputLabel>
+                                    </div>
+                                </div>
+                                <h:message for="groupName"
+                                           styleClass="form-input-error error"/>
+                                <h:commandButton
+                                        action="#{searchGroup.searchGroupByName}"
+                                        styleClass="btn waves-effect waves-light postfix"
+                                        style="display: none;"/>
+                            </h:form>
+
+                            <!-- List of group-->
+                            <div class="row">
+                                <h:dataTable
+                                        value="#{beanManager.dataManager.displayGroups}"
+                                        var="group"
+                                        styleClass="responsive-table highlight bordered">
+                                    <h:column>
+                                        <h:form>
+                                            <h:commandLink
+                                                    action="#{beanManager.loadGroup(group.groupId)}"
+                                                    style="color: black;">
+                                                <h:outputText
+                                                        value="#{group.groupName}"/></h:commandLink>
+                                        </h:form>
+                                    </h:column>
+                                    <h:column>
+                                        <h:form>
+                                            <h:commandLink
+                                                    action="#{deleteGroup.deleteGroup(group.groupId)}"
+                                                    styleClass="btn-floating waves-effect waves-light pink accent-3 left-align keep-scroll-pos">
+                                                <i class="material-icons left-align">remove</i>
+                                            </h:commandLink>
+                                        </h:form>
+                                    </h:column>
+                                </h:dataTable>
+                            </div>
+                        </h:panelGroup>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ui:composition>
+</h:body>
+
+</html>

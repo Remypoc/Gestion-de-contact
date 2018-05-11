@@ -1,75 +1,80 @@
 package domain;
 
-import javax.persistence.Entity;
-
 public class Address {
 
-	private long id;
-	private String street;
-	private String city;
-	private String zip;
-	private String country;
-	
-	public Address() {
-	}
-	
-	public Address(long id, String country, String city, String street, String zip) {
-		this.id = id;
-		this.country = country;
-		this.city = city;
-		this.street = street;
-		this.zip = zip;
-	}
+    private long id;
+    private String street;
+    private String city;
+    private String zip;
+    private String country;
 
-	public long getId() {
-		return id;
-	}
+    public Address() {
+    }
 
-	public void setId(long id) {
-		this.id = id;
-	}
+    public Address(long id, String country, String city, String street, String zip) {
+        this.id = id;
+        this.country = country;
+        this.city = city;
+        this.street = street;
+        this.zip = zip;
+    }
 
-	public String getStreet() {
-		return street;
-	}
+    public long getId() {
+        return id;
+    }
 
-	public void setStreet(String street) {
-		this.street = street;
-	}
+    public void setId(long id) {
+        this.id = id;
+    }
 
-	public String getCity() {
-		return city;
-	}
+    public String getStreet() {
+        return street;
+    }
 
-	public void setCity(String city) {
-		this.city = city;
-	}
+    public void setStreet(String street) {
+        this.street = street;
+    }
 
-	public String getZip() {
-		return zip;
-	}
+    public String getCity() {
+        return city;
+    }
 
-	public void setZip(String zip) {
-		this.zip = zip;
-	}
+    public void setCity(String city) {
+        this.city = city;
+    }
 
-	public String getCountry() {
-		return country;
-	}
+    public String getZip() {
+        return zip;
+    }
 
-	public void setCountry(String country) {
-		this.country = country;
-	}
+    public void setZip(String zip) {
+        this.zip = zip;
+    }
 
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("Address {\n").append("id=").append(id).append("\n");
-		sb.append("country=").append(country).append("\n");
-		sb.append("city=").append(city).append("\n");
-		sb.append("street=").append(street).append("\n");
-		sb.append("zip=").append(zip).append("\n");
-		sb.append("}\n");
-		return sb.toString();
-	}
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public boolean isValid() {
+        return !((street == null || street.trim().isEmpty()) ||
+                (city == null || city.trim().isEmpty()) ||
+                (zip == null || zip.trim().isEmpty()) ||
+                (country == null || country.trim().isEmpty()));
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Address {\n").append("id=").append(id).append("\n");
+        sb.append("country=").append(country).append("\n");
+        sb.append("city=").append(city).append("\n");
+        sb.append("street=").append(street).append("\n");
+        sb.append("zip=").append(zip).append("\n");
+        sb.append("}\n");
+        return sb.toString();
+    }
 }

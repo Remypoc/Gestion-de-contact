@@ -3,15 +3,17 @@ package domain;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Contact {
-	
-	private long id;   
+public class Contact implements ContactI {
+
+	private long id;
 	private String firstName;
 	private String lastName;
 	private String email;
 	private Address address;
 	private Set<PhoneNumber> phones = new HashSet<PhoneNumber>();
 	private Set<ContactGroup> books = new HashSet<ContactGroup>();
+
+	private int version;
 
 	public Contact() {
 		// TODO Auto-generated constructor stub
@@ -21,83 +23,86 @@ public class Contact {
 		this.id = id;
 	}
 
-    public Contact(long id, String firstName, String lastName, String email) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-    }
-
-    public Contact(long id, String firstName, String lastName, String email, Address address) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.address = address;
-    }
-
-    public Contact(long id, String firstName, String lastName, String email,
-                   Set<PhoneNumber> phones, Address address) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        if (phones != null)
-        	this.phones = phones;
-        this.address = address;
-    }
-
-	public String getFullName() {
-		return String.format("%s %s", getFirstName(), getLastName());
+	public Contact(long id, String email) {
+		this.id = id;
+		this.email = email;
 	}
 
-    public String getEmail() {
-        return email;
-    }
+	public Contact(long id, String email, Address address) {
+		this.id = id;
+		this.email = email;
+		this.address = address;
+	}
 
-    public String getFirstName() {
-        return firstName;
-    }
+	public Contact(long id, String email,
+				   Set<PhoneNumber> phones, Address address) {
+		this.id = id;
+		this.email = email;
+		if (phones != null)
+			this.phones = phones;
+		this.address = address;
+	}
 
-    public String getLastName() {
-        return lastName;
-    }
+	public String getFirstName() {
+		return firstName;
+	}
 
-    public void setEmail(String string) {
-        email = string;
-    }
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
 
-    public void setFirstName(String string) {
-        firstName = string;
-    }
+	public String getLastName() {
+		return lastName;
+	}
 
-    public void setLastName(String string) {
-        lastName = string;
-    }
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
 
-    public long getId() {
-        return id;
-    }
+	public int getVersion() {
+		return version;
+	}
 
-    public void setId(long l) {
-        id = l;
-    }
+	public void setVersion(int version) {
+		this.version = version;
+	}
 
-    public Set<PhoneNumber> getPhones() {
-        return phones;
-    }
+	@Override
+	public String getFullName() {
+		return String.format("%s <b>%s</b>", getFirstName(), getLastName());
+	}
 
-    public void setPhones(Set<PhoneNumber> phoneNumbers) {
-        if (phoneNumbers != null)
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String string) {
+		email = string;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long l) {
+		id = l;
+	}
+
+	public Set<PhoneNumber> getPhones() {
+		return phones;
+	}
+
+	public void setPhones(Set<PhoneNumber> phoneNumbers) {
+		if (phoneNumbers != null)
 			phones = phoneNumbers;
-    }
+	}
 
-    public void addPhoneNumber(PhoneNumber phone) {
+	public void addPhoneNumber(PhoneNumber phone) {
 		if (phone != null) {
 			this.phones.add(phone);
 			phone.setContact(this);
 		}
-    }
+	}
 
 	public Address getAddress() {
 		return address;
@@ -131,10 +136,6 @@ public class Contact {
 		return books.contains(group);
 	}
 
-	public boolean hasPhoneNumber(PhoneNumber phoneNumber) {
-		return phones.contains(phoneNumber);
-	}
-
 	@Override
 	public int hashCode() {
 		return (int) this.id;
@@ -144,9 +145,8 @@ public class Contact {
 	public boolean equals(Object obj) {
 		if (obj == null)
 			return false;
-		if (obj instanceof Contact) {
-			if (((Contact) obj).getId() == this.id)
-				return true;
+		else if (obj instanceof Contact) {
+			return ((Contact) obj).getId() == this.id;
 		}
 		return false;
 	}
@@ -158,6 +158,7 @@ public class Contact {
 		sb.append("id: ").append(id).append("\n");
 		sb.append("first name: ").append(firstName).append("\n");
 		sb.append("last name: ").append(lastName).append("\n");
+		sb.append("version : ").append(version).append("\n");
 		sb.append("Address: ").append(address).append("\n");
 		sb.append("Phones = [\n");
 		for (PhoneNumber p : phones) {
@@ -166,5 +167,9 @@ public class Contact {
 		}
 		sb.append("]}\n");
 		return sb.toString();
+	}
+
+	public void removePhoneNumber(PhoneNumber phoneNumber) {
+		this.phones.remove(phoneNumber);
 	}
 }

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+<h:body>
+    <ui:composition>
+        <h:panelGroup layout="block" rendered="#{viewManager.displayGroup}">
+            <div class="card-panel">
+
+                <h:panelGroup styleClass="color: #3b5998;">
+                    <div style="color: #3b5998;">
+                        <i class="small material-icons">group</i>
+                        <i class="small material-icons">book</i>
+                    </div>
+                </h:panelGroup>
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col s10 center">
+                            <h5 class="center">
+                                <h:outputText
+                                        value="#{beanManager.dataManager.group.groupName}"/>
+                            </h5>
+                        </div>
+                        <div class="col s2">
+                            <h:form>
+                                <h:commandLink
+                                        action="#{viewManager.enableDisplayUpdateGroupForm}"
+                                        rendered="#{!viewManager.displayUpdateGroupForm}"
+                                        styleClass="btn-floating waves-effect waves-light orange">
+                                    <i class="material-icons">mode_edit</i>
+                                </h:commandLink>
+                            </h:form>
+                        </div>
+                    </div>
+
+                    <!-- Search for contact in group -->
+                    <h:form>
+                        <div class="row">
+                            <div class="input-field col s10">
+                                <i class="material-icons prefix">search</i>
+                                <h:inputText
+                                        id="input-form-searchContactInGroup-name"
+                                        value="#{searchGroup.filterContacts}"
+                                        validatorMessage="#{msgs['search.contact.validator.size.min.max']}"
+                                        styleClass="validate">
+                                    <f:validateLength minimum="1" maximum="50"/>
+                                </h:inputText>
+                                <h:outputLabel
+                                        for="input-form-searchContactInGroup-name">#{msgs['label.search.contact']}</h:outputLabel>
+                            </div>
+                            <h:commandButton
+                                    action="#{searchGroup.searchContactByName}"
+                                    styleClass="btn-floating waves-effect waves-light light-blue darken-4"
+                                    style="display: none;"/>
+                        </div>
+                    </h:form>
+                    <h:message for="input-form-searchContactInGroup-name"
+                               styleClass="form-input-error error"/>
+
+                    <!-- List of contact in group (by firstname and lastname) -->
+                    <div class="row">
+                        <h:dataTable
+                                value="#{beanManager.dataManager.displayContactsOfGroup}"
+                                var="contact"
+                                rendered="#{viewManager.displayGroup}"
+                                styleClass="responsive-table highlight bordered">
+                            <h:column>
+                                <h:form>
+                                    <h:commandLink
+                                            action="#{beanManager.loadContact(contact.id)}"
+                                            style="color: black;">
+                                        #{contact.firstName} <b>#{contact.lastName}</b>
+                                    </h:commandLink>
+                                </h:form>
+                            </h:column>
+
+                            <!-- Delete Contact in group -->
+                            <h:column>
+                                <h:form>
+                                    <h:commandLink
+                                            action="#{deleteGroup.deleteContactFromGroup(contact.id, beanManager.dataManager.group.groupId)}"
+                                            styleClass="btn-floating waves-effect waves-light pink accent-3 keep-scroll-pos">
+                                        <i class="material-icons">remove</i>
+                                    </h:commandLink>
+                                </h:form>
+                            </h:column>
+
+                        </h:dataTable>
+                    </div>
+                    <br/>
+
+                    <!-- Add contact to group -->
+                    <div class="row">
+                        <h:form>
+                            #{addContactToGroup.setGroupId(beanManager.dataManager.group.groupId)}
+                            <h:inputHidden value="#{addContactToGroup.groupId}"/>
+                            <div class="input-field col s6 offset-s2">
+                                <h:selectOneMenu
+                                        value="#{addContactToGroup.contactId}">
+                                    <f:selectItem itemValue="0"
+                                                  itemDisabled="true"
+                                                  itemLabel="#{msgs['label.select.contact']}"
+                                                  selected="selected"
+                                                  noSelectionOption="true"/>
+                                    <f:selectItems
+                                            value="#{beanManager.dataManager.contactsNotInGroup}"
+                                            var="contact"
+                                            itemValue="#{contact.id}"
+                                            itemLabel="#{contact.fullName}"/>
+                                </h:selectOneMenu>
+                                <label>Contact</label>
+                            </div>
+                            <div class="input-field col s2">
+                                <div class="input-field col s12">
+                                    <h:commandLink
+                                            action="#{addContactToGroup.addContactToGroup}"
+                                            styleClass="btn waves-effect waves-light light-blue darken-4 keep-scroll-pos">
+                                        <i class="material-icons">person_add</i>
+                                    </h:commandLink>
+                                </div>
+                            </div>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+        </h:panelGroup>
+    </ui:composition>
+</h:body>
+
+</html>

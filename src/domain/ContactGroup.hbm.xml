@@ -1,27 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC
-        "-//Hibernate/Hibernate Mapping DTD//EN"
-        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+		"-//Hibernate/Hibernate Mapping DTD//EN"
+		"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping package="domain">
-    <class name="ContactGroup" table="CONTACTGROUP">
+	<class name="ContactGroup" table="CONTACTGROUP">
 
-        <meta attribute="class-description">
-            This class contains all ContactGroup informations.
-        </meta>
+		<meta attribute="class-description">
+			This class contains all ContactGroup informations.
+		</meta>
 
-        <id name="groupId" type="long" column="ID">
-            <generator class="increment"/>
-        </id>
+		<cache usage="read-write"/>
 
-        <property name="groupName" column="GROUPNAME" type="string"/>
+		<id name="groupId" type="long" column="ID">
+			<generator class="increment"/>
+		</id>
 
-        <!-- ContactGroup est le possédant de l'association. Pour sauvegarder, mettre à jour, ou supprimer
-        il faut passer par le contactGroup -->
-        <set name="contacts" table="CONTACTINGROUP" lazy="true" cascade="persist">
-            <key column="ID_GROUP"></key>
-            <many-to-many class="Contact" column="ID_CONTACT"></many-to-many>
-        </set>
+		<property name="groupName" column="GROUPNAME" type="string"/>
 
-    </class>
+		<!-- ContactGroup est le possédant de l'association. Pour sauvegarder, mettre à jour, ou supprimer
+		il faut passer par le contactGroup -->
+		<set name="contacts" table="CONTACTINGROUP" lazy="true" cascade="persist">
+			<cache usage="read-write"/>
+
+			<key column="ID_GROUP"/>
+			<many-to-many class="Contact" column="ID_CONTACT"/>
+		</set>
+	</class>
 </hibernate-mapping>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+<h:body>
+    <ui:composition>
+        <h:panelGroup layout="block" rendered="#{viewManager.displayContact}">
+            <div class="card-panel">
+                <h:panelGroup>
+                    <div style="color: #3b5998;">
+                        <i class="small material-icons prefix">person</i>
+                    </div>
+                </h:panelGroup>
+                <div class="container">
+                    <div class="row">
+                        <div class="col s10 center">
+                            <h5 class="center">
+                                <h:outputText
+                                        value="#{beanManager.dataManager.contact.firstName}"/>
+                                <b><h:outputText
+                                        value="#{beanManager.dataManager.contact.lastName}"/></b>
+                            </h5>
+                        </div>
+                        <div class="col s2">
+                            <h:form>
+                                <h:commandLink
+                                        action="#{viewManager.enableDisplayUpdateContactForm}"
+                                        rendered="#{!viewManager.displayUpdateContactForm}"
+                                        styleClass="btn-floating waves-effect waves-light orange">
+                                    <i class="material-icons">mode_edit</i>
+                                </h:commandLink>
+                            </h:form>
+                        </div>
+                    </div>
+
+                    <!-- Contact email, address and phone -->
+                    <div class="row">
+                        <div class="col s12">
+                            <ul class="collection">
+                                <li class="collection-item avatar">
+                                    <i class="material-icons circle light-blue darken-4">email</i>
+                                    <p>#{beanManager.dataManager.contact.email}</p>
+                                </li>
+                                <li class="collection-item avatar">
+                                    <i class="material-icons circle light-blue darken-4">add_location</i>
+                                    <c:if test="#{not empty beanManager.dataManager.contact.address}">
+                                        <p>#{beanManager.dataManager.contact.address.street}</p>
+                                        <p>#{beanManager.dataManager.contact.address.zip} #{beanManager.dataManager.contact.address.city}</p>
+                                        <p>#{beanManager.dataManager.contact.address.country}</p>
+                                    </c:if>
+                                    <c:if test="#{empty beanManager.dataManager.contact.address}">
+                                        <p>#{msgs["label.no.address"]}</p>
+                                    </c:if>
+                                </li>
+                                <li class="collection-item avatar">
+                                    <i class="material-icons circle light-blue darken-4">contact_phone</i>
+                                    <c:if test="#{not empty beanManager.dataManager.contact.phones }">
+                                        <c:forEach var="phone"
+                                                   items="#{beanManager.dataManager.contact.phones}">
+                                            <p>
+                                                <c:if test="#{phone.isMobile()}">
+                                                    <i class="material-icons">phone_iphone</i>
+                                                </c:if>
+                                                <c:if test="#{not phone.isMobile()}">
+                                                    <i class="material-icons">local_phone</i>
+                                                </c:if>
+                                                #{phone.phoneNumber}
+                                            </p>
+                                        </c:forEach>
+                                    </c:if>
+                                    <c:if test="#{empty beanManager.dataManager.contact.phones}">
+                                        <p>#{msgs["label.no.phone"]}</p>
+                                    </c:if>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <br/>
+                </div>
+            </div>
+        </h:panelGroup>
+    </ui:composition>
+
+</h:body>
+
+</html>

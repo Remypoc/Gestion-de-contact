@@ -1,6 +1,5 @@
 package domain;
 
-import javax.persistence.Entity;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,6 +19,10 @@ public class ContactGroup {
         this.groupId = groupId;
         this.groupName = groupName;
     }
+
+    public ContactGroup(String groupName) {
+    	this.groupName = groupName;
+	}
 
     public ContactGroup(long groupId, String groupName, Set<Contact> contacts) {
         this.groupId = groupId;
@@ -63,6 +66,10 @@ public class ContactGroup {
 			contact.removeBook(this);
 	}
 
+	public void removeContact(long contactId) {
+		this.contacts.removeIf(contact -> contact.getId() == contactId);
+	}
+
 	public Boolean hasContact(Contact contact) {
 		return contacts.contains(contact);
 	}
@@ -96,4 +103,11 @@ public class ContactGroup {
 		sb.append("]}\n");
 		return sb.toString();
 	}
+
+    public ContactGroup copy(ContactGroup contactGroup) {
+    	this.groupName = contactGroup.getGroupName();
+    	this.contacts = contactGroup.getContacts();
+    	return this;
+
+    }
 }

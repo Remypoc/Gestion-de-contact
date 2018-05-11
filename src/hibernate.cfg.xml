@@ -20,13 +20,12 @@
         <!-- Enable Hibernate's automatic session context management -->
         <property name="current_session_context_class">thread</property>
 
-        <property name="hbm2ddl.auto">update</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
 
         <!-- List of XML mapping files -->
         <mapping resource="domain/Address.hbm.xml"/>
         <mapping resource="domain/Contact.hbm.xml"/>
         <mapping resource="domain/ContactGroup.hbm.xml"/>
         <mapping resource="domain/PhoneNumber.hbm.xml"/>
-
     </session-factory>
 </hibernate-configuration>

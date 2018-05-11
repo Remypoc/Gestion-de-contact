@@ -1,24 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC
-        "-//Hibernate/Hibernate Mapping DTD//EN"
-        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+		"-//Hibernate/Hibernate Mapping DTD//EN"
+		"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping package="domain">
-    <class name="PhoneNumber" table="PHONENUMBER">
+	<class name="PhoneNumber" table="PHONENUMBER">
 
-        <meta attribute="class-description">
-            This class contains all PhoneNumber informations.
-        </meta>
+		<meta attribute="class-description">
+			This class contains all PhoneNumber informations.
+		</meta>
 
-        <id name="id" type="long" column="ID">
-            <generator class="increment"/>
-        </id>
+		<cache usage="read-write"/>
 
-        <property name="phoneKind" column="PHONEKIND" type="string"/>
-        <property name="phoneNumber" column="PHONENUMBER" type="string"/>
+		<id name="id" type="long" column="ID">
+			<generator class="increment"/>
+		</id>
 
-        <!-- lazy="proxy" not-null="false" -->
-        <many-to-one name="contact" column="id_contact" class="Contact"/>
+		<property name="phoneKind" column="PHONEKIND" type="string"/>
+		<property name="phoneNumber" column="PHONENUMBER" type="string"/>
 
-    </class>
+		<!-- lazy="proxy" not-null="false" -->
+		<many-to-one name="contact" column="id_contact" class="Contact"/>
+
+	</class>
 </hibernate-mapping>

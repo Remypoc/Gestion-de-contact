@@ -23,8 +23,13 @@ public class HibernateUtil {
     }
 
     public static SessionFactory getSessionFactory() {
-        if (sessionFactory == null)
-            sessionFactory = buildSessionFactory();
+        if (sessionFactory == null) {
+            try {
+                sessionFactory = buildSessionFactory();
+            } catch (ExceptionInInitializerError e) {
+                System.err.println(e.getMessage());
+            }
+        }
         return sessionFactory;
     }
 }

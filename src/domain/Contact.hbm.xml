@@ -7,34 +7,47 @@
   ~ See the lgpl.txt file in the root directory or <http://www.gnu.org/licenses/lgpl-2.1.html>.
   -->
 <!DOCTYPE hibernate-mapping PUBLIC
-        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+		"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+		"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping package="domain">
 
-    <class name="Contact" table="CONTACT">
+	<class name="Contact" table="contact" discriminator-value="contact">
 
-        <id name="id" column="ID">
-            <generator class="increment"/>
-        </id>
+		<cache usage="read-write"/>
 
-        <property name="firstName" type="string" column="FIRSTNAME"/>
-        <property name="lastName" type="string" column="LASTNAME"/>
-        <property name="email" type="string" column="EMAIL"/>
+		<id name="id" column="ID">
+			<generator class="increment"/>
+		</id>
 
-        <many-to-one name="address" column="REFADDRESS"  not-null="false" cascade="persist"/>
+		<discriminator column="type" type="string"/>
 
-        <set name="phones" cascade="persist" lazy="true">
-            <key column="id_contact"/>
-            <one-to-many class="PhoneNumber"/>
-        </set>
+		<version name="version" access="field" column="version"/>
 
-        <!-- ContactGroup est le possédant de l'association. Pour sauvegarder, mettre à jour, ou supprimer
-        il faut passer par le contactGroup -->
-        <set name="books" table="CONTACTINGROUP" inverse="true" lazy="true" cascade="persist">
-            <key column="ID_CONTACT"/>
-            <many-to-many class="ContactGroup" column="ID_GROUP"/>
-        </set>
+		<property name="lastName" type="string" column="LASTNAME"/>
+		<property name="firstName" type="string" column="FIRSTNAME"/>
+		<property name="email" type="string" column="EMAIL"/>
 
-    </class>
+		<many-to-one name="address" column="ADDRESS" cascade="all" unique="true"/>
+
+		<set name="phones" cascade="persist all-delete-orphan" lazy="true">
+			<cache usage="read-write"/>
+
+			<key column="id_contact"/>
+			<one-to-many class="PhoneNumber"/>
+		</set>
+
+		<!-- ContactGroup est le possédant de l'association. Pour sauvegarder, mettre à jour, ou supprimer
+		il faut passer par le contactGroup -->
+		<set name="books" table="CONTACTINGROUP" inverse="true" lazy="true" cascade="persist">
+			<cache usage="read-write"/>
+
+			<key column="ID_CONTACT"/>
+			<many-to-many class="ContactGroup" column="ID_GROUP"/>
+		</set>
+
+		<subclass name="Company" discriminator-value="company">
+			<property name="numSiret" type="long" column="NUM_SIRET"/>
+		</subclass>
+	</class>
 </hibernate-mapping>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+<h:body>
+    <ui:composition>
+        <div style="position: relative">
+            <div class="fixed-action-btn horizontal"
+                 style="position: absolute; right: auto; bottom: auto;">
+                <a class="btn-floating btn-large light-blue darken-4"
+                   title="#{msgs['label.menu']}">
+                    <i class="material-icons">menu</i>
+                </a>
+                <ul>
+                    <li>
+                        <h:form>
+                            <h:commandLink
+                                    action="#{viewManager.enableDisplayContacts}"
+                                    class="btn-floating orange darken-1"
+                                    title="#{msgs['label.display.contacts']}">
+                                <i class="material-icons">person</i>
+                            </h:commandLink>
+                        </h:form>
+                    </li>
+                    <li>
+                        <h:form>
+                            <h:commandLink
+                                    action="#{viewManager.enableDisplayGroups}"
+                                    class="btn-floating blue darken-1"
+                                    title="#{msgs['label.display.groups']}">
+                                <i class="material-icons">group</i>
+                            </h:commandLink>
+                        </h:form>
+                    </li>
+                    <li>
+                        <h:form>
+                            <h:commandLink
+                                    action="#{viewManager.enableDisplayCreateContactForm}"
+                                    class="btn-floating yellow darken-1"
+                                    title="#{msgs['label.add.contact']}">
+                                <i class="material-icons">person_add</i>
+                            </h:commandLink>
+                        </h:form>
+                    </li>
+                    <li>
+                        <h:form>
+                            <h:commandLink
+                                    action="#{viewManager.enableDisplayCreateGroupForm}"
+                                    styleClass="btn-floating waves-effect waves-light"
+                                    title="#{msgs['label.add.contactgroup']}">
+                                <i class="material-icons center">group_add</i>
+                            </h:commandLink>
+                        </h:form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </ui:composition>
+</h:body>
+
+</html>
